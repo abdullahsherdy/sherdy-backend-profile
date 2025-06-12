@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Moon, Sun, Download, Github, Linkedin, Youtube, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -7,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import emailjs from 'emailjs-com';
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
@@ -24,18 +24,36 @@ const Index = () => {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    // Simulate form submission
-    toast({
-      title: "Message Sent!",
-      description: "Thank you for your message. I'll get back to you soon!",
-    });
-    setFormData({ name: "", email: "", message: "" });
+    emailjs.send(
+      'service_el5hyxy',      // TODO: Replace with your EmailJS service ID
+      'template_4auovm6',     // TODO: Replace with your EmailJS template ID
+      {
+        from_name: formData.name,
+        from_email: formData.email,
+        message: formData.message,
+      },
+      'LfHew_mrxUGTgdpGe'       // TODO: Replace with your EmailJS public key
+    ).then(
+      (result) => {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for your message. I'll get back to you soon!",
+        });
+        setFormData({ name: "", email: "", message: "" });
+      },
+      (error) => {
+        toast({
+          title: "Error",
+          description: "There was an error sending your message. Please try again.",
+        });
+      }
+    );
   };
 
   const skills = {
-    backend: ["C#", "ASP.NET Core", "Python", "PHP", "Java"],
-    devops: ["Git", "GitHub", "Docker"],
-    database: ["MSSQL", "Oracle", "EF Core"],
+    backend: ["C#", "ASP.NET Core", "Python", "PHP", "Java", "JS"],
+    devops: ["Git", "Cloud", "Docker"],
+    database: ["MSSQL", "Oracle", "EF Core", "MongoDB"],
     principles: ["OOP", "SOLID", "RESTful API", "Clean Architecture"],
     workflow: ["Agile/Scrum", "Trello", "Git-Flow"]
   };
