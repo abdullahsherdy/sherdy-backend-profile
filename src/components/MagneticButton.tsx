@@ -7,6 +7,8 @@ interface MagneticButtonProps {
   className?: string;
   variant?: "default" | "destructive" | "outline" | "secondary" | "ghost" | "link";
   size?: "default" | "sm" | "lg" | "icon";
+  type?: "button" | "submit" | "reset";
+  disabled?: boolean;
   onClick?: () => void;
 }
 
@@ -15,6 +17,8 @@ const MagneticButton = ({
   className = '', 
   variant = 'default',
   size = 'default',
+  type = 'button',
+  disabled = false,
   onClick 
 }: MagneticButtonProps) => {
   const [position, setPosition] = useState({ x: 0, y: 0 });
@@ -37,8 +41,10 @@ const MagneticButton = ({
   return (
     <Button
       ref={buttonRef}
+      type={type}
       variant={variant}
       size={size}
+      disabled={disabled}
       className={`magnetic-hover transition-transform duration-200 ${className}`}
       style={{
         transform: `translate(${position.x}px, ${position.y}px)`,
