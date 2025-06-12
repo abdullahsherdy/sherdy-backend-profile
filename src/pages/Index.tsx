@@ -16,14 +16,32 @@ const Index = () => {
     message: ""
   });
   const { toast } = useToast();
+  const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState<{ name?: string; email?: string; message?: string }>({});
 
   const toggleDarkMode = () => {
     setIsDarkMode(!isDarkMode);
     document.documentElement.classList.toggle('dark');
   };
 
+  const validate = () => {
+    const newErrors: { name?: string; email?: string; message?: string } = {};
+    if (!formData.name.trim()) newErrors.name = 'Name is required.';
+    if (!formData.email.trim()) {
+      newErrors.email = 'Email is required.';
+    } else if (!/^[^@\s]+@[^@\s]+\.[^@\s]+$/.test(formData.email)) {
+      newErrors.email = 'Enter a valid email address.';
+    }
+    if (!formData.message.trim()) newErrors.message = 'Message is required.';
+    return newErrors;
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    const validationErrors = validate();
+    setErrors(validationErrors);
+    if (Object.keys(validationErrors).length > 0) return;
+    setLoading(true);
     emailjs.send(
       'service_el5hyxy',      // TODO: Replace with your EmailJS service ID
       'template_4auovm6',     // TODO: Replace with your EmailJS template ID
@@ -40,12 +58,15 @@ const Index = () => {
           description: "Thank you for your message. I'll get back to you soon!",
         });
         setFormData({ name: "", email: "", message: "" });
+        setErrors({});
+        setLoading(false);
       },
       (error) => {
         toast({
           title: "Error",
           description: "There was an error sending your message. Please try again.",
         });
+        setLoading(false);
       }
     );
   };
@@ -310,7 +331,9 @@ const Index = () => {
                       value={formData.name}
                       onChange={(e) => setFormData({ ...formData, name: e.target.value })}
                       required
+                      disabled={loading}
                     />
+                    {errors.name && <div style={{ color: '#e11d48', fontSize: 13, marginTop: 4 }}>{errors.name}</div>}
                   </div>
                   <div>
                     <Input
@@ -319,7 +342,9 @@ const Index = () => {
                       value={formData.email}
                       onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                       required
+                      disabled={loading}
                     />
+                    {errors.email && <div style={{ color: '#e11d48', fontSize: 13, marginTop: 4 }}>{errors.email}</div>}
                   </div>
                   <div>
                     <Textarea
@@ -328,10 +353,13 @@ const Index = () => {
                       value={formData.message}
                       onChange={(e) => setFormData({ ...formData, message: e.target.value })}
                       required
+                      disabled={loading}
                     />
+                    {errors.message && <div style={{ color: '#e11d48', fontSize: 13, marginTop: 4 }}>{errors.message}</div>}
                   </div>
-                  <Button type="submit" className="w-full">
-                    Send Message
+                  <Button type="submit" className="w-full" disabled={loading}>
+                    {loading ? <span className="animate-spin mr-2 inline-block border-2 border-t-transparent border-white rounded-full w-4 h-4 align-middle"></span> : null}
+                    {loading ? 'Sending...' : 'Send Message'}
                   </Button>
                 </form>
                 
@@ -365,7 +393,8 @@ const Index = () => {
         <footer className="py-8 px-4 border-t border-border">
           <div className="container mx-auto text-center">
             <p className="text-muted-foreground">
-              © 2024 Abdullah Ahmed Abdullah Sherdy. Built with React & Tailwind CSS.
+              © 2025 Abdullah Ahmed Abdullah Sherdy. All rights reserved.
+              <br />
             </p>
           </div>
         </footer>
