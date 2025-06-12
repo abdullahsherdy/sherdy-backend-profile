@@ -132,8 +132,10 @@ const Index = () => {
                   <a href="#projects">View Projects</a>
                 </Button>
                 <Button variant="outline" size="lg" className="hover-scale">
-                  <Download className="mr-2 h-4 w-4" />
-                  Download Resume
+                  <a href="resume/abdullah_sherdy_cv.pdf" download="abdullah_sherdy_cv.pdf" className="flex items-center">
+                    <Download className="mr-2 h-4 w-4" />
+                    Download Resume
+                  </a>
                 </Button>
                 <Button variant="secondary" size="lg" className="hover-scale">
                   <a href="#contact">Hire Me</a>
