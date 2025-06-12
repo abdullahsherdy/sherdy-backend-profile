@@ -6,6 +6,7 @@ import { Badge } from "@/components/ui/badge";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
+import CurrentlyLearning from "@/components/CurrentlyLearning";
 import emailjs from 'emailjs-com';
 
 const Index = () => {
@@ -104,6 +105,7 @@ const Index = () => {
             <div className="flex items-center gap-4">
               <a href="#about" className="hover:text-primary transition-colors">About</a>
               <a href="#projects" className="hover:text-primary transition-colors">Projects</a>
+              <a href="#learning" className="hover:text-primary transition-colors">Learning</a>
               <a href="#skills" className="hover:text-primary transition-colors">Skills</a>
               <a href="#contact" className="hover:text-primary transition-colors">Contact</a>
               <Button variant="ghost" size="icon" onClick={toggleDarkMode}>
@@ -206,6 +208,9 @@ const Index = () => {
             </div>
           </div>
         </section>
+
+        {/* Currently Learning Section */}
+        <CurrentlyLearning />
 
         {/* Projects Section */}
         <section id="projects" className="py-16 px-4">
