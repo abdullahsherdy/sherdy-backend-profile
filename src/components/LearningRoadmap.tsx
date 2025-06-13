@@ -14,7 +14,7 @@ import {
   BackgroundVariant
 } from '@xyflow/react';
 import '@xyflow/react/dist/style.css';
-import { Brain, Cloud, Network, Zap, Database, Settings } from "lucide-react";
+import { Brain, Cloud, Network, Zap, Database, Settings, LucideIcon } from "lucide-react";
 import LearningNode from './LearningNode';
 import { Card, CardContent } from '@/components/ui/card';
 
@@ -22,7 +22,19 @@ const nodeTypes = {
   learning: LearningNode,
 };
 
-const initialNodes: Node[] = [
+interface LearningNodeData {
+  title: string;
+  subtitle: string;
+  icon: LucideIcon;
+  status: 'completed' | 'in-progress' | 'planned';
+  category: string;
+}
+
+interface LearningFlowNode extends Node {
+  data: LearningNodeData;
+}
+
+const initialNodes: LearningFlowNode[] = [
   {
     id: '1',
     type: 'learning',
@@ -164,7 +176,7 @@ const initialEdges: Edge[] = [
 
 const LearningRoadmap = () => {
   const [isVisible, setIsVisible] = useState(false);
-  const [selectedNode, setSelectedNode] = useState<Node | null>(null);
+  const [selectedNode, setSelectedNode] = useState<LearningFlowNode | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState(initialEdges);
@@ -187,7 +199,7 @@ const LearningRoadmap = () => {
   }, []);
 
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
-    setSelectedNode(node);
+    setSelectedNode(node as LearningFlowNode);
   }, []);
 
   const onPaneClick = useCallback(() => {
@@ -264,9 +276,7 @@ const LearningRoadmap = () => {
                 <CardContent className="p-4">
                   <div className="flex items-center gap-3 mb-3">
                     <div className="p-2 rounded-lg bg-primary/10">
-                      {selectedNode.data.icon && (
-                        <selectedNode.data.icon className="h-6 w-6 text-primary" />
-                      )}
+                      <selectedNode.data.icon className="h-6 w-6 text-primary" />
                     </div>
                     <div>
                       <h3 className="font-semibold">{selectedNode.data.title}</h3>

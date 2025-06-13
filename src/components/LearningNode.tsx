@@ -3,11 +3,12 @@ import { memo } from 'react';
 import { Handle, Position } from '@xyflow/react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
+import { LucideIcon } from 'lucide-react';
 
 interface LearningNodeData {
   title: string;
   subtitle: string;
-  icon: React.ComponentType<{ className?: string }>;
+  icon: LucideIcon;
   status: 'completed' | 'in-progress' | 'planned';
   category: string;
 }
