@@ -1,4 +1,3 @@
-
 import { useState } from "react";
 import { Moon, Sun, Download, Github, Linkedin, Youtube, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -8,6 +7,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
 import CurrentlyLearning from "@/components/CurrentlyLearning";
+import LearningRoadmap from "@/components/LearningRoadmap";
 import AnimatedSection from "@/components/AnimatedSection";
 import TypewriterText from "@/components/TypewriterText";
 import MagneticButton from "@/components/MagneticButton";
@@ -240,6 +240,9 @@ const Index = () => {
           </div>
         </section>
 
+        {/* Learning Roadmap Section */}
+        <LearningRoadmap />
+
         {/* Projects Section */}
         <section id="projects" className="py-16 px-4">
           <div className="container mx-auto">
@@ -295,9 +298,6 @@ const Index = () => {
             </AnimatedSection>
           </div>
         </section>
-
-        {/* Currently Learning Section */}
-        <CurrentlyLearning />
 
         {/* Skills Section */}
         <section id="skills" className="py-16 px-4 bg-muted/50">
@@ -416,7 +416,7 @@ const Index = () => {
                       </MagneticButton>
                     </div>
                     <p className="text-center text-sm text-muted-foreground mt-4">
-                      <a href="https://leetcode.com/u/abdallahsherdy/" target="_blank" rel="noopener noreferrer" className="link-underline hover:text-primary transition-colors">
+                      <a href="https://leetcode.com/u/abdullahsherdy/" target="_blank" rel="noopener noreferrer" className="link-underline hover:text-primary transition-colors">
                         Check out my LeetCode profile
                       </a>
                     </p>
