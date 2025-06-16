@@ -108,16 +108,19 @@ const Index = () => {
     }
   ];
 
+
   return (
+
     <div className={`min-h-screen transition-colors duration-300 ${isDarkMode ? 'dark' : ''}`}>
       <div className="bg-background text-foreground">
+        
         {/* Navigation */}
         <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
           <div className="container mx-auto px-4 py-4 flex justify-between items-center">
             <AnimatedSection animation="slide-in-left">
-              <h2 className="text-xl font-bold">Abdullah Sherdy</h2>
+              <h1 className="text-xl font-bold">Abdullah Sherdy</h1>
             </AnimatedSection>
-            <AnimatedSection animation="slide-in-right" delay={200}>
+            <AnimatedSection animation="slide-in-right" delay={300}>
               <div className="flex items-center gap-4">
                 <a href="#about" className="link-underline hover:text-primary transition-colors">About</a>
                 <a href="#projects" className="link-underline hover:text-primary transition-colors">Projects</a>
