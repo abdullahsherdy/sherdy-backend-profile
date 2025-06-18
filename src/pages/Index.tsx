@@ -414,6 +414,8 @@ const Index = () => {
               <Card className="hover-scale magnetic-hover">
                 <CardContent className="p-6">
                   <form onSubmit={handleSubmit} className="space-y-4">
+
+                    {/* name input */}
                     <div>
                       <Input
                         placeholder="Your Name"
@@ -425,6 +427,8 @@ const Index = () => {
                       />
                       {errors.name && <div style={{ color: '#e11d48', fontSize: 13, marginTop: 4 }}>{errors.name}</div>}
                     </div>
+
+                    {/* email input */}
                     <div>
                       <Input
                         type="email"
@@ -437,6 +441,8 @@ const Index = () => {
                       />
                       {errors.email && <div style={{ color: '#e11d48', fontSize: 13, marginTop: 4 }}>{errors.email}</div>}
                     </div>
+
+                    {/* message input */}
                     <div>
                       <Textarea
                         placeholder="Your Message"
@@ -454,7 +460,7 @@ const Index = () => {
                       {loading ? 'Sending...' : 'Send Message'}
                     </MagneticButton>
                   </form>
-                  
+
                   <div className="mt-8 pt-6 border-t border-border">
                     <div className="flex justify-center gap-4">
                       <MagneticButton variant="outline" size="sm">
@@ -471,7 +477,7 @@ const Index = () => {
                       </MagneticButton>
                     </div>
                     <p className="text-center text-sm text-muted-foreground mt-4">
-                      <a href="https://leetcode.com/u/abdullahsherdy/" target="_blank" rel="noopener noreferrer" className="link-underline hover:text-primary transition-colors">
+                      <a href="https://leetcode.com/u/abdallahsherdy" target="_blank" rel="noopener noreferrer" className="link-underline hover:text-primary transition-colors">
                         Check out my LeetCode profile
                       </a>
                     </p>
