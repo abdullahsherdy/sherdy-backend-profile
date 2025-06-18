@@ -1,6 +1,5 @@
-
 import { useState } from "react";
-import { Moon, Sun, Download, Github, Linkedin, Youtube, Mail, Phone, MapPin, ExternalLink } from "lucide-react";
+import { Moon, Sun, Download, Github, Linkedin, Youtube, Mail, Phone, MapPin, ExternalLink, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
@@ -16,6 +15,7 @@ import emailjs from 'emailjs-com';
 
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const [formData, setFormData] = useState({
     name: "",
     email: "",
@@ -121,7 +121,8 @@ const Index = () => {
               <h1 className="text-xl font-bold">Abdullah Sherdy</h1>
             </AnimatedSection>
             <AnimatedSection animation="slide-in-right" delay={300}>
-              <div className="flex items-center gap-4">
+              {/* Desktop Menu */}
+              <div className="hidden md:flex items-center gap-4">
                 <a href="#about" className="link-underline hover:text-primary transition-colors">About</a>
                 <a href="#projects" className="link-underline hover:text-primary transition-colors">Projects</a>
                 <a href="#learning" className="link-underline hover:text-primary transition-colors">Learning</a>
@@ -131,8 +132,59 @@ const Index = () => {
                   {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
                 </Button>
               </div>
+              {/* Hamburger for Mobile */}
+              <button
+                className="md:hidden p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                aria-label="Open menu"
+                onClick={() => setIsMobileMenuOpen(true)}
+                type="button"
+              >
+                <Menu className="h-7 w-7" />
+              </button>
             </AnimatedSection>
           </div>
+          {/* Mobile Aside Menu */}
+          {isMobileMenuOpen && (
+            <div className="fixed inset-0 z-[100] flex">
+              {/* Overlay */}
+              <div
+                className="fixed inset-0 bg-black/50 backdrop-blur-sm transition-opacity duration-300"
+                onClick={() => setIsMobileMenuOpen(false)}
+                aria-label="Close menu overlay"
+                tabIndex={-1}
+              />
+              {/* Aside Menu */}
+              <aside
+                className="relative ml-0 w-64 max-w-[80vw] h-full bg-background shadow-lg p-6 flex flex-col gap-6 animate-slide-in-left"
+                style={{ zIndex: 101 }}
+                aria-label="Mobile menu"
+              >
+                <button
+                  className="absolute top-4 right-4 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
+                  aria-label="Close menu"
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  type="button"
+                >
+                  <X className="h-6 w-6" />
+                </button>
+                <nav className="flex flex-col gap-4 mt-8">
+                  <a href="#about" className="link-underline hover:text-primary transition-colors text-lg" onClick={() => setIsMobileMenuOpen(false)}>About</a>
+                  <a href="#projects" className="link-underline hover:text-primary transition-colors text-lg" onClick={() => setIsMobileMenuOpen(false)}>Projects</a>
+                  <a href="#learning" className="link-underline hover:text-primary transition-colors text-lg" onClick={() => setIsMobileMenuOpen(false)}>Learning</a>
+                  <a href="#skills" className="link-underline hover:text-primary transition-colors text-lg" onClick={() => setIsMobileMenuOpen(false)}>Skills</a>
+                  <a href="#contact" className="link-underline hover:text-primary transition-colors text-lg" onClick={() => setIsMobileMenuOpen(false)}>Contact</a>
+                  <Button variant="ghost" size="icon" onClick={() => { toggleDarkMode(); setIsMobileMenuOpen(false); }} className="magnetic-hover self-start mt-2">
+                    {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
+                  </Button>
+                </nav>
+                <div className="flex gap-3 mt-8">
+                  <a href="https://github.com/abdullahsherdy" target="_blank" rel="noopener noreferrer" aria-label="GitHub"><Github className="h-5 w-5" /></a>
+                  <a href="https://www.linkedin.com/in/abdullah-sherdy/" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn"><Linkedin className="h-5 w-5" /></a>
+                  <a href="https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw" target="_blank" rel="noopener noreferrer" aria-label="YouTube"><Youtube className="h-5 w-5" /></a>
+                </div>
+              </aside>
+            </div>
+          )}
         </nav>
 
         {/* Hero Section */}
@@ -436,7 +488,7 @@ const Index = () => {
             <AnimatedSection animation="fade-up">
               <p className="text-muted-foreground">
                 © 2025 Abdullah Ahmed Abdullah Sherdy. All rights reserved.
-                <br />
+                <br/>
               </p>
             </AnimatedSection>
           </div>
