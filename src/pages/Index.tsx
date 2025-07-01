@@ -285,12 +285,69 @@ const Index = () => {
                       </MagneticButton>
                       <MagneticButton variant="outline" size="sm">
                         <Youtube className="mr-2 h-4 w-4" />
-                        <a href="https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw" target="_blank" rel="noopener noreferrer">YouTube</a>
+                        <a href="https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw" target="_blank" rel="noopener noreferrer">My Channel</a>
                       </MagneticButton>
                     </div>
                   </CardContent>
                 </Card>
               </AnimatedSection>
+            </div>
+          </div>
+        </section>
+
+        {/* Work Experience Section */}
+        <section id="work-experience" className="py-16 px-4">
+          <div className="container mx-auto">
+            <AnimatedSection animation="fade-up">
+              <h2 className="text-3xl font-bold text-center mb-12">Work Experience</h2>
+            </AnimatedSection>
+            <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">
+              {[ // Placeholder data
+                {
+                  title: "Backend Engineer Intern",
+                  company: "Code Casa",
+                  duration: "Jun 2024– May 2024",
+                  description: "Developed a large scale web application "
+                },
+                {
+                  title: "Online Coding Instructor",
+                  company: "Private Group Related to freelance camp initiative",
+                  duration: "Feb 2025 - Present",
+                  description: "Taught coding to children aged 14-24 years old"
+                }
+                
+              ].map((job, idx) => (
+                <AnimatedSection key={idx} animation="slide-in-left" delay={idx * 200}>
+                  <Card className="hover-scale magnetic-hover">
+                    <CardContent className="p-6">
+                      < h3 className="text-xl font-semibold mb-2">{job.title}</h3>
+                      <div className="flex items-center gap-2 mb-2">
+                        <span className="font-medium text-primary">{job.company}</span>
+                        <span className="text-xs text-muted-foreground">&bull;</span>
+                        <span className="text-sm text-muted-foreground">{job.duration}</span>
+                      </div>
+                      <p className="text-muted-foreground text-sm">{job.description}</p>
+                    </CardContent>
+                  </Card>
+                </AnimatedSection>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        {/* Roles I Can Work Section */}
+        <section id="roles" className="py-16 px-4 bg-muted/50">
+          <div className="container mx-auto">
+            <AnimatedSection animation="fade-up">
+              <h2 className="text-3xl font-bold text-center mb-6">Roles I Can Work</h2>
+              <p className="text-center text-lg text-muted-foreground mb-8">I'm open to working in these roles:</p>
+            </AnimatedSection>
+            <div className="flex flex-wrap justify-center gap-4 max-w-3xl mx-auto">
+              {["Software Engineer", "Backend Engineer", "Coding Instructor"].map((role, idx) => (
+                <Badge key={idx} variant="secondary" className="text-base px-4 py-2 shadow-md">
+                  {role}
+                </Badge>
+              ))}
             </div>
           </div>
         </section>
