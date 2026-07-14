@@ -13,6 +13,7 @@ import MagneticButton from "@/components/MagneticButton";
 import SkillBar from "@/components/SkillBar";
 import emailjs from 'emailjs-com';
 
+
 const Index = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
@@ -284,21 +285,20 @@ const Index = () => {
                 <h1 className="text-5xl md:text-7xl font-bold mb-6">
                   <span className="block mb-2">Abdullah Sherdy</span>
                   <span className="block text-3xl md:text-5xl bg-gradient-to-r from-primary to-blue-600 bg-clip-text text-transparent">
-                    Backend Software Engineer
+                    Software Engineer Backend Focused
                   </span>
                 </h1>
               </AnimatedSection>
               
               <AnimatedSection animation="fade-up" delay={400}>
                 <p className="text-xl md:text-2xl text-muted-foreground mb-6 font-medium">
-                  Building Scalable APIs & Systems with C# / ASP.NET Core
+                 
                 </p>
               </AnimatedSection>
               
               <AnimatedSection animation="fade-up" delay={600}>
                 <p className="text-base md:text-lg mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-                  Computer Science student specializing in backend development, RESTful APIs, database design, and clean architecture. 
-                  Experienced with C#, ASP.NET Core, Entity Framework, SQL Server, Docker, and building production-ready systems.
+                  
                 </p>
               </AnimatedSection>
               
@@ -308,12 +308,14 @@ const Index = () => {
                     <a href="#projects">View My Work</a>
                   </MagneticButton>
                   <MagneticButton variant="outline" size="lg">
-                    <a href="resume/abdullah_sherdy_cv.pdf" download="abdullah_sherdy_cv.pdf" className="flex items-center">
+                    {/* add public hosted link for the resume */}
+                    <a href="" download="abdullah_sherdy_cv.pdf" className="flex items-center">
                       <Download className="mr-2 h-4 w-4" />
                       Download CV
                     </a>
                   </MagneticButton>
                   <MagneticButton variant="secondary" size="lg">
+                    {/* can add another get in touch way  */}
                     <a href="#contact">Get In Touch</a>
                   </MagneticButton>
                 </div>
