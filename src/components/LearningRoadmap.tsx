@@ -209,7 +209,10 @@ const LearningRoadmap = () => {
   return (
     <section ref={sectionRef} id="learning" className="py-16 px-4">
       <div className="container mx-auto">
-        <h2 className="text-3xl font-bold text-center mb-12">🧠 Learning Roadmap</h2>
+        <div className="text-center mb-12">
+          <p className="eyebrow mb-3">What's next</p>
+          <h2 className="font-display text-3xl md:text-4xl font-bold tracking-tight">Learning Roadmap</h2>
+        </div>
         
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="mb-6 text-center">
@@ -218,15 +221,15 @@ const LearningRoadmap = () => {
             </p>
             <div className="flex justify-center gap-4 text-sm">
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-green-500"></div>
+                <div className="w-3 h-3 rounded-full bg-success"></div>
                 <span>Completed</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-blue-500"></div>
+                <div className="w-3 h-3 rounded-full bg-primary"></div>
                 <span>In Progress</span>
               </div>
               <div className="flex items-center gap-2">
-                <div className="w-3 h-3 rounded-full bg-gray-500"></div>
+                <div className="w-3 h-3 rounded-full bg-muted-foreground"></div>
                 <span>Planned</span>
               </div>
             </div>

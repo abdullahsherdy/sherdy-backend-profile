@@ -23,19 +23,17 @@ const LearningNode = memo(({ data, selected }: LearningNodeProps) => {
   
   const getStatusColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-100 border-green-500 text-green-700';
-      case 'in-progress': return 'bg-blue-100 border-blue-500 text-blue-700';
-      case 'planned': return 'bg-gray-100 border-gray-500 text-gray-700';
-      default: return 'bg-gray-100 border-gray-500 text-gray-700';
+      case 'completed': return 'bg-success/10 border-success text-foreground';
+      case 'in-progress': return 'bg-primary/10 border-primary text-foreground';
+      default: return 'bg-muted border-muted-foreground/40 text-foreground';
     }
   };
 
   const getStatusBadgeColor = (status: string) => {
     switch (status) {
-      case 'completed': return 'bg-green-500';
-      case 'in-progress': return 'bg-blue-500';
-      case 'planned': return 'bg-gray-500';
-      default: return 'bg-gray-500';
+      case 'completed': return 'bg-success';
+      case 'in-progress': return 'bg-primary';
+      default: return 'bg-muted-foreground';
     }
   };
 
@@ -55,7 +53,7 @@ const LearningNode = memo(({ data, selected }: LearningNodeProps) => {
         <CardContent className="p-4">
           <div className="flex items-start gap-3">
             <div className="flex-shrink-0">
-              <div className="p-2 rounded-lg bg-white/80">
+              <div className="p-2 rounded-lg bg-background/80">
                 <IconComponent className="h-6 w-6 text-primary" />
               </div>
             </div>
