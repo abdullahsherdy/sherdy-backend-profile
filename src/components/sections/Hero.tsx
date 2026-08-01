@@ -22,21 +22,24 @@ const Hero = () => (
 
         <AnimatedSection animation="fade-up" delay={150}>
           <p className="font-mono text-sm md:text-base text-primary mb-4">
-            $ whoami <span className="text-muted-foreground">→</span> backend engineer <span className="text-accent">&amp;&amp;</span> coding instructor
+            $ whoami <span className="text-muted-foreground">→</span> software engineer <span className="text-accent">&amp;&amp;</span> coding instructor
           </p>
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={300}>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-6 tracking-tight">
+          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4 tracking-tight">
             Abdullah Sherdy
           </h1>
+          <p className="font-display text-lg md:text-2xl font-medium text-muted-foreground mb-6">
+            Software Engineer <span className="text-primary">|</span> Full-Stack Developer <span className="text-primary">|</span> Coding Instructor
+          </p>
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={450}>
           <p className="text-base md:text-lg mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            I build robust, scalable backend systems with ASP.NET Core — and teach the
-            fundamentals behind them. Clean architecture, well-designed databases, and
-            APIs that hold up in production.
+            Backend-focused engineer building production APIs with .NET and Node.js —
+            expanding into React and Next.js for end-to-end delivery — and teaching the
+            fundamentals behind them.
           </p>
         </AnimatedSection>
 

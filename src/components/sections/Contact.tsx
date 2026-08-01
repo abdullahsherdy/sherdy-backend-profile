@@ -66,7 +66,7 @@ const Contact = () => {
   };
 
   return (
-    <section id="contact" className="py-16 px-4 scroll-mt-24" data-section>
+    <section id="contact" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
       <div className="container mx-auto max-w-2xl">
         <SectionHeading eyebrow="Say hello" title="Get In Touch" />
         <AnimatedSection animation="fade-up" delay={200}>

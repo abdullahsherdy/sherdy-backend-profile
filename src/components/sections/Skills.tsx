@@ -2,25 +2,24 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import AnimatedSection from "@/components/AnimatedSection";
 import SectionHeading from "@/components/SectionHeading";
-import SkillBar from "@/components/SkillBar";
-import { skills, skillLevels } from "@/data/portfolio";
+import { skills, focusAreas } from "@/data/portfolio";
 
 const Skills = () => (
-  <section id="skills" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
+  <section id="skills" className="py-16 px-4 scroll-mt-24" data-section>
     <div className="container mx-auto">
-      <SectionHeading eyebrow="Toolbox" title="Technical Skills" />
+      <SectionHeading eyebrow="Toolbox" title="Technical Skills" subtitle="Backend-Focused | Fullstack in Progress" />
 
       <AnimatedSection animation="fade-up" delay={200}>
         <div className="max-w-2xl mx-auto mb-12">
-          <h3 className="text-xl font-semibold text-center mb-8 text-primary">Expertise Level</h3>
-          {skillLevels.map((skill, index) => (
-            <SkillBar
-              key={index}
-              skill={skill.skill}
-              percentage={skill.percentage}
-              delay={index * 200}
-            />
-          ))}
+          <h3 className="font-display text-xl font-semibold text-center mb-8 text-primary">Focus Areas</h3>
+          <ul className="space-y-4">
+            {focusAreas.map((area) => (
+              <li key={area.skill} className="flex flex-col sm:flex-row sm:items-baseline gap-1 sm:gap-3">
+                <span className="font-mono text-sm font-medium text-foreground shrink-0 sm:w-56">{area.skill}</span>
+                <span className="text-sm text-muted-foreground">{area.context}</span>
+              </li>
+            ))}
+          </ul>
         </div>
       </AnimatedSection>
 
@@ -30,11 +29,11 @@ const Skills = () => (
             <Card className="hover-scale magnetic-hover transition-colors border-border/60 hover:border-primary/40 hover:bg-primary/5">
               <CardContent className="p-6">
                 <h3 className="font-semibold mb-4 text-primary capitalize">
-                  {category.replace(/([A-Z])/g, " $1").trim()}
+                  {category}
                 </h3>
                 <div className="flex flex-wrap gap-2">
                   {skillList.map((skill, index) => (
-                    <Badge key={index} variant="outline">
+                    <Badge key={index} variant="outline" className="font-mono text-xs">
                       {skill}
                     </Badge>
                   ))}

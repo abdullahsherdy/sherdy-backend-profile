@@ -17,6 +17,8 @@ import '@xyflow/react/dist/style.css';
 import { Brain, Cloud, Network, Zap, Database, Settings, LucideIcon } from "lucide-react";
 import LearningNode from './LearningNode';
 import { Card, CardContent } from '@/components/ui/card';
+import { Badge } from '@/components/ui/badge';
+import { useIsMobile } from '@/hooks/use-mobile';
 
 const nodeTypes = {
   learning: LearningNode,
@@ -174,7 +176,14 @@ const initialEdges: Edge[] = [
   }
 ];
 
+const statusDot: Record<LearningNodeData['status'], string> = {
+  completed: 'bg-success',
+  'in-progress': 'bg-primary',
+  planned: 'bg-muted-foreground',
+};
+
 const LearningRoadmap = () => {
+  const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
   const [selectedNode, setSelectedNode] = useState<LearningFlowNode | null>(null);
   const sectionRef = useRef<HTMLElement>(null);
@@ -217,7 +226,7 @@ const LearningRoadmap = () => {
         <div className={`transition-all duration-1000 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           <div className="mb-6 text-center">
             <p className="text-muted-foreground mb-4">
-              Navigate through my learning journey. Click and drag to explore!
+              {isMobile ? 'My learning journey, step by step.' : 'Navigate through my learning journey. Click and drag to explore!'}
             </p>
             <div className="flex justify-center gap-4 text-sm">
               <div className="flex items-center gap-2">
@@ -235,6 +244,21 @@ const LearningRoadmap = () => {
             </div>
           </div>
 
+          {isMobile ? (
+            <ol className="relative max-w-md mx-auto border-l border-border pl-6 space-y-6">
+              {initialNodes.map((node) => (
+                <li key={node.id} className="relative">
+                  <span className={`absolute -left-[31px] top-1.5 w-2.5 h-2.5 rounded-full ${statusDot[node.data.status]}`} />
+                  <div className="flex items-center gap-2 mb-1">
+                    <node.data.icon className="h-4 w-4 text-primary" />
+                    <h3 className="font-semibold text-sm">{node.data.title}</h3>
+                  </div>
+                  <p className="text-xs text-muted-foreground mb-1.5">{node.data.subtitle}</p>
+                  <Badge variant="outline" className="font-mono text-xs">{node.data.category}</Badge>
+                </li>
+              ))}
+            </ol>
+          ) : (
           <div className="relative">
             <div 
               className="w-full bg-card border rounded-lg overflow-hidden" 
@@ -302,6 +326,7 @@ const LearningRoadmap = () => {
               </Card>
             )}
           </div>
+          )}
         </div>
       </div>
     </section>

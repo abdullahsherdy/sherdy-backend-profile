@@ -6,7 +6,7 @@ import MagneticButton from "@/components/MagneticButton";
 import { socials } from "@/data/portfolio";
 
 const About = () => (
-  <section id="about" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
+  <section id="about" className="py-16 px-4 scroll-mt-24" data-section>
     <div className="container mx-auto">
       <SectionHeading eyebrow="Behind the code" title="About Me" />
       <div className="max-w-4xl mx-auto grid md:grid-cols-2 gap-8">

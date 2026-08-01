@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Moon, Sun, Github, Linkedin, Youtube, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
@@ -21,6 +21,17 @@ interface NavbarProps {
 
 const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const closeButtonRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!isMobileMenuOpen) return;
+    closeButtonRef.current?.focus();
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setIsMobileMenuOpen(false);
+    };
+    document.addEventListener("keydown", onKeyDown);
+    return () => document.removeEventListener("keydown", onKeyDown);
+  }, [isMobileMenuOpen]);
 
   return (
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
@@ -77,6 +88,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
             aria-label="Mobile menu"
           >
             <button
+              ref={closeButtonRef}
               className="absolute top-4 right-4 p-2 rounded focus:outline-none focus:ring-2 focus:ring-primary"
               aria-label="Close menu"
               onClick={() => setIsMobileMenuOpen(false)}

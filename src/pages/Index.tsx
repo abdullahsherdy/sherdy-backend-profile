@@ -56,7 +56,9 @@ const Index = () => {
           }
         });
       },
-      { root: null, threshold: 0.4 }
+      // fire when a section crosses the vertical center band of the viewport,
+      // so tall sections still activate reliably
+      { root: null, rootMargin: "-40% 0px -55% 0px", threshold: 0 }
     );
     elements.forEach((el) => observer.observe(el));
     return () => observer.disconnect();
