@@ -7,7 +7,7 @@ import { skills, focusAreas } from "@/data/portfolio";
 const Skills = () => (
   <section id="skills" className="py-16 px-4 scroll-mt-24" data-section>
     <div className="container mx-auto">
-      <SectionHeading eyebrow="Toolbox" title="Technical Skills" subtitle="Backend-Focused | Fullstack in Progress" />
+      <SectionHeading eyebrow="Toolbox" title="Technical Skills" subtitle="Backend depth, full-stack range" />
 
       <AnimatedSection animation="fade-up" delay={200}>
         <div className="max-w-2xl mx-auto mb-12">

@@ -1,3 +1,4 @@
+import { Download } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AnimatedSection from "@/components/AnimatedSection";
 import MagneticButton from "@/components/MagneticButton";
@@ -37,8 +38,8 @@ const Hero = () => (
 
         <AnimatedSection animation="fade-up" delay={450}>
           <p className="text-base md:text-lg mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            Backend-focused engineer building production APIs with .NET and Node.js —
-            expanding into React and Next.js for end-to-end delivery — and teaching the
+            Backend-focused engineer building production APIs with .NET and Node.js,
+            shipping end-to-end products with React and Next.js — and teaching the
             fundamentals behind them.
           </p>
         </AnimatedSection>
@@ -49,6 +50,12 @@ const Hero = () => (
               <a href="#projects">View My Work</a>
             </MagneticButton>
             <MagneticButton variant="outline" size="lg">
+              <a href="/resume/abdullah_sherdy_cv.pdf" download="Abdullah_Sherdy_CV.pdf" className="flex items-center">
+                <Download className="mr-2 h-4 w-4" />
+                Download CV
+              </a>
+            </MagneticButton>
+            <MagneticButton variant="secondary" size="lg">
               <a href="#services">Learn With Me</a>
             </MagneticButton>
             <MagneticButton variant="ghost" size="lg">

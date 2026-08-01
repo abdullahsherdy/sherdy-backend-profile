@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="1200" height="630" viewBox="0 0 1200 630" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <pattern id="dots" x="0" y="0" width="24" height="24" patternUnits="userSpaceOnUse">
+      <circle cx="2" cy="2" r="1.2" fill="#2AA093" opacity="0.18"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="#0D1520"/>
+  <rect width="1200" height="630" fill="url(#dots)"/>
+
+  <!-- accent bar -->
+  <rect x="0" y="0" width="8" height="630" fill="#2AA093"/>
+
+  <!-- terminal line -->
+  <text x="100" y="205" font-family="Consolas, 'Courier New', monospace" font-size="30" fill="#2AA093">$ whoami <tspan fill="#7A8699">→</tspan> software engineer <tspan fill="#F5B82E">&amp;&amp;</tspan> coding instructor</text>
+
+  <!-- name -->
+  <text x="96" y="315" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="700" fill="#F2F6F9">Abdullah Sherdy</text>
+
+  <!-- headline -->
+  <text x="100" y="385" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#AEB9C6">Software Engineer <tspan fill="#2AA093">|</tspan> Full-Stack Developer <tspan fill="#2AA093">|</tspan> Coding Instructor</text>
+
+  <!-- tech row -->
+  <text x="100" y="480" font-family="Consolas, 'Courier New', monospace" font-size="24" fill="#7A8699">C#  ·  ASP.NET Core  ·  Node.js  ·  Docker  ·  Swagger/OpenAPI  ·  React (in progress)</text>
+
+  <!-- status dot + availability -->
+  <circle cx="110" cy="540" r="7" fill="#3DBE8B"/>
+  <text x="130" y="548" font-family="Arial, Helvetica, sans-serif" font-size="24" fill="#3DBE8B">Available for work</text>
+</svg>

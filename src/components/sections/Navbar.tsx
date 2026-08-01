@@ -5,11 +5,12 @@ import AnimatedSection from "@/components/AnimatedSection";
 import { socials } from "@/data/portfolio";
 
 const navLinks = [
-  { href: "#about", id: "about", label: "About" },
   { href: "#projects", id: "projects", label: "Projects" },
+  { href: "#work-experience", id: "work-experience", label: "Experience" },
+  { href: "#skills", id: "skills", label: "Skills" },
   { href: "#services", id: "services", label: "Services" },
   { href: "#learning", id: "learning", label: "Learning" },
-  { href: "#skills", id: "skills", label: "Skills" },
+  { href: "#about", id: "about", label: "About" },
   { href: "#contact", id: "contact", label: "Contact" },
 ];
 
@@ -37,7 +38,10 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <AnimatedSection animation="fade-up">
-          <h1 className="text-xl font-bold">Abdullah Sherdy</h1>
+          <a href="#" className="flex items-center gap-2.5">
+            <img src="/favicon.svg" alt="" className="h-8 w-8" />
+            <span className="text-xl font-bold font-display">Abdullah Sherdy</span>
+          </a>
         </AnimatedSection>
         <AnimatedSection animation="slide-in-right" delay={300}>
           {/* Desktop Menu */}

@@ -24,7 +24,7 @@ export const heroTech = [
 
 export const skills = {
   backend: ["C#", "ASP.NET Core", "Node.js (Express, NestJS)", "Python", "FastAPI"],
-  "frontend (in progress)": ["React", "Next.js", "TypeScript"],
+  frontend: ["React", "Next.js", "TypeScript"],
   database: ["MSSQL", "MySQL", "MongoDB", "EF Core"],
   "APIs & auth": ["RESTful APIs", "Swagger/OpenAPI", "WebSocket", "JWT", "OAuth"],
   devops: ["Git", "GitOps", "Docker", "CI/CD (GitHub Actions)"],
@@ -35,7 +35,7 @@ export const focusAreas = [
   { skill: "C# & ASP.NET Core", context: "Primary stack — production APIs, Clean Architecture, CQRS" },
   { skill: "Node.js (Express, NestJS)", context: "Second backend stack for REST services" },
   { skill: "Database Design", context: "Normalized schemas, EF Core, MSSQL, MySQL & MongoDB" },
-  { skill: "React & Next.js", context: "In progress — expanding toward full-stack delivery" },
+  { skill: "React & Next.js", context: "Building full-stack features on top of backend depth" },
   { skill: "Teaching & Mentorship", context: "Instructor at Netpoint, Code School, iSchool; DEPI mentor" },
 ];
 
@@ -65,7 +65,7 @@ export const projects: Project[] = [
     techDecision:
       "Chose a bounded-queue threading model over synchronous inference to keep the UI responsive under variable camera and model latency",
     tech: ["Python", "MediaPipe", "TensorFlow/Keras", "OpenCV", "FastAPI", "WebSocket"],
-    github: "https://github.com/abdullahsherdy/ESL-Software-ML",
+    github: "https://github.com/abdullahsherdy/ESL-software-ml",
     demo: null,
   },
   {
@@ -81,7 +81,7 @@ export const projects: Project[] = [
     techDecision:
       "Adopted Clean Architecture to ensure testability, maintainability, and independence from frameworks",
     tech: ["ASP.NET Core 8", "C#", "EF Core", "Clean Architecture", "Docker", "JWT", "Swagger"],
-    github: null,
+    github: "https://github.com/abdullahsherdy/FixMate",
     demo: null,
   },
   {
@@ -97,7 +97,7 @@ export const projects: Project[] = [
       "Scoped strictly to the auth boundary so the module could ship without coupling to the client's product roadmap",
     tech: ["OAuth", "JWT", "RESTful APIs"],
     github: null,
-    demo: null,
+    demo: "https://genzapp.com",
   },
 ];
 
