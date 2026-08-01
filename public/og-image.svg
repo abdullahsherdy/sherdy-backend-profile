@@ -22,7 +22,7 @@
   <text x="100" y="385" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#AEB9C6">Software Engineer <tspan fill="#2AA093">|</tspan> Full-Stack Developer <tspan fill="#2AA093">|</tspan> Coding Instructor</text>
 
   <!-- tech row -->
-  <text x="100" y="480" font-family="Consolas, 'Courier New', monospace" font-size="24" fill="#7A8699">C#  ·  ASP.NET Core  ·  Node.js  ·  Docker  ·  Swagger/OpenAPI  ·  React (in progress)</text>
+  <text x="100" y="480" font-family="Consolas, 'Courier New', monospace" font-size="24" fill="#7A8699">C#  ·  ASP.NET Core  ·  Node.js  ·  React  ·  Docker  ·  Swagger/OpenAPI</text>
 
   <!-- status dot + availability -->
   <circle cx="110" cy="540" r="7" fill="#3DBE8B"/>
