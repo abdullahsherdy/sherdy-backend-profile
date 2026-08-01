@@ -102,11 +102,23 @@ const initialNodes: LearningFlowNode[] = [
     type: 'learning',
     position: { x: 300, y: 400 },
     data: {
-      title: 'AI/ML Integration',
-      subtitle: 'Backend services for ML models',
+      title: 'LangChain & LangGraph',
+      subtitle: 'LLM agent orchestration for backend services',
       icon: Brain,
-      status: 'planned',
+      status: 'in-progress',
       category: 'AI/ML'
+    }
+  },
+  {
+    id: '7',
+    type: 'learning',
+    position: { x: 600, y: 400 },
+    data: {
+      title: 'React & Next.js',
+      subtitle: 'Full-stack delivery on top of backend expertise',
+      icon: Zap,
+      status: 'in-progress',
+      category: 'Full-Stack'
     }
   }
 ];
@@ -173,6 +185,17 @@ const initialEdges: Edge[] = [
       type: MarkerType.ArrowClosed,
     },
     style: { stroke: 'hsl(var(--muted-foreground))' }
+  },
+  {
+    id: 'e3-7',
+    source: '3',
+    target: '7',
+    type: 'smoothstep',
+    animated: true,
+    markerEnd: {
+      type: MarkerType.ArrowClosed,
+    },
+    style: { stroke: 'hsl(var(--primary))' }
   }
 ];
 

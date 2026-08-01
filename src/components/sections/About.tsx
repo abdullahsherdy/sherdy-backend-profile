@@ -15,8 +15,9 @@ const About = () => (
             <CardContent className="p-6">
               <h3 className="text-xl font-semibold mb-4">Background</h3>
               <p className="text-muted-foreground mb-4">
-                Computer Science undergraduate at Helwan University with a passion for backend development
-                and system architecture. I specialize in building robust, scalable applications using modern technologies.
+                Computer Science &amp; AI graduate (Helwan University) focused on backend development
+                and system architecture, expanding into full-stack delivery with React and Next.js.
+                I build robust, scalable applications and teach the fundamentals behind them.
               </p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -42,12 +43,12 @@ const About = () => (
               <h3 className="text-xl font-semibold mb-4">Education & Certifications</h3>
               <div className="space-y-4">
                 <div>
-                  <h4 className="font-medium">Computer Science Student</h4>
-                  <p className="text-muted-foreground">Helwan University</p>
+                  <h4 className="font-medium">B.S. Computer Science &amp; Artificial Intelligence</h4>
+                  <p className="text-muted-foreground">Helwan University · 2022 – 2026</p>
                 </div>
                 <div>
                   <h4 className="font-medium">.NET Web Development Graduate</h4>
-                  <p className="text-muted-foreground">Digital Egypt Pioneers</p>
+                  <p className="text-muted-foreground">Digital Egypt Pioneers Initiative (DEPI)</p>
                 </div>
               </div>
               <div className="flex gap-4 mt-6">
