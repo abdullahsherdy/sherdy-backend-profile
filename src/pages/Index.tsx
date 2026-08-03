@@ -9,37 +9,14 @@ import PublicWork from "@/components/sections/PublicWork";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
+import LatestArticles from "@/components/sections/LatestArticles";
+import { useDarkMode } from "@/hooks/useDarkMode";
 
 const LearningRoadmap = lazy(() => import("@/components/LearningRoadmap"));
 
 const Index = () => {
-  const [isDarkMode, setIsDarkMode] = useState(false);
+  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [activeSection, setActiveSection] = useState<string>("projects");
-
-  const toggleDarkMode = () => {
-    const newMode = !isDarkMode;
-    setIsDarkMode(newMode);
-    document.documentElement.classList.toggle("dark", newMode);
-    try {
-      localStorage.setItem("theme", newMode ? "dark" : "light");
-    } catch {
-      // Ignore localStorage errors (e.g., in private browsing)
-    }
-  };
-
-  // initialize theme from localStorage, falling back to system preference
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem("theme");
-      const prefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
-      if (stored === "dark" || (!stored && prefersDark)) {
-        setIsDarkMode(true);
-        document.documentElement.classList.add("dark");
-      }
-    } catch {
-      // Ignore localStorage errors (e.g., in private browsing)
-    }
-  }, []);
 
   // basic scrollspy to highlight current section in nav
   useEffect(() => {
@@ -84,6 +61,7 @@ const Index = () => {
           <LearningRoadmap />
         </Suspense>
         <PublicWork />
+        <LatestArticles />
         <About />
         <Contact />
       </main>

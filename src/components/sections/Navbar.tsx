@@ -1,18 +1,20 @@
 import { useState, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { Link } from "react-router-dom";
 import { Moon, Sun, Github, Linkedin, Youtube, Menu, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import AnimatedSection from "@/components/AnimatedSection";
 import { socials } from "@/data/portfolio";
 
-const navLinks = [
-  { href: "#projects", id: "projects", label: "Projects" },
-  { href: "#work-experience", id: "work-experience", label: "Experience" },
-  { href: "#skills", id: "skills", label: "Skills" },
-  { href: "#services", id: "services", label: "Services" },
-  { href: "#learning", id: "learning", label: "Learning" },
-  { href: "#about", id: "about", label: "About" },
-  { href: "#contact", id: "contact", label: "Contact" },
+const navLinks: { href: string; id: string; label: string; route?: boolean }[] = [
+  { href: "/#projects", id: "projects", label: "Projects" },
+  { href: "/#work-experience", id: "work-experience", label: "Experience" },
+  { href: "/#skills", id: "skills", label: "Skills" },
+  { href: "/#services", id: "services", label: "Services" },
+  { href: "/#learning", id: "learning", label: "Learning" },
+  { href: "/articles", id: "articles", label: "Articles", route: true },
+  { href: "/#about", id: "about", label: "About" },
+  { href: "/#contact", id: "contact", label: "Contact" },
 ];
 
 interface NavbarProps {
@@ -51,16 +53,27 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
         <AnimatedSection animation="slide-in-right" delay={300}>
           {/* Desktop Menu */}
           <div className="hidden md:flex items-center gap-4">
-            {navLinks.map((link) => (
-              <a
-                key={link.id}
-                href={link.href}
-                aria-current={activeSection === link.id ? "page" : undefined}
-                className={`link-underline hover:text-primary transition-colors ${activeSection === link.id ? "text-primary" : ""}`}
-              >
-                {link.label}
-              </a>
-            ))}
+            {navLinks.map((link) =>
+              link.route ? (
+                <Link
+                  key={link.id}
+                  to={link.href}
+                  aria-current={activeSection === link.id ? "page" : undefined}
+                  className={`link-underline hover:text-primary transition-colors ${activeSection === link.id ? "text-primary" : ""}`}
+                >
+                  {link.label}
+                </Link>
+              ) : (
+                <a
+                  key={link.id}
+                  href={link.href}
+                  aria-current={activeSection === link.id ? "page" : undefined}
+                  className={`link-underline hover:text-primary transition-colors ${activeSection === link.id ? "text-primary" : ""}`}
+                >
+                  {link.label}
+                </a>
+              )
+            )}
             <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-primary transition-colors">
               <Github className="h-5 w-5" />
             </a>
@@ -106,16 +119,27 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
                 <X className="h-6 w-6" />
               </button>
               <nav className="flex flex-col gap-4 mt-8">
-                {navLinks.map((link) => (
-                  <a
-                    key={link.id}
-                    href={link.href}
-                    className={`hover:text-primary transition-colors text-lg ${activeSection === link.id ? "text-primary font-medium" : ""}`}
-                    onClick={() => setIsMobileMenuOpen(false)}
-                  >
-                    {link.label}
-                  </a>
-                ))}
+                {navLinks.map((link) =>
+                  link.route ? (
+                    <Link
+                      key={link.id}
+                      to={link.href}
+                      className={`hover:text-primary transition-colors text-lg ${activeSection === link.id ? "text-primary font-medium" : ""}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </Link>
+                  ) : (
+                    <a
+                      key={link.id}
+                      href={link.href}
+                      className={`hover:text-primary transition-colors text-lg ${activeSection === link.id ? "text-primary font-medium" : ""}`}
+                      onClick={() => setIsMobileMenuOpen(false)}
+                    >
+                      {link.label}
+                    </a>
+                  )
+                )}
                 <Button
                   variant="ghost"
                   size="icon"

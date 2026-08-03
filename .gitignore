@@ -32,3 +32,5 @@ docs/
 CLAUDE.md
 .claude/
 dist/
+artifacts/
+public/sitemap.xml
