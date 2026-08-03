@@ -17,7 +17,16 @@
       "Bash(git add *)",
       "Bash(git commit -m ' *)",
       "Bash(python -)",
-      "Bash(npx tsc *)"
+      "Bash(npx tsc *)",
+      "Bash(git checkout *)",
+      "Bash(npm i *)",
+      "Bash(curl -s https://emkc.org/api/v2/piston/runtimes)",
+      "Bash(curl -s \"https://godbolt.org/api/compilers/csharp?fields=id,name\" -H \"Accept: application/json\")",
+      "Bash(curl -s -o /dev/null -w \"%{http_code}\\\\n\" http://localhost:8080/articles)",
+      "Bash(curl -s http://localhost:8080/src/pages/ArticlePage.tsx)",
+      "Bash(kill %1)",
+      "Bash(git push *)",
+      "Bash(grep -v \"ui\\\\\\\\\\\\\\\\\")"
     ]
   }
 }

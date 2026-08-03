@@ -1,6 +1,7 @@
 import { lazy, Suspense, useCallback, useRef, useState } from "react";
 import { Loader2, Play, RotateCcw } from "lucide-react";
-import { runCSharp, type RunResult } from "./runCode";
+import { runCSharp } from "./runCode";
+import Terminal, { type TerminalEntry } from "./Terminal";
 
 const MonacoEditor = lazy(() => import("@monaco-editor/react"));
 
@@ -8,18 +9,22 @@ interface PlaygroundProps {
   initialCode: string;
 }
 
+let entryId = 0;
+
 const Playground = ({ initialCode }: PlaygroundProps) => {
   const [code, setCode] = useState(initialCode);
-  const [result, setResult] = useState<RunResult | null>(null);
+  const [entries, setEntries] = useState<TerminalEntry[]>([]);
   const [running, setRunning] = useState(false);
   const codeRef = useRef(code);
   codeRef.current = code;
 
   const run = useCallback(async () => {
     setRunning(true);
-    setResult(null);
-    const res = await runCSharp(codeRef.current);
-    setResult(res);
+    const id = ++entryId;
+    const timestamp = new Date().toLocaleTimeString();
+    setEntries((prev) => [...prev, { id, timestamp, running: true }]);
+    const result = await runCSharp(codeRef.current);
+    setEntries((prev) => prev.map((e) => (e.id === id ? { id, timestamp, result } : e)));
     setRunning(false);
   }, []);
 
@@ -39,7 +44,7 @@ const Playground = ({ initialCode }: PlaygroundProps) => {
         </button>
         <button
           type="button"
-          onClick={() => { setCode(initialCode); setResult(null); }}
+          onClick={() => { setCode(initialCode); setEntries([]); }}
           className="inline-flex items-center gap-2 rounded-md border border-border px-3 py-2 text-sm hover:bg-muted transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
         >
           <RotateCcw className="h-4 w-4" /> Reset
@@ -55,7 +60,7 @@ const Playground = ({ initialCode }: PlaygroundProps) => {
         (open-source, public, .NET 8). Don't paste secrets.
       </p>
 
-      <div className="min-h-[280px] flex-1 overflow-hidden rounded-lg border border-border">
+      <div className="min-h-[240px] flex-1 overflow-hidden rounded-lg border border-border">
         <Suspense fallback={<div className="flex h-full items-center justify-center text-sm text-muted-foreground">Loading editor…</div>}>
           <MonacoEditor
             height="100%"
@@ -78,29 +83,7 @@ const Playground = ({ initialCode }: PlaygroundProps) => {
         </Suspense>
       </div>
 
-      <div
-        className="max-h-48 min-h-[72px] overflow-y-auto rounded-lg border border-border bg-[#0d1117] p-3 font-mono text-sm text-white/90 whitespace-pre-wrap"
-        aria-live="polite"
-        aria-label="Program output"
-      >
-        {running && <span className="text-white/50">Compiling and running…</span>}
-        {!running && !result && <span className="text-white/40">Output appears here. Hit Run.</span>}
-        {result && (
-          <>
-            {result.message && (
-              <div className="text-amber-300">
-                {result.message}{" "}
-                <button type="button" onClick={run} className="underline hover:text-amber-100">Retry</button>
-              </div>
-            )}
-            {result.stdout && <div>{result.stdout}</div>}
-            {result.stderr && <div className="text-red-400">{result.stderr}</div>}
-            {!result.message && !result.stdout && !result.stderr && (
-              <span className="text-white/50">(program produced no output)</span>
-            )}
-          </>
-        )}
-      </div>
+      <Terminal entries={entries} onRetry={run} className="max-h-56 min-h-[110px]" />
     </div>
   );
 };

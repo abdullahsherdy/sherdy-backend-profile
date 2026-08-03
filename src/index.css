@@ -320,3 +320,23 @@
     opacity: 1;
   }
 }
+
+/* Blinking cursor for the playground terminal */
+.terminal-cursor::after {
+  content: "▋";
+  margin-left: 2px;
+  color: #34d399;
+  animation: terminal-blink 1s steps(1) infinite;
+}
+
+@keyframes terminal-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .terminal-cursor::after {
+    animation: none;
+  }
+}

@@ -9,6 +9,8 @@ import NotFound from "./pages/NotFound";
 
 const ArticlesPage = lazy(() => import("./pages/ArticlesPage"));
 const ArticlePage = lazy(() => import("./pages/ArticlePage"));
+const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
+const UpdatesPage = lazy(() => import("./pages/UpdatesPage"));
 
 const queryClient = new QueryClient();
 
@@ -23,6 +25,8 @@ const App = () => (
             <Route path="/" element={<Index />} />
             <Route path="/articles" element={<ArticlesPage />} />
             <Route path="/articles/:slug" element={<ArticlePage />} />
+            <Route path="/playground" element={<PlaygroundPage />} />
+            <Route path="/updates" element={<UpdatesPage />} />
             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
             <Route path="*" element={<NotFound />} />
           </Routes>

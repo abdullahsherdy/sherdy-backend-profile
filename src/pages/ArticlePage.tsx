@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
-import { motion, useScroll, useSpring, useReducedMotion } from "framer-motion";
-import { ArrowLeft } from "lucide-react";
+import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from "framer-motion";
+import { ArrowLeft, BookOpen, X } from "lucide-react";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
 import ArticleView from "@/components/articles/ArticleView";
@@ -11,6 +11,7 @@ import Seo from "@/components/shared/Seo";
 import { getArticle } from "@/lib/articles";
 import { author } from "@/lib/author";
 import { useDarkMode } from "@/hooks/useDarkMode";
+import { useReadingPosition } from "@/hooks/useReadingPosition";
 import "@/styles/article.css";
 
 function extractToc(content: string): TocEntry[] {
@@ -35,6 +36,7 @@ const ArticlePage = () => {
   const article = slug ? getArticle(slug) : undefined;
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const reduceMotion = useReducedMotion();
+  const { savedPosition, resume, dismiss } = useReadingPosition(slug ?? "");
 
   const { scrollYProgress } = useScroll();
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
@@ -89,6 +91,25 @@ const ArticlePage = () => {
         />
       )}
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} activeSection="articles" />
+      <AnimatePresence>
+        {savedPosition && (
+          <motion.div
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 24 }}
+            className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
+          >
+            <div className="flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pl-4 pr-1.5 shadow-lg backdrop-blur">
+              <button type="button" onClick={resume} className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+                <BookOpen className="h-4 w-4" /> Resume reading ({Math.round(savedPosition.ratio * 100)}%)
+              </button>
+              <button type="button" onClick={dismiss} aria-label="Dismiss" className="rounded-full p-1.5 text-muted-foreground hover:bg-muted">
+                <X className="h-3.5 w-3.5" />
+              </button>
+            </div>
+          </motion.div>
+        )}
+      </AnimatePresence>
       <PageTransition>
         <main className="container mx-auto px-4 pt-28 pb-20">
           <Link to="/articles" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">

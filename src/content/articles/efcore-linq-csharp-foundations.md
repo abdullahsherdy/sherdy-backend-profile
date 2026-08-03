@@ -14,6 +14,10 @@ This is a **complete study reference** for the C# language features and EF Core 
 
 **How the parts connect:** delegates make lambdas possible → lambdas make LINQ possible → LINQ + expression trees make EF Core queries possible → loading strategies decide how many SQL queries EF Core actually runs. That is the order below.
 
+```visual
+linq-pipeline
+```
+
 ---
 
 ## Part A — C# Foundations
@@ -34,7 +38,7 @@ Console.WriteLine(p1.Name); // "Changed" — p1 and p2 are the same Project
 
 **Use case in our project:** entities are classes (reference types) on purpose — EF Core's change tracker holds a reference to the same object you edit, which is how `SaveChangesAsync` knows what changed.
 
-**Pitfall:** passing an entity around and mutating it in two places mutates the *same* object. If you want an independent copy, you must create one.
+> [!PITFALL] Passing an entity around and mutating it in two places mutates the *same* object. If you want an independent copy, you must create one.
 
 ### A2. Nullable Reference Types (`?`, `= null!`, `string.Empty`)
 
@@ -117,7 +121,7 @@ string requestedStatus = "Todo";                       // local variable
 var filtered = tasks.Where(t => t.Status == requestedStatus); // captured inside the lambda
 ```
 
-**Pitfall:** the lambda captures the *variable*, not its value at creation time. If `requestedStatus` changes before the query runs (deferred execution — Part B), the query uses the new value.
+> [!PITFALL] The lambda captures the *variable*, not its value at creation time. If `requestedStatus` changes before the query runs (deferred execution — Part B), the query uses the new value.
 
 ### A6. Expression Trees (why EF Core can translate your lambda to SQL)
 
@@ -130,7 +134,7 @@ Expression<Func<TaskItem, bool>> tree = t => t.Status == "Todo"; // description 
 
 Same lambda text, completely different thing. `IEnumerable<T>.Where` takes the first (runs in memory); `IQueryable<T>.Where` takes the second (translates to SQL). You never build expression trees by hand in this project — but this is the answer to "how does my C# become SQL?"
 
-**Pitfall:** anything EF Core cannot translate (calling your own helper method inside a `Where`, for example) throws at runtime: *"could not be translated."* Fix: move that logic before/after the query, or express it in translatable operators.
+> [!PITFALL] Anything EF Core cannot translate (calling your own helper method inside a `Where`, for example) throws at runtime: *"could not be translated."* Fix: move that logic before/after the query, or express it in translatable operators.
 
 ### A7. Extension Methods
 
@@ -319,7 +323,7 @@ var list = query.ToList(); // runs NOW — includes newTodoTask
 **Deferred:** `Where`, `Select`, `OrderBy`, `Skip`, `Take`, `GroupBy`.
 **Immediate:** `ToList()`, `ToArray()`, `Count()`, `First…`, `Single…`, `Any()`, `Sum()`.
 
-**Pitfall — multiple enumeration:** every enumeration re-runs the query. On `IQueryable` that means **another database round trip**:
+> [!PITFALL] Multiple enumeration: every enumeration re-runs the query. On `IQueryable` that means **another database round trip**:
 
 ```csharp
 var query = db.Tasks.Where(t => t.ProjectId == id); // not executed
@@ -339,19 +343,20 @@ if (query.Any())              // query 1 to the database
 
 The moment you cross from `IQueryable` to `IEnumerable`, everything after runs in memory:
 
-```csharp
-// GOOD — filter and page translated to SQL; database returns 10 rows
-var page = await db.Tasks
-    .Where(t => t.ProjectId == projectId)
-    .Skip(0).Take(10)
-    .ToListAsync(ct);
-
-// BAD — ToList() executes "SELECT all tasks"; Where/Take then run in memory
+```compare
+<<< BAD Pulls the whole table
+// ToList() executes "SELECT all tasks"; Where/Take then run in memory
 var page2 = db.Tasks
     .ToList()                              // pulls the ENTIRE table
     .Where(t => t.ProjectId == projectId)  // now just LINQ-to-Objects
     .Take(10)
     .ToList();
+<<< GOOD Filters in the database
+// filter and page translated to SQL; database returns 10 rows
+var page = await db.Tasks
+    .Where(t => t.ProjectId == projectId)
+    .Skip(0).Take(10)
+    .ToListAsync(ct);
 ```
 
 With 50,000 rows, version 2 transfers 50,000 rows to filter down to 10. This is the single most common performance bug in EF Core code.
@@ -369,7 +374,9 @@ var items = await db.Tasks
     .ToListAsync(ct);
 ```
 
-Generated SQL selects only 4 columns and **joins Projects automatically** because the projection touched `t.Project.Name` — no `Include` needed, no full entities loaded, no change tracking. For read endpoints, projection beats every loading strategy in Part C. Learn Part C anyway: you must know what the alternatives do to recognize their cost.
+Generated SQL selects only 4 columns and **joins Projects automatically** because the projection touched `t.Project.Name` — no `Include` needed, no full entities loaded, no change tracking.
+
+> [!TIP] For **read endpoints**, projection with `Select` beats every loading strategy in Part C: exactly the columns you need, the JOIN generated automatically, no tracking, no N+1. Learn Part C anyway — you must know what the alternatives do to recognize their cost.
 
 ---
 
@@ -416,6 +423,21 @@ var items = await db.Tasks.AsNoTracking()
 ### C3. Relationships and navigation properties
 
 Our model has one relationship: **Project 1 → many TaskItems.**
+
+```mermaid
+erDiagram
+    PROJECT ||--o{ TASK_ITEM : "has many"
+    PROJECT {
+        int Id PK
+        string Name
+    }
+    TASK_ITEM {
+        int Id PK
+        int ProjectId FK
+        string Title
+        string Status
+    }
+```
 
 ```csharp
 public sealed class Project
@@ -492,7 +514,11 @@ foreach (var t in tasks)
     Console.WriteLine(t.Project.Name);        // one MORE query PER task
 ```
 
-**That loop is the N+1 problem:** 1 query for the list + N queries for N navigations = 101 queries for 100 tasks. The code looks innocent; the database melts.
+**That loop is the N+1 problem:** 1 query for the list + N queries for N navigations = 101 queries for 100 tasks. The code looks innocent; the database melts. Watch it happen:
+
+```visual
+nplus1
+```
 
 **Legitimate use cases (why the feature exists):**
 - Long-lived desktop apps where you genuinely can't predict which navigations a user will open.
@@ -644,17 +670,42 @@ public async Task<IActionResult> GetTasks(          // A11: async all the way up
 
 ## Self-Check (answer without looking)
 
-1. What is a delegate, and which built-in delegate type does `Where` accept?
-2. What does a lambda *capture* from its surrounding method?
-3. `Func<T,bool>` vs `Expression<Func<T,bool>>` — which one can EF Core turn into SQL, and why?
-4. Name the deferred/immediate split: which of `Where`, `ToList`, `OrderBy`, `Count`, `Select` execute the query?
-5. What happens to everything written *after* `.ToList()` in a query chain?
-6. Define eager, lazy, and explicit loading in one sentence each.
-7. Why is lazy loading off in this project? What is the N+1 problem?
-8. When is `Include` the right choice over projection?
-9. What does `AsNoTracking` do and when should you use it?
-10. Why must `CancellationToken` be forwarded to `ToListAsync`?
-11. A navigation property is `null`. Does that mean no related data exists?
-12. Why does the paged endpoint run exactly two SQL queries?
+```quiz
+Q: What is a delegate, and which built-in delegate type does Where accept?
+A: A delegate is a type that holds a reference to a method — behavior as data. Where accepts Func<T, bool>: takes an element, returns true to keep it.
+
+Q: What does a lambda capture from its surrounding method?
+A: The variable itself, not its value at creation time. If the variable changes before the query executes (deferred execution), the lambda sees the new value.
+
+Q: Func<T,bool> vs Expression<Func<T,bool>> — which one can EF Core turn into SQL, and why?
+A: Expression<Func<T,bool>>. It is a data structure describing the code, so EF Core can walk it and generate SQL. Func<T,bool> is compiled code — it can only run in memory.
+
+Q: Which of Where, ToList, OrderBy, Count, Select execute the query?
+A: ToList and Count execute immediately. Where, OrderBy, and Select are deferred — they only build a description of the query.
+
+Q: What happens to everything written after .ToList() in a query chain?
+A: It runs in application memory (LINQ-to-Objects) on the fully materialized list — the database has already returned every row ToList requested.
+
+Q: Define eager, lazy, and explicit loading in one sentence each.
+A: Eager: related data loads in the same query via Include, decided up front. Lazy: related data loads automatically on first property touch, one hidden query per touch. Explicit: you call Entry(...).LoadAsync yourself — on demand, but visible and awaited.
+
+Q: Why is lazy loading off in this project? What is the N+1 problem?
+A: Lazy loading hides database access inside property getters and fires synchronous queries; in any loop it degenerates into N+1 — one query for the parent list plus one query per row for related data (101 queries for 100 tasks).
+
+Q: When is Include the right choice over projection?
+A: When you need the full related entities to modify them in a tracked load-then-save flow — not for read endpoints, where projection is leaner.
+
+Q: What does AsNoTracking do and when should you use it?
+A: It skips change-tracker registration for the returned entities — less memory, faster. Use it for read-only queries that will never be saved. (Projection with Select never tracks anyway.)
+
+Q: Why must CancellationToken be forwarded to ToListAsync?
+A: ASP.NET Core cancels the token when the client disconnects; forwarding it lets the database stop work nobody will read.
+
+Q: A navigation property is null. Does that mean no related data exists?
+A: No — it means the data was not loaded. With lazy loading off, a navigation is only populated if you Include it, project it, or explicitly load it.
+
+Q: Why does the paged endpoint run exactly two SQL queries?
+A: One CountAsync for the total count, and one paged SELECT (Skip/Take + projection) for the items. The conditional Where chain builds one query object executed twice, in two shapes.
+```
 
 If any answer is shaky, re-read that section — every one of these will show up the moment you build a real database-backed API.
