@@ -8,14 +8,14 @@ const stats = [
   {
     icon: Github,
     label: "GitHub",
-    value: "15+ public repos",
+    value: "50+ public repos",
     detail: "Regular commits & contributions",
     href: socials.github,
   },
   {
     icon: Code2,
     label: "LeetCode",
-    value: "100+ problems solved",
+    value: "550+ problems solved",
     detail: "Daily problem-solving practice",
     href: socials.leetcode,
   },
@@ -23,7 +23,7 @@ const stats = [
     icon: Youtube,
     label: "YouTube",
     value: "Tech tutorials",
-    detail: "Backend & algorithms content",
+    detail: "Software engineering & algorithms content",
     href: socials.youtube,
   },
 ];
