@@ -13,7 +13,7 @@ const navLinks: { href: string; id: string; label: string; route?: boolean }[] =
   { href: "/#services", id: "services", label: "Services" },
   { href: "/#learning", id: "learning", label: "Learning" },
   { href: "/articles", id: "articles", label: "Articles", route: true },
-  { href: "/playground", id: "playground", label: "Playground", route: true },
+  // { href: "/playground", id: "playground", label: "Playground", route: true },
   { href: "/#about", id: "about", label: "About" },
   { href: "/#contact", id: "contact", label: "Contact" },
 ];
@@ -46,7 +46,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
     <nav className="fixed top-0 w-full bg-background/80 backdrop-blur-md border-b border-border z-50">
       <div className="container mx-auto px-4 py-4 flex justify-between items-center">
         <AnimatedSection animation="fade-up">
-          <a href="#" className="flex items-center gap-2.5">
+          <a href="/" className="flex items-center gap-2.5">
             <img src="/favicon.svg" alt="" className="h-8 w-8" />
             <span className="text-lg sm:text-xl font-bold font-display">Abdullah Sherdy</span>
           </a>
@@ -75,6 +75,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
                 </a>
               )
             )}
+
             <a href={socials.github} target="_blank" rel="noopener noreferrer" aria-label="GitHub" className="text-muted-foreground hover:text-primary transition-colors">
               <Github className="h-5 w-5" />
             </a>
