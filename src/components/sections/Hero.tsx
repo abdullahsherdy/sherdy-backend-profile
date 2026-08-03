@@ -5,7 +5,7 @@ import MagneticButton from "@/components/MagneticButton";
 import { heroTech, roles } from "@/data/portfolio";
 
 const Hero = () => (
-  <section className="pt-32 pb-20 px-4">
+  <section className="pt-28 md:pt-32 pb-16 md:pb-20 px-4">
     <div className="container mx-auto text-center">
       <div className="max-w-4xl mx-auto">
         <AnimatedSection animation="fade-up">
@@ -22,22 +22,22 @@ const Hero = () => (
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={150}>
-          <p className="font-mono text-sm md:text-base text-primary mb-4">
+          <p className="font-mono text-xs sm:text-sm md:text-base text-primary mb-4 break-words">
             $ whoami <span className="text-muted-foreground">→</span> software engineer <span className="text-accent">&amp;&amp;</span> coding instructor
           </p>
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={300}>
-          <h1 className="font-display text-5xl md:text-7xl font-bold mb-4 tracking-tight">
+          <h1 className="font-display text-4xl sm:text-5xl md:text-7xl font-bold mb-4 tracking-tight">
             Abdullah Sherdy
           </h1>
-          <p className="font-display text-lg md:text-2xl font-medium text-muted-foreground mb-6">
+          <p className="font-display text-base sm:text-lg md:text-2xl font-medium text-muted-foreground mb-6">
             Software Engineer <span className="text-primary">|</span> Full-Stack Developer <span className="text-primary">|</span> Coding Instructor
           </p>
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={450}>
-          <p className="text-base md:text-lg mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
+          <p className="text-base md:text-lg mb-10 md:mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
             Backend-focused engineer building production APIs with .NET and Node.js,
             shipping end-to-end products with React and Next.js — and teaching the
             fundamentals behind them.
@@ -45,20 +45,20 @@ const Hero = () => (
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={600}>
-          <div className="flex flex-wrap justify-center gap-4">
-            <MagneticButton size="lg">
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto">
+            <MagneticButton size="lg" className="w-full sm:w-auto">
               <a href="#projects">View My Work</a>
             </MagneticButton>
-            <MagneticButton variant="outline" size="lg">
-              <a href="/resume/abdullah_sherdy_cv.pdf" download="Abdullah_Sherdy_CV.pdf" className="flex items-center">
+            <MagneticButton variant="outline" size="lg" className="w-full sm:w-auto">
+              <a href="/resume/Abdullah_Sherdy_SWE.pdf" download="Abdullah_Sherdy_SWE.pdf" className="flex items-center">
                 <Download className="mr-2 h-4 w-4" />
                 Download CV
               </a>
             </MagneticButton>
-            <MagneticButton variant="secondary" size="lg">
+            <MagneticButton variant="secondary" size="lg" className="w-full sm:w-auto">
               <a href="#services">Learn With Me</a>
             </MagneticButton>
-            <MagneticButton variant="ghost" size="lg">
+            <MagneticButton variant="ghost" size="lg" className="w-full sm:w-auto">
               <a href="#contact">Get In Touch</a>
             </MagneticButton>
           </div>

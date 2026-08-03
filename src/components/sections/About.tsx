@@ -15,9 +15,9 @@ const About = () => (
             <CardContent className="p-6">
               <h3 className="text-xl font-semibold mb-4">Background</h3>
               <p className="text-muted-foreground mb-4">
-                Computer Science &amp; AI graduate (Helwan University) focused on backend development
-                and system architecture, expanding into full-stack delivery with React and Next.js.
-                I build robust, scalable applications and teach the fundamentals behind them.
+                Computer Science &amp; AI graduate (Helwan University) specializing in backend
+                development and system architecture, and delivering full-stack products with React
+                and Next.js. I build robust, scalable applications and teach the fundamentals behind them.
               </p>
               <div className="space-y-2">
                 <div className="flex items-center gap-2">
@@ -25,12 +25,19 @@ const About = () => (
                   <span>{socials.location}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Mail className="h-4 w-4 text-primary" />
-                  <span>{socials.email}</span>
+                  <Mail className="h-4 w-4 text-primary shrink-0" />
+                  <span className="break-all">{socials.email}</span>
                 </div>
                 <div className="flex items-center gap-2">
-                  <Phone className="h-4 w-4 text-primary" />
-                  <span>{socials.phone}</span>
+                  <Phone className="h-4 w-4 text-primary shrink-0" />
+                  <a
+                    href={socials.whatsapp}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="hover:text-primary transition-colors"
+                  >
+                    {socials.phone} (WhatsApp)
+                  </a>
                 </div>
               </div>
             </CardContent>
@@ -51,7 +58,7 @@ const About = () => (
                   <p className="text-muted-foreground">Digital Egypt Pioneers Initiative (DEPI)</p>
                 </div>
               </div>
-              <div className="flex gap-4 mt-6">
+              <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
                 <MagneticButton variant="outline" size="sm">
                   <Github className="mr-2 h-4 w-4" />
                   <a href={socials.github} target="_blank" rel="noopener noreferrer">GitHub</a>

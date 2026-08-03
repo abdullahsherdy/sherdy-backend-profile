@@ -13,7 +13,11 @@
       "Bash(npx --yes sharp-cli -i public/og-image.svg -o public/og-image.png)",
       "Bash(sed 's/width=\"32\" height=\"32\"/width=\"512\" height=\"512\"/' public/favicon.svg)",
       "Bash(npx --yes sharp-cli -i /tmp/favicon-512.svg -o public/apple-touch-icon.png resize 180 180)",
-      "Bash(npx --yes sharp-cli -i /tmp/favicon-512.svg -o public/favicon-96.png resize 96 96)"
+      "Bash(npx --yes sharp-cli -i /tmp/favicon-512.svg -o public/favicon-96.png resize 96 96)",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(python -)",
+      "Bash(npx tsc *)"
     ]
   }
 }

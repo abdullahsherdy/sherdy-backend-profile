@@ -108,18 +108,6 @@ const initialNodes: LearningFlowNode[] = [
       status: 'in-progress',
       category: 'AI/ML'
     }
-  },
-  {
-    id: '7',
-    type: 'learning',
-    position: { x: 600, y: 400 },
-    data: {
-      title: 'React & Next.js',
-      subtitle: 'Full-stack delivery on top of backend expertise',
-      icon: Zap,
-      status: 'in-progress',
-      category: 'Full-Stack'
-    }
   }
 ];
 
@@ -185,17 +173,6 @@ const initialEdges: Edge[] = [
       type: MarkerType.ArrowClosed,
     },
     style: { stroke: 'hsl(var(--muted-foreground))' }
-  },
-  {
-    id: 'e3-7',
-    source: '3',
-    target: '7',
-    type: 'smoothstep',
-    animated: true,
-    markerEnd: {
-      type: MarkerType.ArrowClosed,
-    },
-    style: { stroke: 'hsl(var(--primary))' }
   }
 ];
 
@@ -251,7 +228,7 @@ const LearningRoadmap = () => {
             <p className="text-muted-foreground mb-4">
               {isMobile ? 'My learning journey, step by step.' : 'Navigate through my learning journey. Click and drag to explore!'}
             </p>
-            <div className="flex justify-center gap-4 text-sm">
+            <div className="flex flex-wrap justify-center gap-x-4 gap-y-2 text-sm">
               <div className="flex items-center gap-2">
                 <div className="w-3 h-3 rounded-full bg-success"></div>
                 <span>Completed</span>

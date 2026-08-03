@@ -7,6 +7,7 @@ export const socials = {
   leetcode: "https://leetcode.com/u/abdallahsherdy",
   email: "abdullah.sherdy.work@gmail.com",
   phone: "+20 010 2186 2880",
+  whatsapp: "https://wa.me/201021862880",
   location: "Cairo, Egypt",
 };
 
@@ -14,11 +15,12 @@ export const heroTech = [
   "C#",
   "ASP.NET Core",
   "Node.js",
+  "React",
+  "Next.js",
+  "TypeScript",
   "SQL Server",
   "EF Core",
   "Docker",
-  "Swagger/OpenAPI",
-  "GitOps",
   "Clean Architecture",
 ];
 
@@ -35,7 +37,7 @@ export const focusAreas = [
   { skill: "C# & ASP.NET Core", context: "Primary stack — production APIs, Clean Architecture, CQRS" },
   { skill: "Node.js (Express, NestJS)", context: "Second backend stack for REST services" },
   { skill: "Database Design", context: "Normalized schemas, EF Core, MSSQL, MySQL & MongoDB" },
-  { skill: "React & Next.js", context: "Building full-stack features on top of backend depth" },
+  { skill: "React & Next.js", context: "Full-stack apps with TypeScript on top of backend depth" },
   { skill: "Teaching & Mentorship", context: "Instructor at Netpoint, Code School, iSchool; DEPI mentor" },
 ];
 

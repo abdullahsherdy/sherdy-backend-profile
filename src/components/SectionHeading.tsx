@@ -11,7 +11,7 @@ const SectionHeading = ({ eyebrow, title, subtitle }: SectionHeadingProps) => (
     <div className="text-center mb-12">
       <p className="eyebrow mb-3">{eyebrow}</p>
       <h2 className="font-display text-3xl md:text-4xl font-bold mb-4 tracking-tight">{title}</h2>
-      {subtitle && <p className="text-muted-foreground text-lg">{subtitle}</p>}
+      {subtitle && <p className="text-muted-foreground text-base md:text-lg">{subtitle}</p>}
     </div>
   </AnimatedSection>
 );

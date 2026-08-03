@@ -19,18 +19,18 @@ const Projects = () => (
         {projects.map((project, index) => (
           <AnimatedSection key={index} animation="fade-up" delay={index * 200}>
             <Card className="hover-scale magnetic-hover group transition-all duration-300 border-border/60 hover:border-primary/40 hover:shadow-lg">
-              <CardContent className="p-8">
+              <CardContent className="p-5 sm:p-8">
                 <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4 mb-6">
                   <div className="flex-1">
                     <div className="flex items-center gap-3 mb-2">
-                      <h3 className="text-2xl font-bold group-hover:text-primary transition-colors">
+                      <h3 className="text-xl sm:text-2xl font-bold group-hover:text-primary transition-colors">
                         {project.title}
                       </h3>
                     </div>
                     <p className="text-sm text-primary font-medium mb-3">{project.role}</p>
                     <p className="text-muted-foreground leading-relaxed">{project.description}</p>
                   </div>
-                  <div className="flex gap-2">
+                  <div className="flex flex-wrap gap-2">
                     {project.github && (
                       <MagneticButton variant="outline" size="sm">
                         <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">

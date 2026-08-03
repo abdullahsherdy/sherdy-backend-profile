@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Github, Linkedin, Youtube } from "lucide-react";
+import { Github, Linkedin, Youtube, MessageCircle } from "lucide-react";
 import emailjs from "emailjs-com";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -127,13 +127,28 @@ const Contact = () => {
 
               <p className="text-center text-sm text-muted-foreground mt-4">
                 Prefer email?{" "}
-                <a href={`mailto:${socials.email}`} className="link-underline hover:text-primary transition-colors">
+                <a href={`mailto:${socials.email}`} className="link-underline hover:text-primary transition-colors break-all">
                   {socials.email}
+                </a>
+              </p>
+              <p className="text-center text-sm text-muted-foreground mt-2">
+                Or reach me directly on{" "}
+                <a
+                  href={socials.whatsapp}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="link-underline hover:text-primary transition-colors"
+                >
+                  WhatsApp
                 </a>
               </p>
 
               <div className="mt-8 pt-6 border-t border-border">
-                <div className="flex justify-center gap-4">
+                <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+                  <MagneticButton variant="outline" size="sm">
+                    <MessageCircle className="mr-2 h-4 w-4" />
+                    <a href={socials.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                  </MagneticButton>
                   <MagneticButton variant="outline" size="sm">
                     <Github className="mr-2 h-4 w-4" />
                     <a href={socials.github} target="_blank" rel="noopener noreferrer">GitHub</a>
