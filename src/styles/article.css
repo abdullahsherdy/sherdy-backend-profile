@@ -1,0 +1,41 @@
+@import "highlight.js/styles/github-dark.css";
+
+.article-body {
+  font-size: 1.0625rem;
+  line-height: 1.75;
+}
+
+.article-body .prose h2 {
+  scroll-margin-top: 6rem;
+}
+
+.article-body .prose h3 {
+  scroll-margin-top: 6rem;
+}
+
+.article-body .prose code:not(pre code) {
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  font-weight: 500;
+}
+
+.article-body .prose code:not(pre code)::before,
+.article-body .prose code:not(pre code)::after {
+  content: none;
+}
+
+.article-body pre code {
+  font-family: "Cascadia Code", "JetBrains Mono", Consolas, monospace;
+  background: transparent;
+  color: #e6edf3;
+}
+
+@media print {
+  nav,
+  .article-body ~ footer,
+  button {
+    display: none !important;
+  }
+  .article-body {
+    max-width: none;
+  }
+}
