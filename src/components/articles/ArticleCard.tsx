@@ -2,10 +2,12 @@ import { Link } from "react-router-dom";
 import { motion, useReducedMotion } from "framer-motion";
 import { CalendarDays, Clock, ArrowRight } from "lucide-react";
 import type { Article } from "@/lib/articles";
+import { getReadingRatio } from "@/hooks/useReadingPosition";
 import TagChip from "./TagChip";
 
 const ArticleCard = ({ article }: { article: Article }) => {
   const reduceMotion = useReducedMotion();
+  const progress = getReadingRatio(article.slug);
   const formattedDate = article.date
     ? new Date(article.date + "T00:00:00").toLocaleDateString("en-US", {
         year: "numeric",
@@ -18,8 +20,13 @@ const ArticleCard = ({ article }: { article: Article }) => {
     <motion.article
       whileHover={reduceMotion ? undefined : { y: -6 }}
       transition={{ type: "spring", stiffness: 300, damping: 20 }}
-      className="group relative h-full rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg hover:border-primary/40"
+      className="group relative flex h-full flex-col overflow-hidden rounded-xl border border-border bg-card p-6 shadow-sm transition-shadow hover:shadow-lg hover:border-primary/40"
     >
+      {progress > 0.02 && (
+        <div className="absolute inset-x-0 top-0 h-1 bg-muted" aria-hidden="true">
+          <div className="h-full bg-primary" style={{ width: `${Math.round(progress * 100)}%` }} />
+        </div>
+      )}
       <div className="flex flex-wrap gap-2 mb-4">
         {article.tags.map((tag) => (
           <TagChip key={tag} tag={tag} />
