@@ -115,6 +115,13 @@
 
   html {
     scroll-behavior: smooth;
+    /* slide-in animations translate elements 50px past the viewport edge;
+       clip (not hidden) prevents horizontal scroll without breaking position: sticky */
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
   }
 }
 

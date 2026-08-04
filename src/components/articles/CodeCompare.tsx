@@ -30,7 +30,7 @@ const CodeCompare = ({ source }: { source: string }) => {
 
   return (
     <div className="my-8 not-prose overflow-hidden rounded-xl border border-border">
-      <div className="flex border-b border-border bg-muted/40" role="tablist" aria-label="Code comparison">
+      <div className="flex overflow-x-auto border-b border-border bg-muted/40" role="tablist" aria-label="Code comparison">
         {sections.map((section, i) => {
           const isActive = i === active;
           const good = section.kind === "GOOD";
@@ -41,7 +41,7 @@ const CodeCompare = ({ source }: { source: string }) => {
               role="tab"
               aria-selected={isActive}
               onClick={() => setActive(i)}
-              className={`inline-flex items-center gap-2 px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
+              className={`inline-flex shrink-0 items-center gap-2 whitespace-nowrap px-3 sm:px-4 py-2.5 text-sm font-medium border-b-2 -mb-px transition-colors focus:outline-none focus-visible:ring-2 focus-visible:ring-primary ${
                 isActive
                   ? good
                     ? "border-emerald-500 text-emerald-600 dark:text-emerald-400 bg-emerald-500/5"

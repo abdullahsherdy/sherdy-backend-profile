@@ -3,6 +3,25 @@
 .article-body {
   font-size: 1.0625rem;
   line-height: 1.75;
+  overflow-wrap: break-word;
+  min-width: 0;
+}
+
+@media (max-width: 640px) {
+  .article-body {
+    font-size: 1rem;
+  }
+}
+
+.article-body .prose h1,
+.article-body .prose h2,
+.article-body .prose h3,
+.article-body .prose a {
+  overflow-wrap: anywhere;
+}
+
+.article-body .prose code:not(pre code) {
+  word-break: break-word;
 }
 
 .article-body .prose h2 {
