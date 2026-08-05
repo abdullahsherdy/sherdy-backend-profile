@@ -12,9 +12,14 @@ type Service = {
   description: string;
   highlights?: string[];
   tags?: string[];
-  cta: { label: string; href: string };
-  secondaryCta: { label: string; href: string };
+  inquiry: string;
 };
+
+const emailHref = (inquiry: string) =>
+  `mailto:${socials.email}?subject=${encodeURIComponent(`${inquiry} Inquiry`)}`;
+
+const whatsappHref = (inquiry: string) =>
+  `${socials.whatsapp}?text=${encodeURIComponent(`Hi Abdullah, I'm interested in your ${inquiry} service.`)}`;
 
 const services: Service[] = [
   {
@@ -27,11 +32,7 @@ const services: Service[] = [
       "Live sessions with hands-on coding",
       "Assignments with detailed feedback",
     ],
-    cta: {
-      label: "Book a Course",
-      href: `mailto:${socials.email}?subject=Private%20Course%20Inquiry`,
-    },
-    secondaryCta: { label: "Contact Me", href: "#contact" },
+    inquiry: "Private Course",
   },
   {
     icon: GraduationCap,
@@ -43,11 +44,7 @@ const services: Service[] = [
       "Code and project reviews",
       "DM support between sessions",
     ],
-    cta: {
-      label: "Start Mentorship",
-      href: `mailto:${socials.email}?subject=Private%20Mentorship%20Inquiry`,
-    },
-    secondaryCta: { label: "Contact Me", href: "#contact" },
+    inquiry: "Private Mentorship",
   },
   {
     icon: Users,
@@ -59,11 +56,7 @@ const services: Service[] = [
       "Structured curriculum with projects",
       "Recorded sessions and resources",
     ],
-    cta: {
-      label: "Join a Cohort",
-      href: `mailto:${socials.email}?subject=Group%20Course%20Inquiry`,
-    },
-    secondaryCta: { label: "Contact Me", href: "#contact" },
+    inquiry: "Group Course",
   },
   {
     icon: Server,
@@ -71,8 +64,7 @@ const services: Service[] = [
     description:
       "Complete software solutions from idea to production — requirements, clean architecture, APIs, database design, and deployment.",
     tags: ["Front-end","Back-end","Full-stack","API Development","Database Design","Deployment", "DevOps  & CI/CD", "Cloud Services", "Testing & QA", "Performance Optimization", "Security Best Practices", "Maintenance & Support"],
-    cta: { label: "Request a Quote", href: "#contact" },
-    secondaryCta: { label: "View Projects", href: "#projects" },
+    inquiry: "Software Development",
   },
 ];
 
@@ -110,10 +102,17 @@ const Services = () => (
                 )}
                 <div className="flex flex-wrap gap-3 mt-auto">
                   <MagneticButton>
-                    <a href={service.cta.href} className="flex items-center">{service.cta.label}</a>
+                    <a
+                      href={whatsappHref(service.inquiry)}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center"
+                    >
+                      WhatsApp
+                    </a>
                   </MagneticButton>
                   <MagneticButton variant="outline">
-                    <a href={service.secondaryCta.href}>{service.secondaryCta.label}</a>
+                    <a href={emailHref(service.inquiry)}>Email Me</a>
                   </MagneticButton>
                 </div>
               </CardContent>
