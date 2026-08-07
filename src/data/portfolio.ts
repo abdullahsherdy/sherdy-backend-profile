@@ -109,14 +109,27 @@ export interface Experience {
   duration: string;
   location: string;
   bullets: string[];
+  category: "engineering" | "teaching";
 }
 
 export const experience: Experience[] = [
+  {
+    title: "Freelance Backend Developer",
+    company: "GenzApp (Contract)",
+    duration: "2024",
+    location: "Remote",
+    category: "engineering",
+    bullets: [
+      "Designed and implemented the full authentication module: OAuth-based third-party sign-in, JWT session management, and secure token handling",
+      "Delivered the module as an independently integrable unit within the client's existing stack — on-time and with zero critical bugs post-handoff",
+    ],
+  },
   {
     title: "Technical Instructor / Backend Mentor",
     company: "Netpoint Software Solutions",
     duration: "Jun 2026 – Present",
     location: "Cairo, Egypt",
+    category: "teaching",
     bullets: [
       "Designed and delivered an 8-session .NET backend internship program for fresh graduates",
       "Guided participants through curriculum design and capstone project development",
@@ -128,6 +141,7 @@ export const experience: Experience[] = [
     company: "iSchool",
     duration: "Part-time Jun – Nov 2025 · Contract Dec 2025 – Present",
     location: "Cairo / Remote",
+    category: "teaching",
     bullets: [
       "Delivered interactive coding sessions for beginner and intermediate students across multiple age groups",
       "Collaborated with design teams to tailor curriculum content to student needs",
@@ -138,6 +152,7 @@ export const experience: Experience[] = [
     company: "Code School",
     duration: "Oct 2025 – Present",
     location: "Cairo / Remote",
+    category: "teaching",
     bullets: [
       "Delivered project-based programming sessions for school-age students, building algorithmic thinking through Python and web-technology projects",
     ],
@@ -147,6 +162,7 @@ export const experience: Experience[] = [
     company: "Independent",
     duration: "Ongoing",
     location: "Online / In-person",
+    category: "teaching",
     bullets: [
       "Teach programming fundamentals: syntax, OOP, data structures, and algorithms",
       "Design dedicated custom learning plans based on each student's level and learning behaviour",
@@ -157,6 +173,7 @@ export const experience: Experience[] = [
     company: "Mo5am El Freelance (Freelance Initiative)",
     duration: "Jan 2025 – Jul 2025",
     location: "Port Said, Egypt",
+    category: "teaching",
     bullets: [
       "Led a 7-month program training young learners in programming and freelancing workflows; multiple participants landed their first freelance work",
     ],
@@ -166,6 +183,7 @@ export const experience: Experience[] = [
     company: "Digital Egypt Pioneers Initiative (DEPI)",
     duration: "May 2024 – Dec 2024",
     location: "Cairo, Egypt",
+    category: "teaching",
     bullets: [
       "Mentored student cohorts on backend development, REST API design, and Clean Architecture",
       "Ran structured code reviews that directly improved code quality and debugging skills",
@@ -173,4 +191,4 @@ export const experience: Experience[] = [
   },
 ];
 
-export const roles = ["Software Engineer", "Full-Stack Developer", "Coding Instructor"];
+export const roles = ["Software Engineer", "Full-Stack Developer", ".NET Backend Instructor"];

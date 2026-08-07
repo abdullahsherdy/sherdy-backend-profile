@@ -59,17 +59,23 @@ const About = () => (
                 </div>
               </div>
               <div className="flex flex-wrap gap-3 sm:gap-4 mt-6">
-                <MagneticButton variant="outline" size="sm">
-                  <Github className="mr-2 h-4 w-4" />
-                  <a href={socials.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                <MagneticButton asChild variant="outline" size="sm">
+                  <a href={socials.github} target="_blank" rel="noopener noreferrer">
+                    <Github className="mr-2 h-4 w-4" />
+                    GitHub
+                  </a>
                 </MagneticButton>
-                <MagneticButton variant="outline" size="sm">
-                  <Linkedin className="mr-2 h-4 w-4" />
-                  <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                <MagneticButton asChild variant="outline" size="sm">
+                  <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">
+                    <Linkedin className="mr-2 h-4 w-4" />
+                    LinkedIn
+                  </a>
                 </MagneticButton>
-                <MagneticButton variant="outline" size="sm">
-                  <Youtube className="mr-2 h-4 w-4" />
-                  <a href={socials.youtube} target="_blank" rel="noopener noreferrer">My Channel</a>
+                <MagneticButton asChild variant="outline" size="sm">
+                  <a href={socials.youtube} target="_blank" rel="noopener noreferrer">
+                    <Youtube className="mr-2 h-4 w-4" />
+                    My Channel
+                  </a>
                 </MagneticButton>
               </div>
             </CardContent>

@@ -38,29 +38,33 @@ const Hero = () => (
 
         <AnimatedSection animation="fade-up" delay={450}>
           <p className="text-base md:text-lg mb-10 md:mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
-            Backend-focused engineer building production APIs with .NET and Node.js,
-            shipping end-to-end products with React and Next.js — and teaching the
-            fundamentals behind them.
+            .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs
+            with ASP.NET Core and Node.js — and teaching backend development to 100+ students
+            at Netpoint, iSchool, DEPI, and independently.
           </p>
         </AnimatedSection>
 
         <AnimatedSection animation="fade-up" delay={600}>
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-3 sm:gap-4 max-w-sm sm:max-w-none mx-auto">
-            <MagneticButton size="lg" className="w-full sm:w-auto">
-              <a href="#projects">View My Work</a>
-            </MagneticButton>
-            <MagneticButton variant="outline" size="lg" className="w-full sm:w-auto">
-              <a href="/resume/Abdullah_Sherdy_SWE.pdf" download="Abdullah_Sherdy_SWE.pdf" className="flex items-center">
-                <Download className="mr-2 h-4 w-4" />
-                Download CV
-              </a>
-            </MagneticButton>
-            <MagneticButton variant="secondary" size="lg" className="w-full sm:w-auto">
-              <a href="#services">Learn With Me</a>
-            </MagneticButton>
-            <MagneticButton variant="ghost" size="lg" className="w-full sm:w-auto">
-              <a href="#contact">Get In Touch</a>
-            </MagneticButton>
+          <div className="flex flex-col items-center gap-3">
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+              <MagneticButton asChild size="lg" className="w-full sm:w-auto">
+                <a href="#projects">Hire Me</a>
+              </MagneticButton>
+              <MagneticButton asChild variant="outline" size="lg" className="w-full sm:w-auto">
+                <a href="/resume/Abdullah_Sherdy_SWE.pdf" download="Abdullah_Sherdy_SWE.pdf" className="flex items-center">
+                  <Download className="mr-2 h-4 w-4" />
+                  Download CV
+                </a>
+              </MagneticButton>
+            </div>
+            <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
+              <MagneticButton asChild variant="secondary" size="default" className="w-full sm:w-auto">
+                <a href="#services">Learn With Me</a>
+              </MagneticButton>
+              <MagneticButton asChild variant="ghost" size="default" className="w-full sm:w-auto">
+                <a href="#contact">Get In Touch</a>
+              </MagneticButton>
+            </div>
           </div>
         </AnimatedSection>
 

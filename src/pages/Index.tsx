@@ -10,6 +10,7 @@ import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 import LatestArticles from "@/components/sections/LatestArticles";
+import Seo from "@/components/shared/Seo";
 import { useDarkMode } from "@/hooks/useDarkMode";
 
 const LearningRoadmap = lazy(() => import("@/components/LearningRoadmap"));
@@ -44,6 +45,25 @@ const Index = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+      <Seo
+        title="Abdullah Sherdy — .NET Backend Engineer & Software Instructor | Cairo, Egypt"
+        description="Abdullah Sherdy is a .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs with ASP.NET Core and Node.js. Available for hire: full-time, contract, and freelance. Also offering private courses, group courses, and mentorship."
+        canonicalPath="/"
+        jsonLd={{
+          "@context": "https://schema.org",
+          "@type": "Person",
+          name: "Abdullah Sherdy",
+          url: "https://abdullahsherdy.tech",
+          jobTitle: "Software Engineer",
+          description: ".NET Backend Engineer and Software Instructor based in Cairo, Egypt.",
+          address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
+          sameAs: [
+            "https://github.com/abdullahsherdy",
+            "https://www.linkedin.com/in/abdullah-sherdy/",
+            "https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw",
+          ],
+        }}
+      />
       <a
         href="#main"
         className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-[200] focus:bg-background focus:text-foreground focus:px-4 focus:py-2 focus:rounded focus:ring-2 focus:ring-primary"

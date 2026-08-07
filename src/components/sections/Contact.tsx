@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Github, Linkedin, Youtube, MessageCircle } from "lucide-react";
+import { Github, Linkedin, Youtube, MessageCircle, Briefcase, Monitor, Users } from "lucide-react";
 import emailjs from "emailjs-com";
 import { Card, CardContent } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
@@ -69,6 +69,38 @@ const Contact = () => {
     <section id="contact" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
       <div className="container mx-auto max-w-2xl">
         <SectionHeading eyebrow="Say hello" title="Get In Touch" />
+
+        <AnimatedSection animation="fade-up" delay={100}>
+          <Card className="mb-6 border-primary/20 bg-primary/5">
+            <CardContent className="p-5">
+              <p className="eyebrow mb-3">What I'm looking for</p>
+              <div className="grid sm:grid-cols-3 gap-4 text-sm">
+                <div className="flex items-start gap-2">
+                  <Briefcase className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-medium text-foreground">Engagement</p>
+                    <p className="text-muted-foreground">Full-time · Contract · Freelance</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Monitor className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-medium text-foreground">Setup</p>
+                    <p className="text-muted-foreground">Remote-first · Cairo-based available</p>
+                  </div>
+                </div>
+                <div className="flex items-start gap-2">
+                  <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                  <div>
+                    <p className="font-medium text-foreground">Focus</p>
+                    <p className="text-muted-foreground">.NET / Node.js · Full-stack · Instruction</p>
+                  </div>
+                </div>
+              </div>
+            </CardContent>
+          </Card>
+        </AnimatedSection>
+
         <AnimatedSection animation="fade-up" delay={200}>
           <Card className="hover-scale magnetic-hover transition-colors border-border/60 hover:border-primary/40 hover:bg-primary/5">
             <CardContent className="p-6">
@@ -145,21 +177,29 @@ const Contact = () => {
 
               <div className="mt-8 pt-6 border-t border-border">
                 <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
-                  <MagneticButton variant="outline" size="sm">
-                    <MessageCircle className="mr-2 h-4 w-4" />
-                    <a href={socials.whatsapp} target="_blank" rel="noopener noreferrer">WhatsApp</a>
+                  <MagneticButton asChild variant="outline" size="sm">
+                    <a href={socials.whatsapp} target="_blank" rel="noopener noreferrer">
+                      <MessageCircle className="mr-2 h-4 w-4" />
+                      WhatsApp
+                    </a>
                   </MagneticButton>
-                  <MagneticButton variant="outline" size="sm">
-                    <Github className="mr-2 h-4 w-4" />
-                    <a href={socials.github} target="_blank" rel="noopener noreferrer">GitHub</a>
+                  <MagneticButton asChild variant="outline" size="sm">
+                    <a href={socials.github} target="_blank" rel="noopener noreferrer">
+                      <Github className="mr-2 h-4 w-4" />
+                      GitHub
+                    </a>
                   </MagneticButton>
-                  <MagneticButton variant="outline" size="sm">
-                    <Linkedin className="mr-2 h-4 w-4" />
-                    <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">LinkedIn</a>
+                  <MagneticButton asChild variant="outline" size="sm">
+                    <a href={socials.linkedin} target="_blank" rel="noopener noreferrer">
+                      <Linkedin className="mr-2 h-4 w-4" />
+                      LinkedIn
+                    </a>
                   </MagneticButton>
-                  <MagneticButton variant="outline" size="sm">
-                    <Youtube className="mr-2 h-4 w-4" />
-                    <a href={socials.youtube} target="_blank" rel="noopener noreferrer">YouTube</a>
+                  <MagneticButton asChild variant="outline" size="sm">
+                    <a href={socials.youtube} target="_blank" rel="noopener noreferrer">
+                      <Youtube className="mr-2 h-4 w-4" />
+                      YouTube
+                    </a>
                   </MagneticButton>
                 </div>
                 <p className="text-center text-sm text-muted-foreground mt-4">

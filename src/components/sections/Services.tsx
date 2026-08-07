@@ -6,6 +6,10 @@ import SectionHeading from "@/components/SectionHeading";
 import MagneticButton from "@/components/MagneticButton";
 import { socials } from "@/data/portfolio";
 
+const CALENDLY_URL = "https://calendly.com/abdullahsherdy";
+
+type ServiceType = "teaching" | "engineering";
+
 type Service = {
   icon: LucideIcon;
   title: string;
@@ -13,6 +17,7 @@ type Service = {
   highlights?: string[];
   tags?: string[];
   inquiry: string;
+  type: ServiceType;
 };
 
 const emailHref = (inquiry: string) =>
@@ -33,6 +38,7 @@ const services: Service[] = [
       "Assignments with detailed feedback",
     ],
     inquiry: "Private Course",
+    type: "teaching",
   },
   {
     icon: GraduationCap,
@@ -45,6 +51,7 @@ const services: Service[] = [
       "DM support between sessions",
     ],
     inquiry: "Private Mentorship",
+    type: "teaching",
   },
   {
     icon: Users,
@@ -57,16 +64,23 @@ const services: Service[] = [
       "Recorded sessions and resources",
     ],
     inquiry: "Group Course",
+    type: "teaching",
   },
   {
     icon: Server,
     title: "End-to-End Software Development",
     description:
-      "Complete software solutions from idea to production — requirements, clean architecture, APIs, database design, and deployment.",
-    tags: ["Front-end","Back-end","Full-stack","API Development","Database Design","Deployment", "DevOps  & CI/CD", "Cloud Services", "Testing & QA", "Performance Optimization", "Security Best Practices", "Maintenance & Support"],
+      "Custom software for startups and businesses — from requirements to production. I handle Clean Architecture APIs, database design, React/Next.js frontends, Docker deployment, and CI/CD pipelines.",
+    tags: ["Front-end", "Back-end", "Full-stack", "API Development", "Database Design", "Deployment", "DevOps & CI/CD", "Cloud Services", "Testing & QA", "Performance Optimization", "Security", "Maintenance & Support"],
     inquiry: "Software Development",
+    type: "engineering",
   },
 ];
+
+const teachingCardClass =
+  "h-full hover-scale magnetic-hover group transition-colors border-accent/30 hover:border-accent/60 hover:bg-accent/5";
+const engineeringCardClass =
+  "h-full hover-scale magnetic-hover group transition-colors border-border/60 hover:border-primary/40 hover:bg-primary/5";
 
 const Services = () => (
   <section id="services" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
@@ -79,10 +93,14 @@ const Services = () => (
             animation={i % 2 === 0 ? "slide-in-left" : "slide-in-right"}
             delay={100 + i * 100}
           >
-            <Card className="h-full hover-scale magnetic-hover group transition-colors border-border/60 hover:border-primary/40 hover:bg-primary/5">
+            <Card className={service.type === "teaching" ? teachingCardClass : engineeringCardClass}>
               <CardContent className="p-6 flex h-full flex-col">
                 <div className="flex items-center gap-3 mb-3">
-                  <service.icon className="h-5 w-5 text-primary group-hover:scale-110 transition-transform" />
+                  <service.icon
+                    className={`h-5 w-5 group-hover:scale-110 transition-transform ${
+                      service.type === "teaching" ? "text-accent" : "text-primary"
+                    }`}
+                  />
                   <h3 className="text-xl font-semibold">{service.title}</h3>
                 </div>
                 <p className="text-muted-foreground mb-4">{service.description}</p>
@@ -101,18 +119,26 @@ const Services = () => (
                   </div>
                 )}
                 <div className="flex flex-wrap gap-3 mt-auto">
-                  <MagneticButton>
+                  <MagneticButton asChild>
+                    <a
+                      href={CALENDLY_URL}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      Book a Free Call
+                    </a>
+                  </MagneticButton>
+                  <MagneticButton asChild variant="outline">
                     <a
                       href={whatsappHref(service.inquiry)}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="flex items-center"
                     >
                       WhatsApp
                     </a>
                   </MagneticButton>
-                  <MagneticButton variant="outline">
-                    <a href={emailHref(service.inquiry)}>Email Me</a>
+                  <MagneticButton asChild variant="ghost">
+                    <a href={emailHref(service.inquiry)}>Email</a>
                   </MagneticButton>
                 </div>
               </CardContent>
