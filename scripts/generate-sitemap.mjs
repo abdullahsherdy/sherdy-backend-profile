@@ -1,12 +1,14 @@
 import { readdir, readFile, writeFile } from "node:fs/promises";
 import { join } from "node:path";
 
-const SITE_URL = "https://abdullahsherdy.tech";
+const SITE_URL = "https://www.abdullahsherdy.tech";
 const ARTICLES_DIR = "src/content/articles";
+const TODAY = new Date().toISOString().slice(0, 10);
 
 const staticPages = [
-  { loc: "/", priority: "1.0" },
-  { loc: "/articles", priority: "0.8" },
+  { loc: "/", priority: "1.0", changefreq: "weekly", lastmod: TODAY },
+  { loc: "/articles", priority: "0.8", changefreq: "weekly", lastmod: TODAY },
+  { loc: "/updates", priority: "0.3", changefreq: "monthly", lastmod: TODAY },
 ];
 
 function frontmatterField(raw, key) {
@@ -21,13 +23,13 @@ for (const file of files) {
   if (frontmatterField(raw, "draft") === "true") continue;
   const slug = frontmatterField(raw, "slug") || file.replace(/\.md$/, "");
   const date = frontmatterField(raw, "date");
-  articleEntries.push({ loc: `/articles/${slug}`, priority: "0.7", lastmod: date });
+  articleEntries.push({ loc: `/articles/${slug}`, priority: "0.7", changefreq: "monthly", lastmod: date });
 }
 
 const urls = [...staticPages, ...articleEntries]
   .map(
     (p) =>
-      `  <url>\n    <loc>${SITE_URL}${p.loc}</loc>\n${p.lastmod ? `    <lastmod>${p.lastmod}</lastmod>\n` : ""}    <priority>${p.priority}</priority>\n  </url>`
+      `  <url>\n    <loc>${SITE_URL}${p.loc}</loc>\n${p.lastmod ? `    <lastmod>${p.lastmod}</lastmod>\n` : ""}${p.changefreq ? `    <changefreq>${p.changefreq}</changefreq>\n` : ""}    <priority>${p.priority}</priority>\n  </url>`
   )
   .join("\n");
 

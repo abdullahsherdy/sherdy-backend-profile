@@ -1,4 +1,4 @@
-import { useState, useEffect, lazy, Suspense } from "react";
+import { useState, useEffect, useMemo, lazy, Suspense } from "react";
 import Navbar from "@/components/sections/Navbar";
 import Hero from "@/components/sections/Hero";
 import About from "@/components/sections/About";
@@ -11,6 +11,7 @@ import Contact from "@/components/sections/Contact";
 import Footer from "@/components/sections/Footer";
 import LatestArticles from "@/components/sections/LatestArticles";
 import Seo from "@/components/shared/Seo";
+import { homePageJsonLd } from "@/lib/structuredData";
 import { useDarkMode } from "@/hooks/useDarkMode";
 
 const LearningRoadmap = lazy(() => import("@/components/LearningRoadmap"));
@@ -18,6 +19,9 @@ const LearningRoadmap = lazy(() => import("@/components/LearningRoadmap"));
 const Index = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
   const [activeSection, setActiveSection] = useState<string>("projects");
+
+  // Stable across scrollspy re-renders so <Seo> doesn't rebuild the JSON-LD script on every scroll.
+  const jsonLd = useMemo(() => homePageJsonLd(), []);
 
   // basic scrollspy to highlight current section in nav
   useEffect(() => {
@@ -49,20 +53,7 @@ const Index = () => {
         title="Abdullah Sherdy — .NET Backend Engineer & Software Instructor | Cairo, Egypt"
         description="Abdullah Sherdy is a .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs with ASP.NET Core and Node.js. Available for hire: full-time, contract, and freelance. Also offering private courses, group courses, and mentorship."
         canonicalPath="/"
-        jsonLd={{
-          "@context": "https://schema.org",
-          "@type": "Person",
-          name: "Abdullah Sherdy",
-          url: "https://abdullahsherdy.tech",
-          jobTitle: "Software Engineer",
-          description: ".NET Backend Engineer and Software Instructor based in Cairo, Egypt.",
-          address: { "@type": "PostalAddress", addressLocality: "Cairo", addressCountry: "EG" },
-          sameAs: [
-            "https://github.com/abdullahsherdy",
-            "https://www.linkedin.com/in/abdullah-sherdy/",
-            "https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw",
-          ],
-        }}
+        jsonLd={jsonLd}
       />
       <a
         href="#main"

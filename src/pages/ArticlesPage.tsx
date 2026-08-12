@@ -1,12 +1,15 @@
+import { useMemo } from "react";
 import Navbar from "@/components/sections/Navbar";
 import Footer from "@/components/sections/Footer";
 import ArticleList from "@/components/articles/ArticleList";
 import PageTransition from "@/components/shared/PageTransition";
 import Seo from "@/components/shared/Seo";
+import { articlesIndexJsonLd } from "@/lib/structuredData";
 import { useDarkMode } from "@/hooks/useDarkMode";
 
 const ArticlesPage = () => {
   const { isDarkMode, toggleDarkMode } = useDarkMode();
+  const jsonLd = useMemo(() => articlesIndexJsonLd(), []);
 
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
@@ -14,6 +17,7 @@ const ArticlesPage = () => {
         title="Articles — Abdullah Sherdy"
         description=".NET, C#, and backend engineering articles by Abdullah Sherdy — tutorials with runnable code examples."
         canonicalPath="/articles"
+        jsonLd={jsonLd}
       />
       <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} activeSection="articles" />
       <PageTransition>

@@ -10,6 +10,7 @@ import PageTransition from "@/components/shared/PageTransition";
 import Seo from "@/components/shared/Seo";
 import { getArticle } from "@/lib/articles";
 import { author } from "@/lib/author";
+import { articlePageJsonLd } from "@/lib/structuredData";
 import { useDarkMode } from "@/hooks/useDarkMode";
 import { useReadingPosition } from "@/hooks/useReadingPosition";
 import "@/styles/article.css";
@@ -42,26 +43,7 @@ const ArticlePage = () => {
   const progress = useSpring(scrollYProgress, { stiffness: 120, damping: 30, restDelta: 0.001 });
 
   const toc = useMemo(() => (article ? extractToc(article.content) : []), [article]);
-  const jsonLd = useMemo(
-    () =>
-      article
-        ? {
-            "@context": "https://schema.org",
-            "@type": "Article",
-            headline: article.title,
-            description: article.description,
-            datePublished: article.date,
-            keywords: article.tags.join(", "),
-            author: {
-              "@type": "Person",
-              name: author.name,
-              url: author.website,
-              sameAs: [author.linkedin, author.youtube],
-            },
-          }
-        : undefined,
-    [article]
-  );
+  const jsonLd = useMemo(() => (article ? articlePageJsonLd(article) : undefined), [article]);
 
   if (!article) {
     return (
