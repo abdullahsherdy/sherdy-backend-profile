@@ -40,7 +40,14 @@ async function discoverRoutes() {
     articleRoutes.push(`/articles/${slug}`);
   }
   // /playground is an interactive Monaco tool with no SEO value — deliberately excluded.
-  return ["/", "/articles", "/updates", ...articleRoutes];
+  //
+  // Order matters: `vite preview` serves dist/index.html as the SPA fallback for any
+  // route without its own file. We overwrite dist/index.html with the homepage snapshot,
+  // which bakes the homepage @graph (incl. FAQPage) into that file as static <script> tags
+  // that React (createRoot) does NOT clean up on other routes. So the homepage MUST be
+  // prerendered LAST — that way every other route falls back to the clean built shell
+  // (baseline Person only) and never inherits the homepage's FAQ/ProfilePage nodes.
+  return [...articleRoutes, "/articles", "/updates", "/"];
 }
 
 /** Scroll top-to-bottom to trigger framer-motion whileInView reveals + lazy imports. */
