@@ -13,7 +13,10 @@
  * portfolio that avoids hydration-mismatch crashes from animation libs / ids.
  *
  * Runs after `vite build` (see package.json). Writes dist/<route>/index.html.
- * Fail-soft per route; only a failed homepage exits non-zero.
+ * Prerendering is a build-time SEO *enhancement*, never a deploy blocker: any
+ * failure (browser won't launch, a route errors) is logged loudly and the build
+ * still exits 0, shipping the client-rendered SPA (whose index.html already
+ * carries baseline title/description/OG/Person JSON-LD).
  */
 import { readdir, readFile, writeFile, mkdir } from "node:fs/promises";
 import { join, dirname } from "node:path";
@@ -95,22 +98,42 @@ async function snapshot(page, baseUrl, route) {
   return html.length;
 }
 
+/**
+ * Launch Chromium. On Linux (Vercel's serverless build image) the Chromium that
+ * ships with `puppeteer` fails to start — the image lacks shared libraries it needs
+ * (libnspr4.so, …). So on Linux we point puppeteer at @sparticuz/chromium, a Chromium
+ * built for AWS Lambda / Vercel with those libs bundled. Locally (Windows/macOS) we
+ * use puppeteer's own bundled Chromium, so a dev machine needs no extra setup.
+ */
+async function launchBrowser() {
+  const viewport = { width: 1366, height: 900 };
+  if (process.platform === "linux") {
+    const chromium = (await import("@sparticuz/chromium")).default;
+    chromium.setGraphicsMode = false; // no GPU/WebGL in a headless build container
+    return puppeteer.launch({
+      args: chromium.args,
+      executablePath: await chromium.executablePath(),
+      headless: chromium.headless,
+      defaultViewport: viewport,
+    });
+  }
+  return puppeteer.launch({
+    headless: true,
+    args: ["--no-sandbox", "--disable-setuid-sandbox"],
+    defaultViewport: viewport,
+  });
+}
+
 const routes = await discoverRoutes();
 
-const server = await preview({
-  preview: { port: PORT, strictPort: true },
-  logLevel: "warn",
-});
-const baseUrl = server.resolvedUrls?.local?.[0]?.replace(/\/$/, "") ?? `http://localhost:${PORT}`;
-
-const browser = await puppeteer.launch({
-  headless: true,
-  args: ["--no-sandbox", "--disable-setuid-sandbox"],
-  defaultViewport: { width: 1366, height: 900 },
-});
-
+let server;
+let browser;
 let failed = 0;
 try {
+  server = await preview({ preview: { port: PORT, strictPort: true }, logLevel: "warn" });
+  const baseUrl = server.resolvedUrls?.local?.[0]?.replace(/\/$/, "") ?? `http://localhost:${PORT}`;
+
+  browser = await launchBrowser();
   const page = await browser.newPage();
   for (const route of routes) {
     try {
@@ -118,21 +141,31 @@ try {
       console.log(`  prerendered ${route} -> ${outPathFor(route)} (${bytes} bytes)`);
     } catch (err) {
       failed++;
-      console.error(`  FAILED ${route}: ${err.message}`);
-      if (route === "/") {
-        // The homepage is the one route we cannot ship as an empty shell.
-        throw new Error("Homepage prerender failed — aborting build.");
-      }
+      console.error(`  ⚠️  prerender FAILED ${route}: ${err.message}`);
     }
   }
   await page.close();
+} catch (err) {
+  // Browser couldn't launch (or preview wouldn't start). Ship the SPA shell — it
+  // still has baseline SEO — and warn loudly rather than break the deployment.
+  const bar = "=".repeat(72);
+  console.error(`\n${bar}`);
+  console.error("⚠️  PRERENDER SKIPPED — could not run headless Chromium.");
+  console.error(`    ${err.message}`);
+  console.error("    The site deploys as a client-rendered SPA (baseline SEO intact).");
+  console.error(`${bar}\n`);
 } finally {
-  await browser.close();
-  await server.httpServer?.close();
+  await browser?.close().catch(() => {});
+  await server?.httpServer?.close();
 }
 
-console.log(`prerender complete: ${routes.length - failed}/${routes.length} routes`);
-// A failed homepage already threw above (build aborts). Individual article/page
-// failures are fail-soft — they still ship as the SPA shell, so exit clean.
-// Explicit exit also guarantees termination if the preview server keeps sockets open.
+if (failed > 0) {
+  console.error(
+    `\n⚠️  prerender: ${routes.length - failed}/${routes.length} routes rendered, ${failed} failed (those ship as the SPA shell).`
+  );
+} else {
+  console.log(`prerender complete: ${routes.length} routes`);
+}
+// Never fail the build over prerendering — it is an enhancement. Explicit exit also
+// guarantees termination if the preview server keeps sockets open.
 process.exit(0);
