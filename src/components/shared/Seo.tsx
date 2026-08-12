@@ -8,7 +8,7 @@ interface SeoProps {
   jsonLd?: object;
 }
 
-const SITE_URL = "https://abdullahsherdy.tech";
+const SITE_URL = "https://www.abdullahsherdy.tech";
 
 function setMeta(attr: "name" | "property", key: string, content: string) {
   let el = document.head.querySelector<HTMLMetaElement>(`meta[${attr}="${key}"]`);
