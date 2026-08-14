@@ -116,7 +116,7 @@ export const experience: Experience[] = [
   {
     title: "Freelance Backend Developer",
     company: "GenzApp (Contract)",
-    duration: "2024",
+    duration: "2026",
     location: "Remote",
     category: "engineering",
     bullets: [
@@ -175,7 +175,7 @@ export const experience: Experience[] = [
     location: "Port Said, Egypt",
     category: "teaching",
     bullets: [
-      "Led a 7-month program training young learners in programming and freelancing workflows; multiple participants landed their first freelance work",
+      "Lead a 7-month program training young learners in programming and freelancing workflows; multiple participants landed their first freelance work",
     ],
   },
   {
