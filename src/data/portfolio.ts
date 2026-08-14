@@ -116,7 +116,7 @@ export const experience: Experience[] = [
   {
     title: "Freelance Backend Developer",
     company: "GenzApp (Contract)",
-    duration: "2024",
+    duration: "2026",
     location: "Remote",
     category: "engineering",
     bullets: [
@@ -125,15 +125,16 @@ export const experience: Experience[] = [
     ],
   },
   {
-    title: "Technical Instructor / Backend Mentor",
+    title: "Technical Instructor / Backend Mentor (.NET) and Software Engineer",
     company: "Netpoint Software Solutions",
     duration: "Jun 2026 – Present",
     location: "Cairo, Egypt",
-    category: "teaching",
+    category: "engineering",
     bullets: [
       "Designed and delivered an 8-session .NET backend internship program for fresh graduates",
       "Guided participants through curriculum design and capstone project development",
       "Contributed to backend software solutions alongside training work",
+      "delivered a full backend web api with clean architecture and best practices during the internship program, which was later used as a reference for future interns",
     ],
   },
   {
