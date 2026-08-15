@@ -191,5 +191,5 @@ export const experience: Experience[] = [
   },
 ];
 
-export const roles = ["Software Engineer", "Full-Stack Developer", ".NET Backend Instructor", "Technical Mentor", "Coding Instructor", "Backend Mentor"];
+export const roles = ["Software Engineer", "Full-Stack Developer", "Backend Developer", "Technical Mentor", "Coding Instructor"];
 
