@@ -1,10 +1,16 @@
-import { Download } from "lucide-react";
+import { Download, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AnimatedSection from "@/components/AnimatedSection";
 import MagneticButton from "@/components/MagneticButton";
 import { heroTech, roles } from "@/data/portfolio";
+import { computeReviewStats } from "@/lib/reviews";
+import { useReviews } from "@/hooks/useReviews";
 
-const Hero = () => (
+const Hero = () => {
+  const { data: reviews = [] } = useReviews();
+  const stats = computeReviewStats(reviews);
+
+  return (
   <section className="pt-28 md:pt-32 pb-16 md:pb-20 px-4">
     <div className="container mx-auto text-center">
       <div className="max-w-4xl mx-auto">
@@ -68,6 +74,22 @@ const Hero = () => (
           </div>
         </AnimatedSection>
 
+        {stats.count > 0 && (
+          <AnimatedSection animation="fade-up" delay={700}>
+            <a
+              href="#reviews"
+              className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 text-sm transition-colors hover:border-accent/60 hover:bg-accent/10"
+              aria-label={`${stats.average.toFixed(1)} out of 5 from ${stats.count} verified reviews — read reviews`}
+            >
+              <Star className="h-4 w-4 fill-current text-accent" aria-hidden="true" />
+              <span className="font-semibold text-accent">{stats.average.toFixed(1)}</span>
+              <span className="text-muted-foreground">
+                from {stats.count} verified {stats.count === 1 ? "review" : "reviews"}
+              </span>
+            </a>
+          </AnimatedSection>
+        )}
+
         <AnimatedSection animation="fade-up" delay={800}>
           <div className="mt-16 pt-8 border-t border-border/40">
             <p className="eyebrow mb-4">Core Technologies</p>
@@ -83,6 +105,7 @@ const Hero = () => (
       </div>
     </div>
   </section>
-);
+  );
+};
 
 export default Hero;
