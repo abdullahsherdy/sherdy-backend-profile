@@ -1,6 +1,6 @@
 # Feature Plan — Reviews & Testimonials
 
-**Status:** Proposed · **Owner:** Abdullah Sherdy · **Created:** 2026-08-20
+**Status:** Implemented (code complete) · awaiting Supabase setup + E2E verification · **Owner:** Abdullah Sherdy · **Created:** 2026-08-20
 **Skills applied:** `architecture-designer` (requirements + ADR + trade-offs), `react-expert` (data fetching + accessible components), `frontend-design` (section design + copy)
 
 ---

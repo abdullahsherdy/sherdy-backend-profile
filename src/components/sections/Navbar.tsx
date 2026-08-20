@@ -15,6 +15,7 @@ const navLinks: { href: string; id: string; label: string; route?: boolean }[] =
   { href: "/articles", id: "articles", label: "Articles", route: true },
   // { href: "/playground", id: "playground", label: "Playground", route: true },
   { href: "/#about", id: "about", label: "About" },
+  { href: "/#reviews", id: "reviews", label: "Reviews" },
   { href: "/#contact", id: "contact", label: "Contact" },
 ];
 

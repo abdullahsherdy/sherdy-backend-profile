@@ -8,6 +8,7 @@ import Projects from "@/components/sections/Projects";
 import PublicWork from "@/components/sections/PublicWork";
 import Skills from "@/components/sections/Skills";
 import Contact from "@/components/sections/Contact";
+import Reviews from "@/components/sections/Reviews";
 import Footer from "@/components/sections/Footer";
 import LatestArticles from "@/components/sections/LatestArticles";
 import Seo from "@/components/shared/Seo";
@@ -25,7 +26,7 @@ const Index = () => {
 
   // basic scrollspy to highlight current section in nav
   useEffect(() => {
-    const sectionIds = ["projects", "work-experience", "skills", "services", "learning", "about", "contact"];
+    const sectionIds = ["projects", "work-experience", "skills", "services", "learning", "about", "reviews", "contact"];
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -74,6 +75,7 @@ const Index = () => {
         <PublicWork />
         <LatestArticles />
         <About />
+        <Reviews />
         <Contact />
       </main>
       <Footer />
