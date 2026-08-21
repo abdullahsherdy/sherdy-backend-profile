@@ -66,7 +66,7 @@ const ReviewForm = ({
     onSuccess: () => {
       toast({
         title: "Thank you!",
-        description: "Your review was submitted and will appear once it's approved.",
+        description: "Your review is now live on the site — thanks for sharing.",
       });
       setForm(emptyForm);
       setErrors({});
@@ -132,7 +132,7 @@ const ReviewForm = ({
           <DialogHeader>
             <DialogTitle>Share your experience</DialogTitle>
             <DialogDescription>
-              Students, parents, and clients welcome. Reviews appear after a quick manual approval.
+              Students, parents, and clients welcome. Your review appears on the site as soon as you submit.
             </DialogDescription>
           </DialogHeader>
 

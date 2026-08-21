@@ -8,7 +8,7 @@ const anonKey = import.meta.env.VITE_SUPABASE_ANON_KEY as string | undefined;
  * Shared Supabase client, or `null` when the env vars are absent.
  * Mirrors the EmailJS "silently no-op without config" behavior so the site
  * still builds and renders with no keys set. The anon key is meant to be public;
- * Row-Level Security (insert-only-unapproved, read-only-approved) is the real boundary.
+ * Row-Level Security (anon inserts publish immediately, reads are approved-only) is the real boundary.
  */
 export const supabase: SupabaseClient | null =
   url && anonKey ? createClient(url, anonKey) : null;

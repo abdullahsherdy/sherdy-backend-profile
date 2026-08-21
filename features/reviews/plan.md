@@ -46,7 +46,7 @@ This satisfies "don't fill them manually" (visitors write the content) while kee
 
 ### Decision (ADR-001): Use Supabase (managed Postgres + Row-Level Security)
 
-**Status:** Accepted (user-selected)
+**Status:** Accepted (user-selected) · **partially superseded by [Addendum A](#addendum-a--moderation-gate-removed-2026-08-21)** — the moderation gate was removed 2026-08-21; the Supabase/RLS foundation below still stands.
 
 **Context:** A static SPA needs a write target for submissions and a read path for approved reviews, plus a moderation step — with near-zero ops and cost.
 
@@ -84,6 +84,8 @@ Runtime fetch (not build-time bake) is deliberate: approving in the dashboard ma
 ## 4. Data model
 
 ### Table + RLS (run once in Supabase SQL editor)
+
+> ⚠️ **Superseded by [Addendum A](#addendum-a--moderation-gate-removed-2026-08-21) (2026-08-21).** The `create table` below is still correct for a fresh setup, but the INSERT policy `with check (approved = false)` and the column default `false` have been reversed to auto-publish. Run the table/policies below **first**, then apply Addendum A's migration SQL.
 
 ```sql
 create table public.reviews (
@@ -233,3 +235,29 @@ Grounded in the existing identity: a **.NET backend engineer + instructor** with
 - **Spam volume:** if honeypot proves insufficient, add Cloudflare Turnstile to the form (still moderated regardless).
 - **Doc drift:** [CLAUDE.md](../../CLAUDE.md) references `artifacts/design-system.md`, but the file lives at [docs/design-system.md](../../docs/design-system.md). Worth fixing the reference while touching docs.
 - **Editing/deletion:** removing or editing a published review is a dashboard action (no app UI) — acceptable for v1.
+
+---
+
+## Addendum A — Moderation gate removed (2026-08-21)
+
+**Status:** Accepted (user-selected) · supersedes the pending-approval behavior in ADR-001, §4 SQL, §5, and §6 copy.
+
+**Decision:** Reviews now **publish immediately on submit** — no manual approval step. The `approved` column and the read-side filter are kept, but the *default* flips to `true` and the INSERT policy is relaxed so anon-submitted rows are visible at once.
+
+**Migration SQL (run once in the Supabase SQL editor):**
+
+```sql
+-- 1. New reviews are visible immediately (was: false).
+alter table public.reviews alter column approved set default true;
+
+-- 2. Let anon insert those now-approved rows (old policy required approved = false).
+alter policy "anon can submit reviews" on public.reviews
+  with check (approved = true);
+
+-- 3. (Optional) publish any rows still pending from the moderated era.
+update public.reviews set approved = true where approved = false;
+```
+
+**What is retained:** the `approved` column stays as a **kill switch** — set a row to `approved = false` in the dashboard to hide a bad/spam review after the fact (RLS SELECT still filters `approved = true`, and `fetchApprovedReviews()` is unchanged). No `anon` UPDATE/DELETE, so a visitor still can't alter or unhide rows.
+
+**Accepted risk:** this reverses NFR3's "no unapproved content is ever served." Arbitrary internet input now reaches the public homepage directly, filtered only by the honeypot, client `validate()`, and DB `check` constraints. Reputation/spam exposure is the tradeoff for zero-touch publishing. **Mitigation / upgrade path:** if spam appears, add Cloudflare Turnstile to the form (§10) and/or re-tighten the INSERT policy to `with check (approved = false)` + default `false` to restore the gate — the code path supports both without changes.

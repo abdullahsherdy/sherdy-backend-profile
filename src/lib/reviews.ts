@@ -59,8 +59,9 @@ export async function fetchApprovedReviews(): Promise<Review[]> {
 }
 
 /**
- * Insert a pending review. `approved` is intentionally omitted so the column
- * default (`false`) applies — the RLS INSERT policy also requires `approved = false`.
+ * Insert a review. `approved` is omitted so the column default (now `true`) applies,
+ * publishing it immediately — the RLS INSERT policy requires `approved = true` to match.
+ * A row can still be hidden after the fact by setting `approved = false` in the dashboard.
  */
 export async function submitReview(input: ReviewInput): Promise<void> {
   if (!supabase) throw new Error("Reviews are not configured.");
