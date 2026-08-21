@@ -9,6 +9,13 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    date: "2026-08-21",
+    kind: "feature",
+    title: "Reviews & testimonials",
+    description:
+      "Visitors can now leave a star-rated review — students, parents, and clients — and it appears on the site right away, in both the reviews wall and the hero.",
+  },
+  {
     date: "2026-08-03",
     kind: "feature",
     title: "Interactive learning toolkit in articles",
