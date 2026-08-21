@@ -14,6 +14,6 @@ export function useReviews() {
     queryKey: REVIEWS_QUERY_KEY,
     queryFn: fetchApprovedReviews,
     enabled: isReviewsConfigured,
-    staleTime: 5 * 60 * 1000, // 5 min — reviews change rarely
+    staleTime:  1 * 60 * 1000, // 1 min — reviews change rarely
   });
 }
