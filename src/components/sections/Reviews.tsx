@@ -13,7 +13,7 @@ const Reviews = () => {
   const stats = useMemo(() => computeReviewStats(reviews), [reviews]);
 
   return (
-    <section id="reviews" className="py-16 px-4 scroll-mt-24" data-section>
+    <section id="reviews" className="py-16 px-4 bg-muted/30 scroll-mt-24" data-section>
       <div className="container mx-auto max-w-6xl">
         <SectionHeading
           eyebrow="Social proof"

@@ -34,7 +34,7 @@ const ExperienceCard = ({ job, idx }: { job: Experience; idx: number }) => (
 );
 
 const WorkExperience = () => (
-  <section id="work-experience" className="py-16 px-4 bg-muted/50 scroll-mt-24" data-section>
+  <section id="work-experience" className="py-16 px-4 scroll-mt-24" data-section>
     <div className="container mx-auto">
       <SectionHeading eyebrow="Track record" title="Work Experience" />
       <div className="max-w-4xl mx-auto space-y-12">

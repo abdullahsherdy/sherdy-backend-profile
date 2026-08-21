@@ -38,7 +38,6 @@ export const focusAreas = [
   { skill: "Node.js (Express, NestJS)", context: "Second backend stack for REST services" },
   { skill: "Database Design", context: "Normalized schemas, EF Core, MSSQL, MySQL & MongoDB" },
   { skill: "React & Next.js", context: "Full-stack apps with TypeScript on top of backend depth" },
-  { skill: "Teaching & Mentorship", context: "Instructor at Netpoint, Code School, iSchool; DEPI mentor" },
 ];
 
 export interface Project {
@@ -89,14 +88,14 @@ export const projects: Project[] = [
   {
     title: "GenzApp — Authentication Module",
     description:
-      "Freelance engagement: designed and implemented the authentication module for a client application.",
+      "The authentication module for a client app — third-party sign-in, session management, and secure token handling, built as a drop-in unit.",
     role: "Backend Developer (auth module)",
     impact: [
-      "Implemented OAuth-based authentication flows for secure third-party sign-in",
-      "Delivered the module as an independent, integrable unit within the client's existing stack",
+      "Designed OAuth-based third-party sign-in with JWT session management, secure token storage, and refresh handling",
+      "Exposed the module behind a clean RESTful API with clear integration contracts, so it could ship as a standalone unit",
     ],
     techDecision:
-      "Scoped strictly to the auth boundary so the module could ship without coupling to the client's product roadmap",
+      "Scoped strictly to the auth boundary behind a REST contract, so the module could ship without coupling to the client's product roadmap",
     tech: ["OAuth", "JWT", "RESTful APIs"],
     github: null,
     demo: "https://genzapp.com",
@@ -120,8 +119,8 @@ export const experience: Experience[] = [
     location: "Remote",
     category: "engineering",
     bullets: [
-      "Designed and implemented the full authentication module: OAuth-based third-party sign-in, JWT session management, and secure token handling",
-      "Delivered the module as an independently integrable unit within the client's existing stack — on-time and with zero critical bugs post-handoff",
+      "Owned the authentication module end-to-end as a remote contract engineer — from design through handoff",
+      "Delivered on time with zero critical bugs post-handoff, integrating cleanly into the client's existing stack",
     ],
   },
   {

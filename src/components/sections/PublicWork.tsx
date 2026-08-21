@@ -29,7 +29,7 @@ const stats = [
 ];
 
 const PublicWork = () => (
-  <section className="py-16 px-4 bg-muted/30">
+  <section id="public-work" className="py-16 px-4 bg-muted/30 scroll-mt-24">
     <div className="container mx-auto max-w-5xl">
       <SectionHeading
         eyebrow="Building in public"

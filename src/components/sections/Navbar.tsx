@@ -8,14 +8,14 @@ import { socials } from "@/data/portfolio";
 
 const navLinks: { href: string; id: string; label: string; route?: boolean }[] = [
   { href: "/#projects", id: "projects", label: "Projects" },
-  { href: "/#work-experience", id: "work-experience", label: "Experience" },
   { href: "/#skills", id: "skills", label: "Skills" },
-  { href: "/#services", id: "services", label: "Services" },
   { href: "/#learning", id: "learning", label: "Learning" },
+  { href: "/#work-experience", id: "work-experience", label: "Experience" },
+  { href: "/#services", id: "services", label: "Services" },
   { href: "/articles", id: "articles", label: "Articles", route: true },
   // { href: "/playground", id: "playground", label: "Playground", route: true },
-  { href: "/#about", id: "about", label: "About" },
   { href: "/#reviews", id: "reviews", label: "Reviews" },
+  { href: "/#about", id: "about", label: "About" },
   { href: "/#contact", id: "contact", label: "Contact" },
 ];
 

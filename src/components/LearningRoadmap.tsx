@@ -216,7 +216,7 @@ const LearningRoadmap = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="learning" className="py-16 px-4">
+    <section ref={sectionRef} id="learning" className="py-16 px-4 bg-muted/30">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <p className="eyebrow mb-3">What's next</p>
