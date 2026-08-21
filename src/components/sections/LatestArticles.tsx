@@ -8,7 +8,7 @@ const LatestArticles = () => {
   if (articles.length === 0) return null;
 
   return (
-    <section id="articles" className="py-16 bg-muted/20">
+    <section id="articles" className="py-16">
       <div className="container mx-auto px-4">
         <AnimatedSection animation="fade-up">
           <div className="flex items-end justify-between mb-8">

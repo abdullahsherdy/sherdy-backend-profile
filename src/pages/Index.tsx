@@ -26,7 +26,7 @@ const Index = () => {
 
   // basic scrollspy to highlight current section in nav
   useEffect(() => {
-    const sectionIds = ["projects", "work-experience", "skills", "services", "learning", "about", "reviews", "contact"];
+    const sectionIds = ["projects", "skills", "learning", "work-experience", "services", "reviews", "about", "contact"];
     const elements = sectionIds
       .map((id) => document.getElementById(id))
       .filter((el): el is HTMLElement => Boolean(el));
@@ -66,16 +66,16 @@ const Index = () => {
       <main id="main">
         <Hero />
         <Projects />
-        <WorkExperience />
+        <PublicWork />
         <Skills />
-        <Services />
         <Suspense fallback={<div id="learning" className="py-16 text-center text-muted-foreground">Loading roadmap…</div>}>
           <LearningRoadmap />
         </Suspense>
-        <PublicWork />
+        <WorkExperience />
+        <Services />
         <LatestArticles />
-        <About />
         <Reviews />
+        <About />
         <Contact />
       </main>
       <Footer />

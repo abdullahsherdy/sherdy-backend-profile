@@ -10,6 +10,13 @@ export interface UpdateEntry {
 export const updates: UpdateEntry[] = [
   {
     date: "2026-08-21",
+    kind: "improvement",
+    title: "Redesigned the home page flow",
+    description:
+      "The home page now reads as one clear story — engineering work and skills first, then teaching and services, with reviews near the end — and repeated content was trimmed so it's faster to scan.",
+  },
+  {
+    date: "2026-08-21",
     kind: "feature",
     title: "Reviews & testimonials",
     description:
