@@ -51,7 +51,7 @@ const About = () => (
               <div className="space-y-4">
                 <div>
                   <h4 className="font-medium">B.S. Computer Science &amp; Artificial Intelligence</h4>
-                  <p className="text-muted-foreground">Helwan University · 2022 – 2026</p>
+                  <p className="text-muted-foreground">Helwan University</p>
                 </div>
                 <div>
                   <h4 className="font-medium">.NET Web Development Graduate</h4>
