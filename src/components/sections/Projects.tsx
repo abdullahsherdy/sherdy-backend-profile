@@ -32,7 +32,7 @@ const Projects = () => (
                   </div>
                   <div className="flex flex-wrap gap-2">
                     {project.github && (
-                      <MagneticButton variant="outline" size="sm">
+                      <MagneticButton asChild variant="outline" size="sm">
                         <a href={project.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                           <Github className="h-4 w-4" />
                           <span>Code</span>
@@ -40,7 +40,7 @@ const Projects = () => (
                       </MagneticButton>
                     )}
                     {project.demo && (
-                      <MagneticButton variant="default" size="sm">
+                      <MagneticButton asChild variant="default" size="sm">
                         <a href={project.demo} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
                           <ExternalLink className="h-4 w-4" />
                           <span>Demo</span>
@@ -89,7 +89,7 @@ const Projects = () => (
           <p className="text-muted-foreground mb-4">
             View more projects and contributions on GitHub
           </p>
-          <MagneticButton variant="outline">
+          <MagneticButton asChild variant="outline">
             <a href={socials.github} target="_blank" rel="noopener noreferrer" className="flex items-center gap-2">
               <Github className="h-4 w-4" />
               <span>Visit GitHub Profile</span>

@@ -32,7 +32,7 @@ const Reviews = () => {
                   <span className="text-muted-foreground">→</span>{" "}
                   <span className="font-semibold text-accent">{stats.average.toFixed(1)}★</span>
                   {" · "}
-                  <span className="text-foreground">{stats.count} verified</span>
+                  <span className="text-foreground">{stats.count} {stats.count === 1 ? "review" : "reviews"}</span>
                 </>
               ) : (
                 <span> → awaiting first review</span>

@@ -10,11 +10,6 @@ const cardClassByCategory: Record<Review["category"], string> = {
   teaching: "border-l-2 border-l-accent/60 border-accent/30 hover:border-accent/60 hover:bg-accent/5",
 };
 
-const accentTextByCategory: Record<Review["category"], string> = {
-  engineering: "text-primary",
-  teaching: "text-accent",
-};
-
 interface ReviewCardProps {
   review: Review;
 }
@@ -22,11 +17,8 @@ interface ReviewCardProps {
 const ReviewCard = ({ review }: ReviewCardProps) => (
   <Card className={cn("h-full transition-colors", cardClassByCategory[review.category])}>
     <CardContent className="flex h-full flex-col p-6">
-      <div className="mb-3 flex items-center justify-between gap-2">
+      <div className="mb-3">
         <StarRating value={review.rating} size={16} />
-        <span className={cn("font-mono text-[10px] uppercase tracking-[0.15em]", accentTextByCategory[review.category])}>
-          ✓ verified
-        </span>
       </div>
       <figure className="flex flex-1 flex-col">
         <blockquote className="flex-1 text-sm leading-relaxed text-foreground/90">

@@ -6,7 +6,10 @@ import SectionHeading from "@/components/SectionHeading";
 import MagneticButton from "@/components/MagneticButton";
 import { socials } from "@/data/portfolio";
 
-const CALENDLY_URL = "https://calendly.com/abdullahsherdy";
+// Set this to your Calendly (or other scheduling) link to show the "Book a Free Call" CTA.
+// Blank until a real booking page exists, so no button ever points at a dead link — WhatsApp
+// and Email stay the live paths (mirrors the EmailJS/Supabase "no-op when unset" pattern).
+const CALENDLY_URL: string = "";
 
 type ServiceType = "teaching" | "engineering";
 
@@ -119,16 +122,18 @@ const Services = () => (
                   </div>
                 )}
                 <div className="flex flex-wrap gap-3 mt-auto">
-                  <MagneticButton asChild>
-                    <a
-                      href={CALENDLY_URL}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      Book a Free Call
-                    </a>
-                  </MagneticButton>
-                  <MagneticButton asChild variant="outline">
+                  {CALENDLY_URL ? (
+                    <MagneticButton asChild>
+                      <a
+                        href={CALENDLY_URL}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                      >
+                        Book a Free Call
+                      </a>
+                    </MagneticButton>
+                  ) : null}
+                  <MagneticButton asChild variant={CALENDLY_URL ? "outline" : "default"}>
                     <a
                       href={whatsappHref(service.inquiry)}
                       target="_blank"

@@ -54,7 +54,7 @@ const Hero = () => {
           <div className="flex flex-col items-center gap-3">
             <div className="flex flex-wrap justify-center gap-3 sm:gap-4">
               <MagneticButton asChild size="lg" className="w-full sm:w-auto">
-                <a href="#projects">Hire Me</a>
+                <a href="#contact">Hire Me</a>
               </MagneticButton>
               <MagneticButton asChild variant="outline" size="lg" className="w-full sm:w-auto">
                 <a href="/resume/Abdullah_Sherdy_SWE.pdf" download="Abdullah_Sherdy_SWE.pdf" className="flex items-center">
@@ -67,8 +67,8 @@ const Hero = () => {
               <MagneticButton asChild variant="secondary" size="default" className="w-full sm:w-auto">
                 <a href="#services">Learn With Me</a>
               </MagneticButton>
-              <MagneticButton asChild variant="ghost" size="default" className="w-full sm:w-auto">
-                <a href="#contact">Get In Touch</a>
+              <MagneticButton asChild variant="outline" size="default" className="w-full sm:w-auto">
+                <a href="#projects">See My Work</a>
               </MagneticButton>
             </div>
           </div>
@@ -79,12 +79,12 @@ const Hero = () => {
             <a
               href="#reviews"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 text-sm transition-colors hover:border-accent/60 hover:bg-accent/10"
-              aria-label={`${stats.average.toFixed(1)} out of 5 from ${stats.count} verified reviews — read reviews`}
+              aria-label={`${stats.average.toFixed(1)} out of 5 from ${stats.count} reviews — read reviews`}
             >
               <Star className="h-4 w-4 fill-current text-accent" aria-hidden="true" />
               <span className="font-semibold text-accent">{stats.average.toFixed(1)}</span>
               <span className="text-muted-foreground">
-                from {stats.count} verified {stats.count === 1 ? "review" : "reviews"}
+                from {stats.count} {stats.count === 1 ? "review" : "reviews"}
               </span>
             </a>
           </AnimatedSection>
