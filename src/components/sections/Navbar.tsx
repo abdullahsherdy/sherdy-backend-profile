@@ -13,7 +13,7 @@ const navLinks: { href: string; id: string; label: string; route?: boolean }[] =
   { href: "/#work-experience", id: "work-experience", label: "Experience" },
   { href: "/#services", id: "services", label: "Services" },
   { href: "/articles", id: "articles", label: "Articles", route: true },
-  // { href: "/playground", id: "playground", label: "Playground", route: true },
+  { href: "/playground", id: "playground", label: "Playground", route: true },
   { href: "/#reviews", id: "reviews", label: "Reviews" },
   { href: "/#about", id: "about", label: "About" },
   { href: "/#contact", id: "contact", label: "Contact" },
@@ -83,7 +83,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
             <a href={socials.linkedin} target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" className="text-muted-foreground hover:text-primary transition-colors">
               <Linkedin className="h-5 w-5" />
             </a>
-            <Button variant="ghost" size="icon" onClick={toggleDarkMode} className="magnetic-hover">
+            <Button variant="ghost" size="icon" onClick={toggleDarkMode} aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"} className="magnetic-hover">
               {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}
             </Button>
           </div>
@@ -147,6 +147,7 @@ const Navbar = ({ isDarkMode, toggleDarkMode, activeSection }: NavbarProps) => {
                   variant="ghost"
                   size="icon"
                   onClick={() => { toggleDarkMode(); setIsMobileMenuOpen(false); }}
+                  aria-label={isDarkMode ? "Switch to light mode" : "Switch to dark mode"}
                   className="magnetic-hover self-start mt-2"
                 >
                   {isDarkMode ? <Sun className="h-5 w-5" /> : <Moon className="h-5 w-5" />}

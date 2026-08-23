@@ -106,7 +106,11 @@ const Contact = () => {
             <CardContent className="p-6">
               <form onSubmit={handleSubmit} className="space-y-4">
                 <div>
+                  <label htmlFor="contact-name" className="sr-only">Your name</label>
                   <Input
+                    id="contact-name"
+                    name="name"
+                    autoComplete="name"
                     placeholder="Your Name"
                     value={formData.name}
                     onChange={(e) => setFormData({ ...formData, name: e.target.value })}
@@ -121,8 +125,12 @@ const Contact = () => {
                 </div>
 
                 <div>
+                  <label htmlFor="contact-email" className="sr-only">Your email</label>
                   <Input
+                    id="contact-email"
+                    name="email"
                     type="email"
+                    autoComplete="email"
                     placeholder="Your Email"
                     value={formData.email}
                     onChange={(e) => setFormData({ ...formData, email: e.target.value })}
@@ -137,7 +145,10 @@ const Contact = () => {
                 </div>
 
                 <div>
+                  <label htmlFor="contact-message" className="sr-only">Your message</label>
                   <Textarea
+                    id="contact-message"
+                    name="message"
                     placeholder="Your Message"
                     rows={4}
                     value={formData.message}

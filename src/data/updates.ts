@@ -9,6 +9,34 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    date: "2026-08-23",
+    kind: "fix",
+    title: "Fixed the CV download and service booking links",
+    description:
+      "The “Download CV” button now downloads the résumé correctly, and booking a service goes straight to WhatsApp or email — no more dead links.",
+  },
+  {
+    date: "2026-08-23",
+    kind: "improvement",
+    title: "Clearer buttons in the intro",
+    description:
+      "The main hero button now takes you straight to the contact form, and a new “See My Work” button jumps to the projects.",
+  },
+  {
+    date: "2026-08-23",
+    kind: "improvement",
+    title: "C# playground is easier to find",
+    description:
+      "The interactive C# playground is now linked from the top navigation and the footer, so you can open it from anywhere on the site.",
+  },
+  {
+    date: "2026-08-23",
+    kind: "improvement",
+    title: "Accessibility improvements",
+    description:
+      "Contact form fields and the light/dark theme toggle now carry proper labels, so the site works better with screen readers and keyboard navigation.",
+  },
+  {
     date: "2026-08-21",
     kind: "improvement",
     title: "Redesigned the home page flow",
