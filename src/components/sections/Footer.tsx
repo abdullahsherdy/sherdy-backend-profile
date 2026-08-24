@@ -50,7 +50,7 @@ const Footer = () => (
               <a href="/#contact">Hire me</a>
             </MagneticButton>
             <MagneticButton asChild variant="outline" size="sm">
-              <a href={resumeUrl} download>Résumé</a>
+              <a href={resumeUrl} download>Resume</a>
             </MagneticButton>
           </div>
         </div>
