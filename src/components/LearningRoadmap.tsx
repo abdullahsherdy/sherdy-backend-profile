@@ -182,7 +182,7 @@ const statusDot: Record<LearningNodeData['status'], string> = {
   planned: 'bg-muted-foreground',
 };
 
-const LearningRoadmap = () => {
+const LearningRoadmap = ({ onReady }: { onReady?: () => void }) => {
   const isMobile = useIsMobile();
   const [isVisible, setIsVisible] = useState(false);
   const [selectedNode, setSelectedNode] = useState<LearningFlowNode | null>(null);
@@ -207,6 +207,13 @@ const LearningRoadmap = () => {
     return () => observer.disconnect();
   }, []);
 
+  // Signal the parent once mounted so the home-page scrollspy re-observes the
+  // real #learning section (this component is lazy-loaded behind Suspense, so
+  // at first paint the observed #learning is only the fallback placeholder).
+  useEffect(() => {
+    onReady?.();
+  }, [onReady]);
+
   const onNodeClick = useCallback((event: React.MouseEvent, node: Node) => {
     setSelectedNode(node as LearningFlowNode);
   }, []);
@@ -216,7 +223,7 @@ const LearningRoadmap = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} id="learning" className="py-16 px-4 bg-muted/30">
+    <section ref={sectionRef} id="learning" className="py-16 px-4 bg-muted/30 scroll-mt-24">
       <div className="container mx-auto">
         <div className="text-center mb-12">
           <p className="eyebrow mb-3">What's next</p>

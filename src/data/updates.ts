@@ -11,6 +11,20 @@ export const updates: UpdateEntry[] = [
   {
     date: "2026-08-24",
     kind: "improvement",
+    title: "Reach me from anywhere on the site",
+    description:
+      "A “Hire me” button now sits in the top navigation, and the footer has been rebuilt into a proper landing spot — quick links to every section, ways to connect, a résumé download, and a one-tap “back to top”.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Smoother navigation & better accessibility",
+    description:
+      "The menu now highlights the section you're actually reading — including the contact section at the very bottom — and the mobile menu is fully keyboard- and screen-reader-friendly.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
     title: "Home page refresh — engineering front and center",
     description:
       "A polished pass over the home page: projects now open with a .NET Clean Architecture API, the software-development service highlights a focused set of specialties instead of a long catalog, the experience section points you straight to the project work, and the articles block now matches the rest of the page.",

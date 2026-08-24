@@ -29,13 +29,13 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 - [x] **1E** WorkExperience engineering/teaching balance — call-forward tile fills the empty engineering cell, links to `#projects` — home #9
 - [⏸] **1F** Add a Hero portrait — needs a photo asset from you — home #6
 
-## Section 2 — Navbar & Footer  (owner: `navbar/plan.md`)
+## Section 2 — Navbar & Footer  (owner: `navbar/plan.md`)  ✅ implemented — awaiting review
 
-- [ ] **2A** Persistent nav CTA ("Hire me" → `#contact`, and/or "Résumé") — navbar #2
-- [ ] **2B** Scrollspy fixes: `#learning` re-observe · bottom-activation for Contact · topmost-wins (no flicker) — navbar #3
-- [ ] **2C** Remaining a11y: hamburger `aria-expanded`/`aria-controls` · drawer `role="dialog"`+focus-trap · mobile `aria-current` · label the two `<nav>` landmarks — navbar #4
-- [ ] **2D** Rebuild Footer as a second conversion surface (section mirror · socials · email · résumé · back-to-top) — navbar #6
-- [ ] **2E** Polish: `scroll-mt-24` on `#learning`/`#articles` · logo as router `<Link>` — navbar #7
+- [x] **2A** Persistent nav CTA ("Hire me" → `/#contact`) in desktop bar + top of mobile drawer; also "Hire me" + "Résumé" in the new footer. *Desktop CTA gated to `lg+` so it doesn't crowd the already-dense `md` bar (10 links); mobile drawer always shows it. Résumé path extracted to `resumeUrl` in `portfolio.ts` (single source, reused by Hero/Footer) — the file already existed, so navbar #1's "404" was stale.* — navbar #2
+- [x] **2B** Scrollspy fixes: `#learning` re-observe (LearningRoadmap `onReady` → `roadmapLoaded` re-runs the effect) · bottom-activation for Contact (rAF scroll listener) · topmost-wins (shared `visible` Set, no flicker) — navbar #3
+- [x] **2C** a11y: hamburger `aria-expanded`/`aria-controls` · drawer `role="dialog"`+`aria-modal`+real Tab focus-trap+focus-restore · mobile `aria-current` · labelled `<nav>` landmarks (Primary / Mobile / Footer) — navbar #4
+- [x] **2D** Footer rebuilt as a second conversion surface (brand+tagline · Hire me/Résumé CTAs · Explore section-mirror · Connect socials+email · copyright + reduced-motion-aware back-to-top) — navbar #6
+- [x] **2E** Polish: `scroll-mt-24` on `#learning` (already present on `#articles`) · logo as router `<Link>` — navbar #7
 
 ## Section 3 — Reviews  (owner: `reviews/presentation.md`)
 
@@ -71,3 +71,4 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 
 - 2026-08-24 — tracker created; awaiting choice of starting section.
 - 2026-08-24 — **Section 1 (Home page) implemented** — 1A–1E applied; lint clean (0 errors), build passes (4 routes prerendered). 1F deferred (portrait asset). Awaiting user review before Section 2.
+- 2026-08-24 — **Section 2 (Navbar & Footer) implemented** — 2A–2E applied across Navbar, Footer, Index scrollspy, LearningRoadmap (`onReady`), Hero + `portfolio.ts` (`resumeUrl`). Two `updates.ts` entries prepended. Awaiting user review before Section 3.
