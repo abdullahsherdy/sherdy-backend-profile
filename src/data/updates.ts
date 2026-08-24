@@ -11,9 +11,9 @@ export const updates: UpdateEntry[] = [
   {
     date: "2026-08-24",
     kind: "improvement",
-    title: "Sharper projects, services, and experience",
+    title: "Home page refresh — engineering front and center",
     description:
-      "Projects now lead with backend engineering work, the software-development service lists a focused set of specialties instead of a long catalog, and the experience and articles sections read more cleanly.",
+      "A polished pass over the home page: projects now open with a .NET Clean Architecture API, the software-development service highlights a focused set of specialties instead of a long catalog, the experience section points you straight to the project work, and the articles block now matches the rest of the page.",
   },
   {
     date: "2026-08-23",
