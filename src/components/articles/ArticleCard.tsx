@@ -3,18 +3,13 @@ import { motion, useReducedMotion } from "framer-motion";
 import { CalendarDays, Clock, ArrowRight } from "lucide-react";
 import type { Article } from "@/lib/articles";
 import { getReadingRatio } from "@/hooks/useReadingPosition";
+import { formatDate } from "@/lib/date";
 import TagChip from "./TagChip";
 
 const ArticleCard = ({ article }: { article: Article }) => {
   const reduceMotion = useReducedMotion();
   const progress = getReadingRatio(article.slug);
-  const formattedDate = article.date
-    ? new Date(article.date + "T00:00:00").toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "short",
-        day: "numeric",
-      })
-    : "";
+  const formattedDate = formatDate(article.date);
 
   return (
     <motion.article

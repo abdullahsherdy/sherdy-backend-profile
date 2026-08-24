@@ -101,7 +101,7 @@ const Services = () => (
                 <div className="flex items-center gap-3 mb-3">
                   <service.icon
                     className={`h-5 w-5 group-hover:scale-110 transition-transform ${
-                      service.type === "teaching" ? "text-accent" : "text-primary"
+                      service.type === "teaching" ? "text-accent-text" : "text-primary"
                     }`}
                   />
                   <h3 className="text-xl font-semibold">{service.title}</h3>

@@ -5,11 +5,22 @@ let mermaidId = 0;
 const MermaidDiagram = ({ code }: { code: string }) => {
   const [svg, setSvg] = useState<string>("");
   const [error, setError] = useState(false);
+  const [isDark, setIsDark] = useState(() => document.documentElement.classList.contains("dark"));
   const ref = useRef<HTMLDivElement>(null);
+
+  // Re-render when the site theme toggles. useDarkMode is per-instance state, not a
+  // shared store, so this component can't subscribe to it — watch the root class directly.
+  useEffect(() => {
+    const root = document.documentElement;
+    const observer = new MutationObserver(() => {
+      setIsDark(root.classList.contains("dark"));
+    });
+    observer.observe(root, { attributes: true, attributeFilter: ["class"] });
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     let cancelled = false;
-    const isDark = document.documentElement.classList.contains("dark");
     (async () => {
       try {
         const mermaid = (await import("mermaid")).default;
@@ -27,7 +38,7 @@ const MermaidDiagram = ({ code }: { code: string }) => {
     return () => {
       cancelled = true;
     };
-  }, [code]);
+  }, [code, isDark]);
 
   if (error) {
     return <pre className="my-6 rounded-lg border border-destructive/40 bg-muted p-4 text-sm">{code}</pre>;

@@ -112,38 +112,80 @@ export const KNOWS_ABOUT: string[] = [
 
 ];
 
-/** Teaching + engineering services (mirrors src/components/sections/Services.tsx). */
+/**
+ * Teaching + engineering services (mirrors src/components/sections/Services.tsx).
+ * `type` maps each to the right schema.org class: structured programs are `Course`,
+ * ongoing/bespoke work is `Service`. Each becomes a top-level @graph node (below)
+ * and is referenced from the Person's `makesOffer` by @id, so every offering is a
+ * single, properly-typed entity rather than a generic inline Offer.
+ */
 const OFFERS = [
   {
+    id: "private-courses",
+    type: "Course",
     name: "Private Courses",
     description:
       "1:1 structured programming courses tailored to your level and goals — fundamentals, problem-solving, OOP, databases, and backend development.",
   },
   {
+    id: "private-mentorship",
+    type: "Service",
     name: "Private Mentorship",
     description:
       "Ongoing 1:1 mentorship — roadmap planning, code reviews, project guidance, and interview preparation.",
   },
   {
+    id: "group-courses",
+    type: "Course",
     name: "Group Courses",
     description:
       "Cohort-based programming courses for small groups with structured lessons, live coding, and collaborative projects.",
   },
   {
+    id: "software-development",
+    type: "Service",
     name: "End-to-End Software Development",
     description:
       "Custom software from requirements to production — Clean Architecture APIs, database design, React/Next.js frontends, Docker deployment, and CI/CD.",
   },
 ] as const;
 
+const offeringId = (slug: string) => `${SITE_URL}/#${slug}`;
+
+/**
+ * One node per offering. Courses carry a `hasCourseInstance` with delivery mode;
+ * services carry `serviceType` + `areaServed`. No price or schedule is emitted —
+ * those aren't fixed, and inventing them would be false structured data.
+ */
+function offeringNodes() {
+  return OFFERS.map((o) => {
+    const base = {
+      "@type": o.type,
+      "@id": offeringId(o.id),
+      name: o.name,
+      description: o.description,
+      provider: { "@id": PERSON_ID },
+    };
+    if (o.type === "Course") {
+      return {
+        ...base,
+        hasCourseInstance: {
+          "@type": "CourseInstance",
+          courseMode: ["online", "onsite"],
+        },
+      };
+    }
+    return {
+      ...base,
+      serviceType: o.name,
+      areaServed: [{ "@type": "Country", name: "Egypt" }, "Worldwide (remote)"],
+    };
+  });
+}
+
 const makesOffer = OFFERS.map((o) => ({
   "@type": "Offer",
-  itemOffered: {
-    "@type": "Service",
-    name: o.name,
-    description: o.description,
-    provider: { "@id": PERSON_ID },
-  },
+  itemOffered: { "@id": offeringId(o.id) },
 }));
 
 /** The central Person entity, referenced by @id everywhere else. */
@@ -249,17 +291,26 @@ function breadcrumbNode(items: { name: string; url: string }[]) {
   };
 }
 
-/** Full homepage @graph: Person + WebSite + ProfilePage + FAQ. */
+/** Full homepage @graph: Person + WebSite + ProfilePage + Course/Service offerings + FAQ. */
 export function homePageJsonLd() {
   return {
     "@context": "https://schema.org",
-    "@graph": [personNode(), webSiteNode(), profilePageNode(), faqNode()],
+    "@graph": [
+      personNode(),
+      webSiteNode(),
+      profilePageNode(),
+      ...offeringNodes(),
+      faqNode(),
+    ],
   };
 }
 
 /** Article page @graph: Article + BreadcrumbList. */
 export function articlePageJsonLd(article: Article) {
   const url = `${SITE_URL}/articles/${article.slug}`;
+  const image = article.cover
+    ? (/^https?:\/\//.test(article.cover) ? article.cover : `${SITE_URL}${article.cover.startsWith("/") ? "" : "/"}${article.cover}`)
+    : OG_IMAGE;
   return {
     "@context": "https://schema.org",
     "@graph": [
@@ -269,11 +320,11 @@ export function articlePageJsonLd(article: Article) {
         headline: article.title,
         description: article.description,
         datePublished: article.date,
-        dateModified: article.date,
+        dateModified: article.dateModified,
         inLanguage: "en",
         keywords: article.tags.join(", "),
         articleSection: article.tags[0] ?? "Software Engineering",
-        image: OG_IMAGE,
+        image,
         url,
         mainEntityOfPage: { "@type": "WebPage", "@id": url },
         author: { "@id": PERSON_ID },

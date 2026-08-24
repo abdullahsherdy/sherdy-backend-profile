@@ -10,17 +10,20 @@ const ArticleList = () => {
 
   return (
     <div>
-      <div className="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter articles by tag">
-        <TagChip tag="all" active={activeTag === null} onClick={() => setActiveTag(null)} />
-        {allTags.map((tag) => (
-          <TagChip
-            key={tag}
-            tag={tag}
-            active={activeTag === tag}
-            onClick={() => setActiveTag(activeTag === tag ? null : tag)}
-          />
-        ))}
-      </div>
+      {/* A single-tag filter is meaningless — only offer it once there's more than one tag. */}
+      {allTags.length > 1 && (
+        <div className="flex flex-wrap gap-2 mb-8" role="group" aria-label="Filter articles by tag">
+          <TagChip tag="all" active={activeTag === null} onClick={() => setActiveTag(null)} />
+          {allTags.map((tag) => (
+            <TagChip
+              key={tag}
+              tag={tag}
+              active={activeTag === tag}
+              onClick={() => setActiveTag(activeTag === tag ? null : tag)}
+            />
+          ))}
+        </div>
+      )}
       {visible.length === 0 ? (
         <p className="text-muted-foreground py-12 text-center">No articles for this tag yet.</p>
       ) : (

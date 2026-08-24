@@ -1,34 +1,21 @@
-import { Globe, Youtube, Linkedin } from "lucide-react";
+import ReaderCta from "./ReaderCta";
+import AuthorByline from "./AuthorByline";
 import { author } from "@/lib/author";
 
+/**
+ * Article footer. Leads with the reader → hire/learn conversion band (the warmest
+ * lead the site gets), then a lighter "follow my work" byline underneath so the
+ * social links stay available but secondary.
+ */
 const AuthorFooter = () => (
   <footer className="mt-16 rounded-xl border border-border bg-muted/30 p-6 sm:p-8 not-prose">
-    <p className="font-display font-bold text-lg mb-1">
-      {author.name} <span className="text-muted-foreground font-normal text-sm">— {author.title}</span>
-    </p>
-    <p className="text-sm text-muted-foreground mb-4">
-      Found this useful? I publish more .NET and backend engineering content:
-    </p>
-    <ul className="space-y-2 text-sm">
-      <li>
-        <a href={author.website} className="inline-flex items-center gap-2 text-primary hover:underline">
-          <Globe className="h-4 w-4" /> abdullahsherdy.tech
-        </a>{" "}
-        <span className="text-muted-foreground">— articles, projects, and contact</span>
-      </li>
-      <li>
-        <a href={author.youtube} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline">
-          <Youtube className="h-4 w-4" /> {author.youtubeHandle}
-        </a>{" "}
-        <span className="text-muted-foreground">— video walkthroughs and tutorials</span>
-      </li>
-      <li>
-        <a href={author.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 text-primary hover:underline">
-          <Linkedin className="h-4 w-4" /> {author.linkedinHandle}
-        </a>{" "}
-        <span className="text-muted-foreground">— connect and follow my work</span>
-      </li>
-    </ul>
+    <ReaderCta />
+    <div className="mt-6 border-t border-border/60 pt-5">
+      <p className="text-sm text-muted-foreground mb-2">
+        {author.name} publishes more .NET and backend engineering content — follow along:
+      </p>
+      <AuthorByline showIdentity={false} />
+    </div>
   </footer>
 );
 

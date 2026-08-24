@@ -1,5 +1,9 @@
 import { useState } from "react";
 import { ThumbsDown, ThumbsUp } from "lucide-react";
+import hljs from "highlight.js/lib/core";
+import csharp from "highlight.js/lib/languages/csharp";
+
+hljs.registerLanguage("csharp", csharp);
 
 interface CompareSection {
   kind: "GOOD" | "BAD";
@@ -27,6 +31,7 @@ const CodeCompare = ({ source }: { source: string }) => {
 
   if (sections.length === 0) return null;
   const current = sections[active];
+  const highlighted = hljs.highlight(current.code, { language: "csharp", ignoreIllegals: true }).value;
 
   return (
     <div className="my-8 not-prose overflow-hidden rounded-xl border border-border">
@@ -56,7 +61,9 @@ const CodeCompare = ({ source }: { source: string }) => {
         })}
       </div>
       <div className={`border-l-4 ${current.kind === "GOOD" ? "border-emerald-500" : "border-red-500"} bg-[#0d1117]`}>
-        <pre className="overflow-x-auto p-4 text-sm leading-relaxed text-[#e6edf3] font-mono">{current.code}</pre>
+        <pre className="overflow-x-auto p-4 text-sm leading-relaxed text-[#e6edf3] font-mono">
+          <code className="hljs language-csharp bg-transparent p-0" dangerouslySetInnerHTML={{ __html: highlighted }} />
+        </pre>
       </div>
     </div>
   );

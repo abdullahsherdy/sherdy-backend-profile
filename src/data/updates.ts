@@ -11,6 +11,34 @@ export const updates: UpdateEntry[] = [
   {
     date: "2026-08-24",
     kind: "improvement",
+    title: "Faster, lighter page loads",
+    description:
+      "The home page now ships less code up front — reviews load quietly in the background and shared libraries are cached between pages — so the site opens and moves between pages noticeably faster.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Easier-to-read text and calmer motion",
+    description:
+      "Amber text now meets accessibility contrast standards so it's readable for everyone, the browser's top bar matches your light or dark choice, and if you prefer reduced motion the last few animations now hold still too.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Sharper, theme-aware article reading",
+    description:
+      "Good-vs-bad code comparisons are now syntax-highlighted, self-check quiz answers render formatted text and code, and diagrams instantly follow light/dark mode when you switch themes.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Every article points you forward",
+    description:
+      "Articles and the articles list now close with clear next steps — quick ways to hire me for engineering work or learn with me — plus links to follow along on YouTube and LinkedIn.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
     title: "Reviews you can filter — clients vs. students",
     description:
       "The reviews section now sorts feedback into “Clients & Engineering” and “Students & Parents” tabs, leads each with a standout review, and shows every reviewer's initials and date. The overall star average only appears once there are enough reviews to be meaningful.",
