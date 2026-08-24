@@ -42,8 +42,6 @@ async function discoverRoutes() {
     const slug = frontmatterField(raw, "slug") || file.replace(/\.md$/, "");
     articleRoutes.push(`/articles/${slug}`);
   }
-  // /playground is an interactive Monaco tool with no SEO value — deliberately excluded.
-  //
   // Order matters: `vite preview` serves dist/index.html as the SPA fallback for any
   // route without its own file. We overwrite dist/index.html with the homepage snapshot,
   // which bakes the homepage @graph (incl. FAQPage) into that file as static <script> tags

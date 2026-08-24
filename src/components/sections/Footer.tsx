@@ -15,7 +15,6 @@ const exploreLinks = [
 
 const pageLinks = [
   { to: "/articles", label: "Articles" },
-  { to: "/playground", label: "Playground" },
   { to: "/updates", label: "Updates" },
 ];
 
@@ -43,8 +42,8 @@ const Footer = () => (
             <span className="text-lg font-bold font-display">Abdullah Sherdy</span>
           </Link>
           <p className="text-sm text-muted-foreground max-w-sm mb-5 leading-relaxed">
-            .NET Backend Engineer &amp; Software Instructor in Cairo, Egypt — building
-            production APIs and teaching the fundamentals behind them.
+            Software Engineer, Full-Stack Developer &amp; Coding Instructor in Cairo, Egypt —
+            building production APIs and teaching the fundamentals behind them.
           </p>
           <div className="flex flex-wrap gap-3">
             <MagneticButton asChild size="sm">

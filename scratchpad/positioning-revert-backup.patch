@@ -1,0 +1,404 @@
+diff --git a/features/IMPLEMENTATION.md b/features/IMPLEMENTATION.md
+index 381a22e..081665a 100644
+--- a/features/IMPLEMENTATION.md
++++ b/features/IMPLEMENTATION.md
+@@ -71,6 +71,15 @@ Deliberately **not** implemented; the Supabase split (5B-1) captured the real pe
+ - `import.meta.glob(..., { eager, query: "?raw" })` ships each file's *body* inseparably from its frontmatter; a clean split would require a **new build-time frontmatter-extraction step** — a new failure surface in the SSG pipeline — for a marginal payoff.
+ - Revisit only when article volume grows enough that body payload is a measurable cost.
+ 
++## Section 6 — Positioning consolidation + playground removal  (owner: `plans/zippy-napping-mochi.md`)  ✅ implemented
++
++Collapsed **four competing lead identities** (".NET Backend Engineer" / "Full-Stack Software Engineer" / "Software Engineer & Specialised Coding Instructor" / "Software Engineer") into **one**: `Software Engineer · Backend-Focused` (full-stack is a *capability/range*, never a co-title). Teaching is kept as a **secondary** credibility track — hero bio + footer clause + its existing Work Experience/Services homes — not the primary title.
++
++- [x] **6A** Identity synced across every user-facing + SEO surface — `lib/author.ts` byline, `data/portfolio.ts` `roles` (Hero typewriter) + one project role (`Developer`→`Engineer`), `Hero.tsx` (whoami · subhead · bio), `pages/Index.tsx` (title + description), `lib/structuredData.ts` (`jobTitle` · Person `description` · `profilePageNode` name · FAQ answer · `KNOWS_ABOUT` teaching-string trim), `index.html` (title · description · keywords · OG · Twitter · JSON-LD — L50 Person `description` now matches `structuredData.ts` verbatim, resolving the old two-conflicting-descriptions bug), `Footer.tsx` tagline, `Contact.tsx` Focus line. Straggler assets also synced: `public/og-image.svg` (+ re-exported `og-image.png` via new `scripts/generate-og-image.mjs`), `public/robots.txt`.
++- [x] **6B** Removed the standalone `/playground` page — `pages/PlaygroundPage.tsx` deleted; route dropped from `App.tsx`; nav link dropped from `Navbar.tsx`; footer `pageLinks` entry dropped; `prerender.mjs`'s stale `/playground` exclusion comment removed. The in-article **"Try it"** runner (`CodeBlock` → `PlaygroundModal` → shared `components/playground/*`) is untouched and still live.
++
++*Integrity guard honored: real `experience[]` employment titles were not rebranded. User refinements preserved: the article byline (`author.ts`) and Hero typewriter (`roles`) keep a teaching credential by the user's on-disk edit, so teaching stays visible on those two surfaces while the hero headline + SEO title stay engineering-lead.*
++
+ ---
+ 
+ ## Cross-section notes
+@@ -87,3 +96,4 @@ Deliberately **not** implemented; the Supabase split (5B-1) captured the real pe
+ - 2026-08-24 — **Section 3 (Reviews) implemented** — 3A–3C applied across `lib/reviews.ts` (`showAverage` gate + `formatReviewDate`), `ReviewCard` (avatars, dates, `featured` lead variant), `Reviews.tsx` (segmented tabs + client-side filter + lead card), `Hero.tsx` (average gated), `ReviewForm`/`StarRating` (validation parity + a11y). One `updates.ts` entry prepended. Lint clean (0 errors), build passes (4 routes). Per user instruction, proceeding to Section 4 without pausing — full set to be reviewed at the end.
+ - 2026-08-24 — **Section 4 (Content pages) implemented** — 4A–4E applied. New shared modules: `lib/date.ts`, `shared/PageShell.tsx`, `articles/AuthorByline.tsx`, `articles/ReaderCta.tsx`. Rewrites: `AuthorFooter`, `ArticlesPage`, `PlaygroundPage`, `UpdatesPage`, `NotFound`, `ArticlePage` (all on `PageShell`), `Seo` (`image`/`noindex` props), `MermaidDiagram` (theme reactivity), `CodeCompare` (hljs), `Quiz` (markdown answers). Data: `articles.ts` (`dateModified`), `structuredData.ts` (article `image` + real `dateModified`), `package.json` (`highlight.js` declared). Two `updates.ts` entries prepended. Lint clean (0 errors, 10 pre-existing warnings), build passes (4 routes). Proceeding to Section 5 without pausing.
+ - 2026-08-24 — **Section 5 (Site-wide technical) implemented** — 5A–5E applied. 5A: `--accent-text` token (`index.css` + `tailwind.config.ts`) + text-usage swaps across Hero/Reviews/ReaderCta/ReviewCard/Services. 5B-1: lazy `getSupabase()` dynamic import (`supabase.ts` + `reviews.ts`); 5B-2 deferred (documented). 5C: `manualChunks` + `QueryClient` tuning (`vite.config.ts`, `App.tsx`), dead deps `recharts`/`embla-carousel-react` + `ui/chart.tsx`/`ui/carousel.tsx` removed, reduced-motion gaps closed (`index.css` + `UpdatesPage`), `theme-color` follows toggle (`useDarkMode` rewrite), magnetic-hover shadow tokenized. 5D: typed `Course`/`Service` offering nodes in `structuredData.ts` (AggregateRating deferred). 5E: `docs/design-system.md` sync. Two `updates.ts` entries prepended. Per user instruction, all sections now implemented — full set (1–5) ready for review.
++- 2026-08-24 — **Section 6 (Positioning consolidation + playground removal) implemented** — one identity ("Software Engineer · Backend-Focused"; full-stack as a capability; teaching secondary) synced across `author.ts` / `portfolio.ts` / `Hero.tsx` / `Index.tsx` / `structuredData.ts` / `index.html` / `Footer.tsx` / `Contact.tsx` + `og-image.svg`/`.png` (new `scripts/generate-og-image.mjs`) + `robots.txt`. Standalone `/playground` page removed (`PlaygroundPage.tsx` deleted; `App`/`Navbar`/`Footer`/`prerender.mjs` refs cleaned); in-article "Try it" runner kept. Docs synced (`design-system.md` L15 identity line; this tracker). Two `updates.ts` entries prepended. User's manual teaching-credential edits on the byline + typewriter preserved.
+diff --git a/index.html b/index.html
+index a105ff4..c32f207 100644
+--- a/index.html
++++ b/index.html
+@@ -17,13 +17,13 @@
+         }
+       } catch (e) {}
+     </script>
+-    <title>Abdullah Sherdy - Software Engineer | Full-Stack Developer | Coding Instructor</title>
+-    <meta name="description" content="Abdullah Sherdy - Full-Stack Software Engineer & Coding Instructor. Building production APIs and web apps with .NET, C#, ASP.NET Core, Node.js, React, Next.js & TypeScript." />
+-    <meta name="keywords" content="Abdullah Sherdy, Abdallah Sherdy, عبدالله شردي, Software Engineer, Full-Stack Developer, Backend Developer, .NET Developer, C#, ASP.NET Core, Node.js, React, Next.js, TypeScript, SQL Server, Docker, Clean Architecture, REST APIs, Coding Instructor, Cairo Egypt, مهندس برمجيات, مطور باك اند, مطور دوت نت, مبرمج, مدرس برمجة, مهندس برمجيات مصر, تعليم برمجة, دورات برمجة" />
++    <title>Abdullah Sherdy — Software Engineer, Backend-Focused | Cairo, Egypt</title>
++    <meta name="description" content="Abdullah Sherdy is a backend-focused software engineer in Cairo, Egypt — 2+ years building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, and full-stack capable with React & Next.js. Available for full-time, contract, and freelance work. Also teaches backend development through courses and mentorship." />
++    <meta name="keywords" content="Abdullah Sherdy, Abdallah Sherdy, عبدالله شردي, Software Engineer, Backend Developer, .NET Developer, Backend Engineer, C#, ASP.NET Core, Node.js, React, Next.js, TypeScript, SQL Server, Docker, Clean Architecture, REST APIs, Full-Stack Development, Coding Instructor, Cairo Egypt, مهندس برمجيات, مطور باك اند, مطور دوت نت, مبرمج, مدرس برمجة, مهندس برمجيات مصر, تعليم برمجة, دورات برمجة" />
+     <meta name="author" content="Abdullah Sherdy" />
+     <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+-    <meta property="og:title" content="Abdullah Sherdy - Software Engineer | Full-Stack Developer | Coding Instructor" />
+-    <meta property="og:description" content="Full-Stack Software Engineer & Coding Instructor. Production APIs and web apps with .NET, C#, ASP.NET Core, Node.js, React & Next.js." />
++    <meta property="og:title" content="Abdullah Sherdy — Software Engineer, Backend-Focused | Cairo, Egypt" />
++    <meta property="og:description" content="Abdullah Sherdy is a backend-focused software engineer in Cairo, Egypt — 2+ years building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, and full-stack capable with React & Next.js. Available for full-time, contract, and freelance work. Also teaches backend development through courses and mentorship." />
+     <meta property="og:type" content="website" />
+     <meta property="og:site_name" content="Abdullah Sherdy" />
+     <meta property="og:locale" content="en_US" />
+@@ -34,8 +34,8 @@
+     <meta property="og:image:height" content="630" />
+     <link rel="canonical" href="https://www.abdullahsherdy.tech/" />
+     <meta name="twitter:card" content="summary_large_image" />
+-    <meta name="twitter:title" content="Abdullah Sherdy - Software Engineer | Full-Stack Developer | Coding Instructor" />
+-    <meta name="twitter:description" content="Full-Stack Software Engineer & Coding Instructor. Production APIs and web apps with .NET, C#, ASP.NET Core, Node.js, React & Next.js." />
++    <meta name="twitter:title" content="Abdullah Sherdy — Software Engineer, Backend-Focused | Cairo, Egypt" />
++    <meta name="twitter:description" content="Abdullah Sherdy is a backend-focused software engineer in Cairo, Egypt — 2+ years building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, and full-stack capable with React & Next.js. Available for full-time, contract, and freelance work. Also teaches backend development through courses and mentorship." />
+     <meta name="twitter:image" content="https://www.abdullahsherdy.tech/og-image.png" />
+     <script type="application/ld+json">
+     {
+@@ -46,8 +46,8 @@
+       "alternateName": ["عبدالله شردي", "Abdullah Sherdy", "Abdallah Sherdy", "Abdullah Elsherdy", "Sherdy", "شردي"],
+       "url": "https://www.abdullahsherdy.tech",
+       "image": "https://www.abdullahsherdy.tech/og-image.png",
+-      "jobTitle": ["Software Engineer", ".NET Backend Engineer", "Coding Instructor"],
+-      "description": "Software Engineer, Full-Stack Developer & Coding Instructor based in Cairo, Egypt.",
++      "jobTitle": ["Software Engineer", "Backend Engineer", ".NET Developer", "Coding Instructor"],
++      "description": "Backend-focused software engineer based in Cairo, Egypt — building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, full-stack capable with React and Next.js. Also teaches backend development through private courses, group courses, and mentorship.",
+       "email": "mailto:abdullah.sherdy.work@gmail.com",
+       "knowsLanguage": ["Arabic", "English"],
+       "knowsAbout": ["C#", ".NET", "ASP.NET Core", "Entity Framework Core", "Node.js", "NestJS", "React", "Next.js", "TypeScript", "SQL Server", "MongoDB", "Docker", "CI/CD", "Clean Architecture", "REST APIs"],
+diff --git a/public/og-image.png b/public/og-image.png
+index e57a4d0..54c5d94 100644
+Binary files a/public/og-image.png and b/public/og-image.png differ
+diff --git a/public/og-image.svg b/public/og-image.svg
+index 4f903f7..1b323c3 100644
+--- a/public/og-image.svg
++++ b/public/og-image.svg
+@@ -13,13 +13,13 @@
+   <rect x="0" y="0" width="8" height="630" fill="#2AA093"/>
+ 
+   <!-- terminal line -->
+-  <text x="100" y="205" font-family="Consolas, 'Courier New', monospace" font-size="30" fill="#2AA093">$ whoami <tspan fill="#7A8699">→</tspan> software engineer <tspan fill="#F5B82E">&amp;&amp;</tspan> coding instructor</text>
++  <text x="100" y="205" font-family="Consolas, 'Courier New', monospace" font-size="30" fill="#2AA093">$ whoami <tspan fill="#7A8699">→</tspan> backend-focused software engineer</text>
+ 
+   <!-- name -->
+   <text x="96" y="315" font-family="Arial, Helvetica, sans-serif" font-size="92" font-weight="700" fill="#F2F6F9">Abdullah Sherdy</text>
+ 
+   <!-- headline -->
+-  <text x="100" y="385" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#AEB9C6">Software Engineer <tspan fill="#2AA093">|</tspan> Full-Stack Developer <tspan fill="#2AA093">|</tspan> Coding Instructor</text>
++  <text x="100" y="385" font-family="Arial, Helvetica, sans-serif" font-size="34" fill="#AEB9C6">Software Engineer <tspan fill="#2AA093">·</tspan> Backend-Focused</text>
+ 
+   <!-- tech row -->
+   <text x="100" y="480" font-family="Consolas, 'Courier New', monospace" font-size="24" fill="#7A8699">C#  ·  ASP.NET Core  ·  Node.js  ·  React  ·  Docker  ·  Swagger/OpenAPI</text>
+diff --git a/public/robots.txt b/public/robots.txt
+index 2f8d2f5..610db87 100644
+--- a/public/robots.txt
++++ b/public/robots.txt
+@@ -1,5 +1,5 @@
+ # robots.txt — https://www.abdullahsherdy.tech
+-# Abdullah Sherdy — .NET Backend Engineer & Coding Instructor, Cairo, Egypt
++# Abdullah Sherdy — Software Engineer, Backend-Focused & Coding Instructor, Cairo, Egypt
+ # Full crawl access is intentional, including AI/answer-engine crawlers.
+ 
+ # --- Search engines ---
+diff --git a/scripts/prerender.mjs b/scripts/prerender.mjs
+index 99ceba4..57ddd83 100644
+--- a/scripts/prerender.mjs
++++ b/scripts/prerender.mjs
+@@ -42,8 +42,6 @@ async function discoverRoutes() {
+     const slug = frontmatterField(raw, "slug") || file.replace(/\.md$/, "");
+     articleRoutes.push(`/articles/${slug}`);
+   }
+-  // /playground is an interactive Monaco tool with no SEO value — deliberately excluded.
+-  //
+   // Order matters: `vite preview` serves dist/index.html as the SPA fallback for any
+   // route without its own file. We overwrite dist/index.html with the homepage snapshot,
+   // which bakes the homepage @graph (incl. FAQPage) into that file as static <script> tags
+diff --git a/src/App.tsx b/src/App.tsx
+index be8e772..db9de4d 100644
+--- a/src/App.tsx
++++ b/src/App.tsx
+@@ -9,7 +9,6 @@ import NotFound from "./pages/NotFound";
+ 
+ const ArticlesPage = lazy(() => import("./pages/ArticlesPage"));
+ const ArticlePage = lazy(() => import("./pages/ArticlePage"));
+-const PlaygroundPage = lazy(() => import("./pages/PlaygroundPage"));
+ const UpdatesPage = lazy(() => import("./pages/UpdatesPage"));
+ 
+ const queryClient = new QueryClient({
+@@ -34,7 +33,6 @@ const App = () => (
+             <Route path="/" element={<Index />} />
+             <Route path="/articles" element={<ArticlesPage />} />
+             <Route path="/articles/:slug" element={<ArticlePage />} />
+-            <Route path="/playground" element={<PlaygroundPage />} />
+             <Route path="/updates" element={<UpdatesPage />} />
+             {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+             <Route path="*" element={<NotFound />} />
+diff --git a/src/components/sections/Contact.tsx b/src/components/sections/Contact.tsx
+index c026021..906bca3 100644
+--- a/src/components/sections/Contact.tsx
++++ b/src/components/sections/Contact.tsx
+@@ -93,7 +93,7 @@ const Contact = () => {
+                   <Users className="h-4 w-4 text-primary mt-0.5 shrink-0" />
+                   <div>
+                     <p className="font-medium text-foreground">Focus</p>
+-                    <p className="text-muted-foreground">.NET / Node.js · Full-stack · Instruction</p>
++                    <p className="text-muted-foreground"> Backend · .NET / Node.js · Full-stack · Teaching · Mentoring</p>
+                   </div>
+                 </div>
+               </div>
+diff --git a/src/components/sections/Footer.tsx b/src/components/sections/Footer.tsx
+index 074151d..a8f4b95 100644
+--- a/src/components/sections/Footer.tsx
++++ b/src/components/sections/Footer.tsx
+@@ -15,7 +15,6 @@ const exploreLinks = [
+ 
+ const pageLinks = [
+   { to: "/articles", label: "Articles" },
+-  { to: "/playground", label: "Playground" },
+   { to: "/updates", label: "Updates" },
+ ];
+ 
+@@ -43,15 +42,15 @@ const Footer = () => (
+             <span className="text-lg font-bold font-display">Abdullah Sherdy</span>
+           </Link>
+           <p className="text-sm text-muted-foreground max-w-sm mb-5 leading-relaxed">
+-            .NET Backend Engineer &amp; Software Instructor in Cairo, Egypt — building
+-            production APIs and teaching the fundamentals behind them.
++            Software Engineer · Backend-Focused, based in Egypt — building production
++            APIs and services, and teaching the fundamentals behind them.
+           </p>
+           <div className="flex flex-wrap gap-3">
+             <MagneticButton asChild size="sm">
+               <a href="/#contact">Hire me</a>
+             </MagneticButton>
+             <MagneticButton asChild variant="outline" size="sm">
+-              <a href={resumeUrl} download>Résumé</a>
++              <a href={resumeUrl} download>Resume</a>
+             </MagneticButton>
+           </div>
+         </div>
+diff --git a/src/components/sections/Hero.tsx b/src/components/sections/Hero.tsx
+index 07ef1c1..6754396 100644
+--- a/src/components/sections/Hero.tsx
++++ b/src/components/sections/Hero.tsx
+@@ -29,7 +29,7 @@ const Hero = () => {
+ 
+         <AnimatedSection animation="fade-up" delay={150}>
+           <p className="font-mono text-xs sm:text-sm md:text-base text-primary mb-4 break-words">
+-            $ whoami <span className="text-muted-foreground">→</span> software engineer <span className="text-accent-text">&amp;&amp;</span> coding instructor
++            $ whoami <span className="text-muted-foreground">→</span> backend-focused software engineer
+           </p>
+         </AnimatedSection>
+ 
+@@ -38,15 +38,16 @@ const Hero = () => {
+             Abdullah Sherdy
+           </h1>
+           <p className="font-display text-base sm:text-lg md:text-2xl font-medium text-muted-foreground mb-6">
+-            Software Engineer <span className="text-primary">|</span> Full-Stack Developer <span className="text-primary">|</span> Coding Instructor
++            Software Engineer <span className="text-primary">·</span> Backend-Focused
+           </p>
+         </AnimatedSection>
+ 
+         <AnimatedSection animation="fade-up" delay={450}>
+           <p className="text-base md:text-lg mb-10 md:mb-12 max-w-2xl mx-auto text-muted-foreground leading-relaxed">
+-            .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs
+-            with ASP.NET Core and Node.js — and teaching backend development to 100+ students
+-            at Netpoint, iSchool, DEPI, and independently.
++            Backend-focused software engineer in Cairo, Egypt — 2+ years building production
++            APIs and services with C#/.NET, ASP.NET Core, and Node.js, and taking features
++            full-stack with React &amp; Next.js when the product needs it. Also teaches Programming
++            and Backend Development to 100+ students at Netpoint, iSchool, and DEPI.
+           </p>
+         </AnimatedSection>
+ 
+diff --git a/src/components/sections/Navbar.tsx b/src/components/sections/Navbar.tsx
+index 267743f..4bef540 100644
+--- a/src/components/sections/Navbar.tsx
++++ b/src/components/sections/Navbar.tsx
+@@ -14,7 +14,6 @@ const navLinks: { href: string; id: string; label: string; route?: boolean }[] =
+   { href: "/#work-experience", id: "work-experience", label: "Experience" },
+   { href: "/#services", id: "services", label: "Services" },
+   { href: "/articles", id: "articles", label: "Articles", route: true },
+-  { href: "/playground", id: "playground", label: "Playground", route: true },
+   { href: "/#reviews", id: "reviews", label: "Reviews" },
+   { href: "/#about", id: "about", label: "About" },
+   { href: "/#contact", id: "contact", label: "Contact" },
+diff --git a/src/data/portfolio.ts b/src/data/portfolio.ts
+index 9741e3c..eaf553c 100644
+--- a/src/data/portfolio.ts
++++ b/src/data/portfolio.ts
+@@ -124,7 +124,7 @@ export const projects: Project[] = [
+     title: "GenzApp — Authentication Module",
+     description:
+       "The authentication module for a client app — third-party sign-in, session management, and secure token handling, built as a drop-in unit.",
+-    role: "Backend Developer (auth module)",
++    role: "Backend Engineer (auth module)",
+     impact: [
+       "Designed OAuth-based third-party sign-in with JWT session management, secure token storage, and refresh handling",
+       "Exposed the module behind a clean RESTful API with clear integration contracts, so it could ship as a standalone unit",
+@@ -225,5 +225,5 @@ export const experience: Experience[] = [
+   },
+ ];
+ 
+-export const roles = ["Software Engineer", "Full-Stack Developer", "Backend Developer", "Technical Mentor", "Coding Instructor"];
++export const roles = ["Software Engineer", "Backend Engineer", ".NET Developer", "API Developer", "Coding Instructor", "Technical Mentor"];
+ 
+diff --git a/src/data/updates.ts b/src/data/updates.ts
+index ce05b13..41a7fcb 100644
+--- a/src/data/updates.ts
++++ b/src/data/updates.ts
+@@ -8,6 +8,20 @@ export interface UpdateEntry {
+ }
+ 
+ export const updates: UpdateEntry[] = [
++  {
++    date: "2026-08-24",
++    kind: "improvement",
++    title: "One clear professional identity",
++    description:
++      "The site now presents a single, consistent identity — a backend-focused software engineer who's full-stack capable — across the hero, page titles, and article bylines, so it's immediately clear what I do. Teaching stays front and center in its own Work Experience and Services sections.",
++  },
++  {
++    date: "2026-08-24",
++    kind: "improvement",
++    title: "Streamlined the top navigation",
++    description:
++      "The standalone C# playground page was removed to keep the site focused on the work that matters. You can still edit and run the C# examples right inside the articles.",
++  },
+   {
+     date: "2026-08-24",
+     kind: "improvement",
+diff --git a/src/lib/author.ts b/src/lib/author.ts
+index 8d044b1..9592e1b 100644
+--- a/src/lib/author.ts
++++ b/src/lib/author.ts
+@@ -1,6 +1,6 @@
+ export const author = {
+   name: "Abdullah Sherdy",
+-  title: "Software Engineer & Specialised Coding Instructor",
++  title: "Software Engineer · Backend-Focused & Coding Instructor/Mentor",
+   website: "https://www.abdullahsherdy.tech",
+   youtube: "https://www.youtube.com/channel/UCOP9CFwH4OVHHQaznTgNDsw",
+   youtubeHandle: "@abdullah.sherdy",
+diff --git a/src/lib/structuredData.ts b/src/lib/structuredData.ts
+index 6197841..5a02329 100644
+--- a/src/lib/structuredData.ts
++++ b/src/lib/structuredData.ts
+@@ -66,9 +66,6 @@ export const KNOWS_ABOUT: string[] = [
+   "Backend Development",
+   "Full-Stack Development",
+   "Programming Instruction",
+-  "Software Mentorship",
+-  "Private Courses",
+-  "Group Courses",
+   "Mentorship",
+   "Code Reviews",
+   "Project Guidance",
+@@ -102,7 +99,6 @@ export const KNOWS_ABOUT: string[] = [
+   "Database Management",
+   "Web Application Development",
+   "Software Project Management",
+-  "Technical Mentorship",
+   "Software Design Principles",
+   "Code Quality",
+   "Refactoring Techniques",
+@@ -197,9 +193,9 @@ function personNode() {
+     alternateName: ALTERNATE_NAMES,
+     url: SITE_URL,
+     image: OG_IMAGE,
+-    jobTitle: ["Software Engineer", ".NET Backend Engineer", "Coding Instructor"],
++    jobTitle: ["Software Engineer", "Backend Engineer", ".NET Developer", "Coding Instructor"],
+     description:
+-      ".NET Backend Engineer and Coding Instructor based in Cairo, Egypt — building production APIs with ASP.NET Core and Node.js, and teaching programming through private courses, group courses, and mentorship.",
++      "Backend-focused software engineer based in Cairo, Egypt — building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, full-stack capable with React and Next.js. Also teaches backend development through private courses, group courses, and mentorship.",
+     email: `mailto:${socials.email}`,
+     knowsAbout: KNOWS_ABOUT,
+     knowsLanguage: [
+@@ -236,7 +232,7 @@ function profilePageNode() {
+     "@type": "ProfilePage",
+     "@id": `${SITE_URL}/#profilepage`,
+     url: `${SITE_URL}/`,
+-    name: "Abdullah Sherdy — .NET Backend Engineer & Coding Instructor | Cairo, Egypt",
++    name: "Abdullah Sherdy — Software Engineer, Backend-Focused | Cairo, Egypt",
+     inLanguage: "en",
+     isPartOf: { "@id": WEBSITE_ID },
+     about: { "@id": PERSON_ID },
+@@ -251,7 +247,7 @@ function profilePageNode() {
+ const FAQ: { q: string; a: string }[] = [
+   {
+     q: "Is Abdullah Sherdy available for hire?",
+-    a: "Yes. Abdullah Sherdy (عبدالله شردي) is a .NET Backend Engineer based in Cairo, Egypt, available for full-time, contract, and freelance work building production APIs and web applications.",
++    a: "Yes. Abdullah Sherdy (عبدالله شردي) is a backend-focused software engineer based in Cairo, Egypt, available for full-time, contract, and freelance work building production APIs, services, and web applications.",
+   },
+   {
+     q: "What technologies does Abdullah Sherdy work with?",
+diff --git a/src/pages/Index.tsx b/src/pages/Index.tsx
+index 38f983d..1491771 100644
+--- a/src/pages/Index.tsx
++++ b/src/pages/Index.tsx
+@@ -90,8 +90,8 @@ const Index = () => {
+   return (
+     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
+       <Seo
+-        title="Abdullah Sherdy — .NET Backend Engineer & Software Instructor | Cairo, Egypt"
+-        description="Abdullah Sherdy is a .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs with ASP.NET Core and Node.js. Available for hire: full-time, contract, and freelance. Also offering private courses, group courses, and mentorship."
++        title="Abdullah Sherdy — Software Engineer, Backend-Focused | Egypt"
++        description="Abdullah Sherdy is a backend-focused software engineer in  Egypt — 2+ years building production APIs and services with C#/.NET, ASP.NET Core, and Node.js, and full-stack capable with React & Next.js. Available for full-time, contract, and freelance work. Also teaches Programming and backend development through courses and mentorship."
+         canonicalPath="/"
+         jsonLd={jsonLd}
+       />
+diff --git a/src/pages/PlaygroundPage.tsx b/src/pages/PlaygroundPage.tsx
+deleted file mode 100644
+index e20c09e..0000000
+--- a/src/pages/PlaygroundPage.tsx
++++ /dev/null
+@@ -1,47 +0,0 @@
+-import Playground from "@/components/playground/Playground";
+-import PageShell from "@/components/shared/PageShell";
+-import Seo from "@/components/shared/Seo";
+-
+-const DEFAULT_CODE = `// Welcome to the C# playground — edit and hit Run (Ctrl+Enter).
+-var tasks = new List<TaskItem>
+-{
+-    new() { Id = 1, Title = "Design schema", Status = "Done" },
+-    new() { Id = 2, Title = "Build API", Status = "InProgress" },
+-    new() { Id = 3, Title = "Write tests", Status = "Todo" },
+-};
+-
+-var pending = tasks
+-    .Where(t => t.Status != "Done")
+-    .Select(t => $"#{t.Id} {t.Title} [{t.Status}]");
+-
+-foreach (var line in pending)
+-    Console.WriteLine(line);
+-`;
+-
+-const PlaygroundPage = () => (
+-  <PageShell
+-    activeSection="playground"
+-    seo={
+-      <Seo
+-        title="C# Playground — Abdullah Sherdy"
+-        description="Write, edit, and run C# code right in the browser — powered by Monaco and Compiler Explorer."
+-        canonicalPath="/playground"
+-      />
+-    }
+-    mainClassName="container mx-auto flex min-h-[calc(100vh-4rem)] flex-col px-4 pt-28 pb-12"
+-  >
+-    <header className="mb-6">
+-      <h1 className="text-3xl sm:text-4xl font-bold font-display mb-2">C# Playground</h1>
+-      <p className="text-muted-foreground max-w-2xl">
+-        A scratchpad for .NET experiments. The Task Tracker types (<code className="font-mono text-sm">Project</code>,{" "}
+-        <code className="font-mono text-sm">TaskItem</code>, <code className="font-mono text-sm">TaskResponse</code>) from
+-        the articles are available out of the box.
+-      </p>
+-    </header>
+-    <div className="min-h-[560px] flex-1">
+-      <Playground initialCode={DEFAULT_CODE} />
+-    </div>
+-  </PageShell>
+-);
+-
+-export default PlaygroundPage;

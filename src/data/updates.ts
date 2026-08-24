@@ -11,6 +11,20 @@ export const updates: UpdateEntry[] = [
   {
     date: "2026-08-24",
     kind: "improvement",
+    title: "One consistent professional title",
+    description:
+      "My title now reads the same across the whole site — Software Engineer, Full-Stack Developer, and Coding Instructor — in the browser tab, the intro, the footer, the article byline, and search results, instead of switching between different labels.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Streamlined the top navigation",
+    description:
+      "The standalone C# playground page was removed to keep the site focused on the work that matters. You can still edit and run the C# examples right inside the articles.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
     title: "Faster, lighter page loads",
     description:
       "The home page now ships less code up front — reviews load quietly in the background and shared libraries are cached between pages — so the site opens and moves between pages noticeably faster.",
