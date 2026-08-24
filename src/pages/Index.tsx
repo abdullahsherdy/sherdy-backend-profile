@@ -90,7 +90,7 @@ const Index = () => {
   return (
     <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
       <Seo
-        title="Abdullah Sherdy — .NET Backend Engineer & Software Instructor | Cairo, Egypt"
+        title="Abdullah Sherdy — Software Engineer · Full-Stack Developer · Coding Instructor | Cairo, Egypt"
         description="Abdullah Sherdy is a .NET Backend Engineer based in Cairo, Egypt. 2+ years building production APIs with ASP.NET Core and Node.js. Available for hire: full-time, contract, and freelance. Also offering private courses, group courses, and mentorship."
         canonicalPath="/"
         jsonLd={jsonLd}

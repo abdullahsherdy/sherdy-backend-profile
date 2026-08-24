@@ -236,7 +236,7 @@ function profilePageNode() {
     "@type": "ProfilePage",
     "@id": `${SITE_URL}/#profilepage`,
     url: `${SITE_URL}/`,
-    name: "Abdullah Sherdy — .NET Backend Engineer & Coding Instructor | Cairo, Egypt",
+    name: "Abdullah Sherdy — Software Engineer · Full-Stack Developer · Coding Instructor | Cairo, Egypt",
     inLanguage: "en",
     isPartOf: { "@id": WEBSITE_ID },
     about: { "@id": PERSON_ID },

@@ -38,7 +38,7 @@ const Hero = () => {
             Abdullah Sherdy
           </h1>
           <p className="font-display text-base sm:text-lg md:text-2xl font-medium text-muted-foreground mb-6">
-            Software Engineer <span className="text-primary">|</span> Full-Stack Developer <span className="text-primary">|</span> Coding Instructor
+            Software Engineer <span className="text-primary">·</span> Full-Stack Developer <span className="text-primary">·</span> Coding Instructor
           </p>
         </AnimatedSection>
 
