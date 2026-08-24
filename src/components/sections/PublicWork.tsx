@@ -1,32 +1,8 @@
-import { Github, Youtube, Code2, ExternalLink } from "lucide-react";
+import { ExternalLink } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedSection from "@/components/AnimatedSection";
 import SectionHeading from "@/components/SectionHeading";
-import { socials } from "@/data/portfolio";
-
-const stats = [
-  {
-    icon: Github,
-    label: "GitHub",
-    value: "50+ public repos",
-    detail: "Regular commits & contributions",
-    href: socials.github,
-  },
-  {
-    icon: Code2,
-    label: "LeetCode",
-    value: "550+ problems solved",
-    detail: "Daily problem-solving practice",
-    href: socials.leetcode,
-  },
-  {
-    icon: Youtube,
-    label: "YouTube",
-    value: "Tech tutorials",
-    detail: "Software engineering & algorithms content",
-    href: socials.youtube,
-  },
-];
+import { publicWork } from "@/data/portfolio";
 
 const PublicWork = () => (
   <section id="public-work" className="py-16 px-4 bg-muted/30 scroll-mt-24">
@@ -38,7 +14,7 @@ const PublicWork = () => (
       />
 
       <div className="grid sm:grid-cols-3 gap-4">
-        {stats.map((stat, index) => (
+        {publicWork.map((stat, index) => (
           <AnimatedSection key={stat.label} animation="fade-up" delay={index * 150}>
             <a
               href={stat.href}

@@ -9,6 +9,13 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    date: "2026-08-24",
+    kind: "improvement",
+    title: "Sharper projects, services, and experience",
+    description:
+      "Projects now lead with backend engineering work, the software-development service lists a focused set of specialties instead of a long catalog, and the experience and articles sections read more cleanly.",
+  },
+  {
     date: "2026-08-23",
     kind: "fix",
     title: "Fixed the CV download and service booking links",
