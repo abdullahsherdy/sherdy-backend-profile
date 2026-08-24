@@ -1,16 +1,63 @@
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { Skeleton } from "@/components/ui/skeleton";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import AnimatedSection from "@/components/AnimatedSection";
 import SectionHeading from "@/components/SectionHeading";
 import ReviewCard from "@/components/reviews/ReviewCard";
 import ReviewForm from "@/components/reviews/ReviewForm";
-import { computeReviewStats } from "@/lib/reviews";
+import { computeReviewStats, type Review } from "@/lib/reviews";
 import { isReviewsConfigured } from "@/lib/supabase";
 import { useReviews } from "@/hooks/useReviews";
 
+type ReviewTab = "all" | "engineering" | "teaching";
+
+// Maps the site's engineering/teaching split onto audience-facing labels.
+const TABS: { value: ReviewTab; label: string }[] = [
+  { value: "all", label: "All" },
+  { value: "engineering", label: "Clients & Engineering" },
+  { value: "teaching", label: "Students & Parents" },
+];
+
+// Strongest review = highest rating, then longest (most substantive) quote.
+const pickLead = (list: Review[]): Review =>
+  list.reduce(
+    (best, r) =>
+      r.rating > best.rating || (r.rating === best.rating && r.quote.length > best.quote.length) ? r : best,
+    list[0]
+  );
+
 const Reviews = () => {
   const { data: reviews = [], isLoading } = useReviews();
+  const [tab, setTab] = useState<ReviewTab>("all");
   const stats = useMemo(() => computeReviewStats(reviews), [reviews]);
+
+  const forTab = (value: ReviewTab): Review[] =>
+    value === "all" ? reviews : reviews.filter((r) => r.category === value);
+
+  // Promote the strongest review as a wider lead card, then the rest in the grid.
+  const renderList = (list: Review[]) => {
+    if (list.length === 0) {
+      return <p className="py-12 text-center text-muted-foreground">No reviews in this category yet.</p>;
+    }
+    const lead = pickLead(list);
+    const rest = list.filter((r) => r.id !== lead.id);
+    return (
+      <>
+        <AnimatedSection animation="fade-up">
+          <ReviewCard review={lead} featured />
+        </AnimatedSection>
+        {rest.length > 0 && (
+          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+            {rest.map((review, i) => (
+              <AnimatedSection key={review.id} animation="fade-up" delay={Math.min(i * 80, 400)}>
+                <ReviewCard review={review} />
+              </AnimatedSection>
+            ))}
+          </div>
+        )}
+      </>
+    );
+  };
 
   return (
     <section id="reviews" className="py-16 px-4 bg-muted/30 scroll-mt-24" data-section>
@@ -26,16 +73,20 @@ const Reviews = () => {
             {/* Terminal-style aggregate summary — matches the Hero's `$ whoami` motif */}
             <p className="font-mono text-sm text-muted-foreground">
               <span className="text-primary">$</span> reviews --summary
-              {stats.count > 0 ? (
+              {stats.count === 0 ? (
+                <span> → awaiting first review</span>
+              ) : (
                 <>
                   {" "}
                   <span className="text-muted-foreground">→</span>{" "}
-                  <span className="font-semibold text-accent">{stats.average.toFixed(1)}★</span>
-                  {" · "}
+                  {stats.showAverage && (
+                    <>
+                      <span className="font-semibold text-accent">{stats.average.toFixed(1)}★</span>
+                      {" · "}
+                    </>
+                  )}
                   <span className="text-foreground">{stats.count} {stats.count === 1 ? "review" : "reviews"}</span>
                 </>
-              ) : (
-                <span> → awaiting first review</span>
               )}
             </p>
             {isReviewsConfigured && <ReviewForm triggerLabel="Write a review" triggerSize="lg" />}
@@ -60,13 +111,22 @@ const Reviews = () => {
             </div>
           </AnimatedSection>
         ) : (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-            {reviews.map((review, i) => (
-              <AnimatedSection key={review.id} animation="fade-up" delay={Math.min(i * 80, 400)}>
-                <ReviewCard review={review} />
-              </AnimatedSection>
+          <Tabs value={tab} onValueChange={(v) => setTab(v as ReviewTab)}>
+            <div className="mb-8 flex justify-center">
+              <TabsList className="h-auto flex-wrap justify-center gap-1">
+                {TABS.map((t) => (
+                  <TabsTrigger key={t.value} value={t.value}>
+                    {t.label}
+                  </TabsTrigger>
+                ))}
+              </TabsList>
+            </div>
+            {TABS.map((t) => (
+              <TabsContent key={t.value} value={t.value}>
+                {renderList(forTab(t.value))}
+              </TabsContent>
             ))}
-          </div>
+          </Tabs>
         )}
       </div>
     </section>

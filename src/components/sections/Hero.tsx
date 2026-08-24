@@ -79,13 +79,25 @@ const Hero = () => {
             <a
               href="#reviews"
               className="mt-8 inline-flex items-center gap-2 rounded-full border border-accent/30 bg-accent/5 px-4 py-2 text-sm transition-colors hover:border-accent/60 hover:bg-accent/10"
-              aria-label={`${stats.average.toFixed(1)} out of 5 from ${stats.count} reviews — read reviews`}
+              aria-label={
+                stats.showAverage
+                  ? `${stats.average.toFixed(1)} out of 5 from ${stats.count} reviews — read reviews`
+                  : `${stats.count} ${stats.count === 1 ? "review" : "reviews"} — read reviews`
+              }
             >
               <Star className="h-4 w-4 fill-current text-accent" aria-hidden="true" />
-              <span className="font-semibold text-accent">{stats.average.toFixed(1)}</span>
-              <span className="text-muted-foreground">
-                from {stats.count} {stats.count === 1 ? "review" : "reviews"}
-              </span>
+              {stats.showAverage ? (
+                <>
+                  <span className="font-semibold text-accent">{stats.average.toFixed(1)}</span>
+                  <span className="text-muted-foreground">
+                    from {stats.count} {stats.count === 1 ? "review" : "reviews"}
+                  </span>
+                </>
+              ) : (
+                <span className="text-muted-foreground">
+                  {stats.count} {stats.count === 1 ? "review" : "reviews"}
+                </span>
+              )}
             </a>
           </AnimatedSection>
         )}
