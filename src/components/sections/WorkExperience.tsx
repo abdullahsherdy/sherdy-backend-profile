@@ -1,4 +1,4 @@
-import { MapPin } from "lucide-react";
+import { MapPin, ArrowRight } from "lucide-react";
 import { Card, CardContent } from "@/components/ui/card";
 import AnimatedSection from "@/components/AnimatedSection";
 import SectionHeading from "@/components/SectionHeading";
@@ -44,6 +44,22 @@ const WorkExperience = () => (
             {engineering.map((job, idx) => (
               <ExperienceCard key={job.company} job={job} idx={idx} />
             ))}
+            {engineering.length < 2 && (
+              <AnimatedSection animation="fade-up" delay={engineering.length * 100}>
+                <a
+                  href="#projects"
+                  className="group flex h-full flex-col justify-center rounded-lg border border-dashed border-border/60 p-6 text-center transition-colors hover:border-primary/40 hover:bg-primary/5"
+                >
+                  <p className="font-medium text-foreground mb-1">More engineering in my projects</p>
+                  <p className="text-sm text-muted-foreground mb-3">
+                    Beyond formal roles, my backend work shows up in the build — Clean Architecture APIs, auth modules, and real-time services.
+                  </p>
+                  <span className="inline-flex items-center justify-center gap-1 text-sm font-medium text-primary transition-all group-hover:gap-2">
+                    See projects <ArrowRight className="h-4 w-4" />
+                  </span>
+                </a>
+              </AnimatedSection>
+            )}
           </div>
         </div>
         <div>

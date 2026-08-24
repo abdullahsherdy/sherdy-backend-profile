@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import { Github, Youtube, Code2, type LucideIcon } from "lucide-react";
 
 export const socials = {
   github: "https://github.com/abdullahsherdy",
@@ -40,6 +40,38 @@ export const focusAreas = [
   { skill: "React & Next.js", context: "Full-stack apps with TypeScript on top of backend depth" },
 ];
 
+export interface PublicStat {
+  icon: LucideIcon;
+  label: string;
+  value: string;
+  detail: string;
+  href: string;
+}
+
+export const publicWork: PublicStat[] = [
+  {
+    icon: Github,
+    label: "GitHub",
+    value: "50+ public repos",
+    detail: "Regular commits & contributions",
+    href: socials.github,
+  },
+  {
+    icon: Code2,
+    label: "LeetCode",
+    value: "550+ problems solved",
+    detail: "Daily problem-solving practice",
+    href: socials.leetcode,
+  },
+  {
+    icon: Youtube,
+    label: "YouTube",
+    value: "Tutorials & walkthroughs",
+    detail: "Software engineering & algorithms content",
+    href: socials.youtube,
+  },
+];
+
 export interface Project {
   title: string;
   description: string;
@@ -52,6 +84,22 @@ export interface Project {
 }
 
 export const projects: Project[] = [
+  {
+    title: "FixMate — Vehicle Service Booking Platform",
+    description:
+      "Clean architecture-based RESTful API for vehicle service booking, managing service requests, status tracking, and mechanic assignment.",
+    role: "Backend Engineer",
+    impact: [
+      "Architected with Clean Architecture (Domain, Application, Infrastructure, API layers) for independently testable concerns",
+      "Built end-to-end booking workflows with JWT-based authentication and role-based authorization",
+      "Containerized with Docker and documented via Swagger/OpenAPI",
+    ],
+    techDecision:
+      "Adopted Clean Architecture to ensure testability, maintainability, and independence from frameworks",
+    tech: ["ASP.NET Core 8", "C#", "EF Core", "Clean Architecture", "Docker", "JWT", "Swagger"],
+    github: "https://github.com/abdullahsherdy/FixMate",
+    demo: null,
+  },
   {
     title: "Wasla — Real-Time Egyptian Sign Language & Emotion Recognition",
     description:
@@ -67,22 +115,6 @@ export const projects: Project[] = [
       "Chose a bounded-queue threading model over synchronous inference to keep the UI responsive under variable camera and model latency",
     tech: ["Python", "MediaPipe", "TensorFlow/Keras", "OpenCV", "FastAPI", "WebSocket"],
     github: "https://github.com/abdullahsherdy/ESL-software-ml",
-    demo: null,
-  },
-  {
-    title: "FixMate — Vehicle Service Booking Platform",
-    description:
-      "Clean architecture-based RESTful API for vehicle service booking, managing service requests, status tracking, and mechanic assignment.",
-    role: "Backend Engineer",
-    impact: [
-      "Architected with Clean Architecture (Domain, Application, Infrastructure, API layers) for independently testable concerns",
-      "Built end-to-end booking workflows with JWT-based authentication and role-based authorization",
-      "Containerized with Docker and documented via Swagger/OpenAPI",
-    ],
-    techDecision:
-      "Adopted Clean Architecture to ensure testability, maintainability, and independence from frameworks",
-    tech: ["ASP.NET Core 8", "C#", "EF Core", "Clean Architecture", "Docker", "JWT", "Swagger"],
-    github: "https://github.com/abdullahsherdy/FixMate",
     demo: null,
   },
   {

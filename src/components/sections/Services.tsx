@@ -74,7 +74,7 @@ const services: Service[] = [
     title: "End-to-End Software Development",
     description:
       "Custom software for startups and businesses — from requirements to production. I handle Clean Architecture APIs, database design, React/Next.js frontends, Docker deployment, and CI/CD pipelines.",
-    tags: ["Front-end", "Back-end", "Full-stack", "API Development", "Database Design", "Deployment", "DevOps & CI/CD", "Cloud Services", "Testing & QA", "Performance Optimization", "Security", "Maintenance & Support"],
+    tags: ["Clean Architecture APIs", "Database Design", "React & Next.js", "Docker & CI/CD", "Cloud Deployment", "Testing & QA"],
     inquiry: "Software Development",
     type: "engineering",
   },
