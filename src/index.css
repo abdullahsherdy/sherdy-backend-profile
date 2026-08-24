@@ -28,6 +28,9 @@
 
     --accent: 38 90% 50%;
     --accent-foreground: 30 60% 12%;
+    /* Text-safe amber: dark enough for WCAG AA (~5:1) on light surfaces.
+       Use for amber *text*; --accent stays for fills, borders, and icons. */
+    --accent-text: 36 90% 32%;
 
     --destructive: 0 72% 45%;
     --destructive-foreground: 0 0% 98%;
@@ -72,6 +75,8 @@
 
     --accent: 38 90% 55%;
     --accent-foreground: 30 60% 10%;
+    /* On dark navy, bright amber already reads fine as text. */
+    --accent-text: 40 96% 62%;
 
     --destructive: 0 62% 45%;
     --destructive-foreground: 0 0% 98%;
@@ -162,7 +167,7 @@
 
   .magnetic-hover:hover {
     transform: translateY(-2px);
-    box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 8px 10px -6px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 10px 25px -5px hsl(var(--foreground) / 0.1), 0 8px 10px -6px hsl(var(--foreground) / 0.1);
   }
 
   .link-underline {
@@ -251,6 +256,22 @@
   .hover-scale,
   .magnetic-hover {
     transition: none;
+  }
+
+  /* Roadmap node entrance, Hero availability pulse, and React Flow edge
+     marching-ants are otherwise uncovered by the utility resets above. */
+  .learning-node {
+    animation: none;
+    opacity: 1;
+    transform: none;
+  }
+
+  .animate-ping {
+    animation: none;
+  }
+
+  .react-flow__edge.animated .react-flow__edge-path {
+    animation: none !important;
   }
 }
 

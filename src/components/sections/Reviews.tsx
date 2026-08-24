@@ -81,7 +81,7 @@ const Reviews = () => {
                   <span className="text-muted-foreground">→</span>{" "}
                   {stats.showAverage && (
                     <>
-                      <span className="font-semibold text-accent">{stats.average.toFixed(1)}★</span>
+                      <span className="font-semibold text-accent-text">{stats.average.toFixed(1)}★</span>
                       {" · "}
                     </>
                   )}

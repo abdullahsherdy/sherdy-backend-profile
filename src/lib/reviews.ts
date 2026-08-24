@@ -1,4 +1,4 @@
-import { supabase } from "./supabase";
+import { getSupabase } from "./supabase";
 
 /**
  * A published testimonial. Reuses the site-wide `"engineering" | "teaching"`
@@ -48,6 +48,7 @@ const SELECT_COLUMNS = "id, created_at, name, role, org, category, rating, quote
  * Returns `[]` when Supabase is not configured so callers can render an empty state.
  */
 export async function fetchApprovedReviews(): Promise<Review[]> {
+  const supabase = await getSupabase();
   if (!supabase) return [];
   const { data, error } = await supabase
     .from("reviews")
@@ -64,6 +65,7 @@ export async function fetchApprovedReviews(): Promise<Review[]> {
  * A row can still be hidden after the fact by setting `approved = false` in the dashboard.
  */
 export async function submitReview(input: ReviewInput): Promise<void> {
+  const supabase = await getSupabase();
   if (!supabase) throw new Error("Reviews are not configured.");
   const { error } = await supabase.from("reviews").insert({
     name: input.name.trim(),

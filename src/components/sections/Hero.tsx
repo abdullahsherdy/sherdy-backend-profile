@@ -29,7 +29,7 @@ const Hero = () => {
 
         <AnimatedSection animation="fade-up" delay={150}>
           <p className="font-mono text-xs sm:text-sm md:text-base text-primary mb-4 break-words">
-            $ whoami <span className="text-muted-foreground">→</span> software engineer <span className="text-accent">&amp;&amp;</span> coding instructor
+            $ whoami <span className="text-muted-foreground">→</span> software engineer <span className="text-accent-text">&amp;&amp;</span> coding instructor
           </p>
         </AnimatedSection>
 
@@ -88,7 +88,7 @@ const Hero = () => {
               <Star className="h-4 w-4 fill-current text-accent" aria-hidden="true" />
               {stats.showAverage ? (
                 <>
-                  <span className="font-semibold text-accent">{stats.average.toFixed(1)}</span>
+                  <span className="font-semibold text-accent-text">{stats.average.toFixed(1)}</span>
                   <span className="text-muted-foreground">
                     from {stats.count} {stats.count === 1 ? "review" : "reviews"}
                   </span>

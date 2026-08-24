@@ -45,21 +45,31 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 
 *Security model untouched: RLS stays the boundary, `approved` stays a dashboard kill switch, all changes are client-side filter/display. Schema additions (`verified`, `project_slug`) remain deferred.*
 
-## Section 4 — Content pages  (owner: `content-pages/plan.md`)
+## Section 4 — Content pages  (owner: `content-pages/plan.md`)  ✅ implemented — awaiting review
 
-- [ ] **4A** Extract shared `PageShell` / `AuthorByline` / `formatDate` (unlocks 4E cheaply) — content-pages de-dup
-- [ ] **4B** Article footer CTA — "Hire me" (`#contact`) + "Learn with me" (`#services`) — content-pages #2
-- [ ] **4C** Articles list: intro + CTA band · gate tag filter to plural · `.eyebrow` header — content-pages #3
-- [ ] **4D** Per-article OG image (`cover`→`Seo`) + reader bugs (Mermaid theme · real `dateModified` · CodeCompare highlight · Quiz markdown) — content-pages #4, #5
-- [ ] **4E** Updates kind-colors (stop overloading amber) · rebuild NotFound on the shell (`noindex`, `<Link>`, no `console.error`) — content-pages #8, #9
+- [x] **4A** Extracted `PageShell` (shared non-home chrome: bg + skip-link + Navbar + PageTransition + `<main id="main">` + Footer, owns `useDarkMode`), `AuthorByline` (byline + socials, `showIdentity` prop), `formatDate` (`lib/date.ts`, "short"/"long"), plus bonus `ReaderCta` (reused by article footer + articles index). ArticleView/ArticleCard now use `formatDate`; ArticlesPage/ArticlePage/PlaygroundPage/UpdatesPage/NotFound all now ride `PageShell` — route-level skip-link + shell no longer forgotten on 404/article-not-found — content-pages de-dup
+- [x] **4B** `AuthorFooter` rebuilt around `ReaderCta` — "Hire me" (`/#contact`, teal) + "Learn with me" (`/#services`, amber outline); author socials demoted to a secondary `AuthorByline showIdentity={false}` line — content-pages #2
+- [x] **4C** `ArticlesPage` on `PageShell` with `SectionHeading` (eyebrow "Writing") + closing `ReaderCta` band; `ArticleList` tag-filter gated to `allTags.length > 1` — content-pages #3
+- [x] **4D** `cover` → `Seo image` (absolutized) → og/twitter + Article JSON-LD `image`; `dateModified` now truthful via optional `updated:` frontmatter (falls back to `date`). Reader bugs: Mermaid theme reactivity via `MutationObserver` on root `class` + effect dep; `CodeCompare` now hljs-highlighted (csharp, `ignoreIllegals`, `highlight.js` declared `^11.11.1`); Quiz answers render via react-markdown + remark-gfm (`prose prose-sm`) — content-pages #4, #5
+- [x] **4E** `UpdatesPage` on `PageShell` — `fix` kind moved off amber → rose (amber stays teaching-only), timeline dot colored per kind, `.eyebrow` "Changelog" header, `formatDate` for dates. `NotFound` rebuilt on `PageShell` with `Seo noindex`, `font-display`, router `<Link>` (no full reload), `console.error` dropped, home/articles/contact links — content-pages #8, #9
 
-## Section 5 — Site-wide technical  (owner: `site-wide/plan.md`)
+*Deferred (need article volume / your input): search·sort·RSS, related/next-article links, share button. Playground page also moved onto `PageShell` (kept its custom flex `mainClassName`).*
 
-- [ ] **5A** Amber text-contrast token (text-safe amber vs fill/border amber) — a11y #2 + DS-04
-- [ ] **5B** Perf: Supabase off the eager home path + split article metadata/body — perf P1
-- [ ] **5C** Perf/polish: `manualChunks` · drop dead deps (`recharts`, `embla`) · `QueryClient` staleTime · reduced-motion gaps · `theme-color` follows toggle · tokenize shadows — perf/a11y/dark P2
-- [ ] **5D** SEO structured data: `AggregateRating` + `Course`/`Service` (on Org/Course, not Person) · NotFound `noindex` — SEO P1
-- [ ] **5E** Design-system doc sync (DS-02/DS-04 status) — DS
+## Section 5 — Site-wide technical  (owner: `site-wide/plan.md`)  ✅ implemented — awaiting review
+
+- [x] **5A** Amber text-contrast token — new `--accent-text` (light `36 90% 32%` ≈ AA ~5:1; dark `40 96% 62%`) exposed as `text-accent-text` via `tailwind.config.ts`. Swapped **text** usages (Hero `&&` + rating number, Reviews average, `ReaderCta` button, `ReviewCard` teaching avatar, teaching `Services` icon) to `text-accent-text`; decorative **fills/icons** (StarRating fills, Hero star icon, all `ui/*`) stay on bright `--accent`. — a11y #2 + DS-04
+- [x] **5B** Perf: **5B-1 done** — `@supabase/supabase-js` moved off the eager home chunk via a lazy `getSupabase()` dynamic import (`isReviewsConfigured` stays synchronous for render-path gates; `reviews.ts` awaits the getter). **5B-2 deferred** (see note). — perf P1
+- [x] **5C** Perf/polish: `manualChunks` (react-vendor, query-vendor) in `vite.config.ts` · dropped dead deps `recharts` + `embla-carousel-react` and their only importers (`ui/chart.tsx`, `ui/carousel.tsx`) · `QueryClient` `staleTime`/`gcTime`/`retry` tuned · reduced-motion gaps closed (`.learning-node`, `.animate-ping`, React Flow animated edges in CSS + `useReducedMotion` in `UpdatesPage`) · `theme-color` meta now follows the manual toggle (`useDarkMode` rewrite) · `.magnetic-hover` shadow tokenized off `--foreground` — perf/a11y/dark P2
+- [x] **5D** SEO structured data: `OFFERS` restructured to carry `@type` + `@id`; each offering now emits a typed top-level `Course` (Private/Group Courses, with `hasCourseInstance` + `courseMode`) or `Service` (Mentorship, End-to-End Dev, with `serviceType` + `areaServed`) node with `provider → Person @id`; `makesOffer` references them by `@id`. NotFound `noindex` already shipped in 4E. *AggregateRating deferred — reviews are client-fetched at runtime, so there's no build-time rating to emit truthfully, and the average is suppressed below 3 reviews.* — SEO P1
+- [x] **5E** Design-system doc sync — DS-02 marked ✅ Resolved (`asChild`), DS-04 ✅ Resolved with the `--accent` vs `--accent-text` split documented, DS-03 ◐ Partial (magnetic-hover shadow tokenized); token tables + Semantic/Accent usage guides updated; stale "✓ verified" ReviewCard line corrected to the real avatar+date+featured anatomy. — DS
+
+### Section 5 deferral — 5B-2 (split article metadata/body)
+
+Deliberately **not** implemented; the Supabase split (5B-1) captured the real perf win. Rationale:
+- Only one article exists today, so decoupling body text from metadata saves a few KB of markdown — negligible next to the ~40–50 kB Supabase SDK already moved off the eager chunk.
+- Article **metadata must stay eager**: `prerender.mjs` needs it in the static HTML so the home "Latest Articles" teasers and the articles list are SEO-visible without JS.
+- `import.meta.glob(..., { eager, query: "?raw" })` ships each file's *body* inseparably from its frontmatter; a clean split would require a **new build-time frontmatter-extraction step** — a new failure surface in the SSG pipeline — for a marginal payoff.
+- Revisit only when article volume grows enough that body payload is a measurable cost.
 
 ---
 
@@ -75,3 +85,5 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 - 2026-08-24 — **Section 1 (Home page) implemented** — 1A–1E applied; lint clean (0 errors), build passes (4 routes prerendered). 1F deferred (portrait asset). Awaiting user review before Section 2.
 - 2026-08-24 — **Section 2 (Navbar & Footer) implemented** — 2A–2E applied across Navbar, Footer, Index scrollspy, LearningRoadmap (`onReady`), Hero + `portfolio.ts` (`resumeUrl`). Two `updates.ts` entries prepended. Awaiting user review before Section 3.
 - 2026-08-24 — **Section 3 (Reviews) implemented** — 3A–3C applied across `lib/reviews.ts` (`showAverage` gate + `formatReviewDate`), `ReviewCard` (avatars, dates, `featured` lead variant), `Reviews.tsx` (segmented tabs + client-side filter + lead card), `Hero.tsx` (average gated), `ReviewForm`/`StarRating` (validation parity + a11y). One `updates.ts` entry prepended. Lint clean (0 errors), build passes (4 routes). Per user instruction, proceeding to Section 4 without pausing — full set to be reviewed at the end.
+- 2026-08-24 — **Section 4 (Content pages) implemented** — 4A–4E applied. New shared modules: `lib/date.ts`, `shared/PageShell.tsx`, `articles/AuthorByline.tsx`, `articles/ReaderCta.tsx`. Rewrites: `AuthorFooter`, `ArticlesPage`, `PlaygroundPage`, `UpdatesPage`, `NotFound`, `ArticlePage` (all on `PageShell`), `Seo` (`image`/`noindex` props), `MermaidDiagram` (theme reactivity), `CodeCompare` (hljs), `Quiz` (markdown answers). Data: `articles.ts` (`dateModified`), `structuredData.ts` (article `image` + real `dateModified`), `package.json` (`highlight.js` declared). Two `updates.ts` entries prepended. Lint clean (0 errors, 10 pre-existing warnings), build passes (4 routes). Proceeding to Section 5 without pausing.
+- 2026-08-24 — **Section 5 (Site-wide technical) implemented** — 5A–5E applied. 5A: `--accent-text` token (`index.css` + `tailwind.config.ts`) + text-usage swaps across Hero/Reviews/ReaderCta/ReviewCard/Services. 5B-1: lazy `getSupabase()` dynamic import (`supabase.ts` + `reviews.ts`); 5B-2 deferred (documented). 5C: `manualChunks` + `QueryClient` tuning (`vite.config.ts`, `App.tsx`), dead deps `recharts`/`embla-carousel-react` + `ui/chart.tsx`/`ui/carousel.tsx` removed, reduced-motion gaps closed (`index.css` + `UpdatesPage`), `theme-color` follows toggle (`useDarkMode` rewrite), magnetic-hover shadow tokenized. 5D: typed `Course`/`Service` offering nodes in `structuredData.ts` (AggregateRating deferred). 5E: `docs/design-system.md` sync. Two `updates.ts` entries prepended. Per user instruction, all sections now implemented — full set (1–5) ready for review.

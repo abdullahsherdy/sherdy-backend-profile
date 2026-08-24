@@ -4,16 +4,16 @@ import remarkGfm from "remark-gfm";
 import rehypeHighlight from "rehype-highlight";
 import { motion, useReducedMotion } from "framer-motion";
 import type { Article } from "@/lib/articles";
-import { author } from "@/lib/author";
 import { slugifyHeading } from "./TableOfContents";
 import CodeBlock from "./CodeBlock";
 import AuthorFooter from "./AuthorFooter";
+import AuthorByline from "./AuthorByline";
 import MermaidDiagram from "./MermaidDiagram";
 import Quiz from "./Quiz";
 import CodeCompare from "./CodeCompare";
 import Callout, { type CalloutKind } from "./Callout";
 import ArticleVisual from "./visuals";
-import { Globe, Youtube, Linkedin } from "lucide-react";
+import { formatDate } from "@/lib/date";
 
 function extractText(node: ReactNode): string {
   if (typeof node === "string" || typeof node === "number") return String(node);
@@ -56,13 +56,7 @@ const ArticleView = ({ article }: { article: Article }) => {
   const reduceMotion = useReducedMotion();
   const rv = reduceMotion ? {} : reveal;
 
-  const formattedDate = article.date
-    ? new Date(article.date + "T00:00:00").toLocaleDateString("en-US", {
-        year: "numeric",
-        month: "long",
-        day: "numeric",
-      })
-    : "";
+  const formattedDate = formatDate(article.date, "long");
 
   return (
     <article className="article-body">
@@ -81,14 +75,7 @@ const ArticleView = ({ article }: { article: Article }) => {
           transition={{ duration: 0.5, delay: 0.12 }}
           className="rounded-lg border-l-4 border-primary bg-muted/40 px-4 py-3 text-sm"
         >
-          <p className="font-semibold">
-            {author.name} <span className="font-normal text-muted-foreground">— {author.title}</span>
-          </p>
-          <p className="mt-1 flex flex-wrap gap-x-4 gap-y-1 text-muted-foreground">
-            <a href={author.website} className="inline-flex items-center gap-1 hover:text-primary"><Globe className="h-3.5 w-3.5" /> abdullahsherdy.tech</a>
-            <a href={author.youtube} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-primary"><Youtube className="h-3.5 w-3.5" /> YouTube</a>
-            <a href={author.linkedin} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 hover:text-primary"><Linkedin className="h-3.5 w-3.5" /> LinkedIn</a>
-          </p>
+          <AuthorByline />
         </motion.div>
         <p className="mt-3 text-sm text-muted-foreground">
           {formattedDate} · {article.readingTime}

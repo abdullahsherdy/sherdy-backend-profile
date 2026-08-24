@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { CheckCircle2, ChevronDown, HelpCircle } from "lucide-react";
+import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 interface QuizItem {
   question: string;
@@ -70,9 +72,9 @@ const Quiz = ({ source }: { source: string }) => {
                     transition={{ duration: 0.25 }}
                     className="overflow-hidden"
                   >
-                    <p className="border-l-2 border-emerald-500/60 bg-emerald-500/5 mx-5 mb-4 rounded-r px-4 py-3 text-sm text-muted-foreground whitespace-pre-wrap">
-                      {item.answer}
-                    </p>
+                    <div className="border-l-2 border-emerald-500/60 bg-emerald-500/5 mx-5 mb-4 rounded-r px-4 py-3 text-sm prose prose-sm dark:prose-invert max-w-none prose-p:my-2 prose-pre:my-2">
+                      <ReactMarkdown remarkPlugins={[remarkGfm]}>{item.answer}</ReactMarkdown>
+                    </div>
                   </motion.div>
                 )}
               </AnimatePresence>

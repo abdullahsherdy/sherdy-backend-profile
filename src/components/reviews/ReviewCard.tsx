@@ -13,7 +13,7 @@ const cardClassByCategory: Record<Review["category"], string> = {
 // The initial-avatar carries the same category signal as the left bar.
 const avatarClassByCategory: Record<Review["category"], string> = {
   engineering: "bg-primary/10 text-primary",
-  teaching: "bg-accent/10 text-accent",
+  teaching: "bg-accent/10 text-accent-text",
 };
 
 /** First letters of up to two words — "Sara Ali" → "SA", "Mohamed" → "M". */

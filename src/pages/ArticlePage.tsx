@@ -2,16 +2,13 @@ import { useMemo } from "react";
 import { Link, useParams } from "react-router-dom";
 import { motion, AnimatePresence, useScroll, useSpring, useReducedMotion } from "framer-motion";
 import { ArrowLeft, BookOpen, X } from "lucide-react";
-import Navbar from "@/components/sections/Navbar";
-import Footer from "@/components/sections/Footer";
 import ArticleView from "@/components/articles/ArticleView";
 import TableOfContents, { slugifyHeading, type TocEntry } from "@/components/articles/TableOfContents";
-import PageTransition from "@/components/shared/PageTransition";
+import PageShell from "@/components/shared/PageShell";
 import Seo from "@/components/shared/Seo";
 import { getArticle } from "@/lib/articles";
 import { author } from "@/lib/author";
 import { articlePageJsonLd } from "@/lib/structuredData";
-import { useDarkMode } from "@/hooks/useDarkMode";
 import { useReadingPosition } from "@/hooks/useReadingPosition";
 import "@/styles/article.css";
 
@@ -35,7 +32,6 @@ function extractToc(content: string): TocEntry[] {
 const ArticlePage = () => {
   const { slug } = useParams<{ slug: string }>();
   const article = slug ? getArticle(slug) : undefined;
-  const { isDarkMode, toggleDarkMode } = useDarkMode();
   const reduceMotion = useReducedMotion();
   const { savedPosition, resume, dismiss } = useReadingPosition(slug ?? "");
 
@@ -47,66 +43,77 @@ const ArticlePage = () => {
 
   if (!article) {
     return (
-      <div className="min-h-screen bg-background text-foreground flex flex-col items-center justify-center gap-4 px-4">
-        <h1 className="text-2xl font-bold font-display">Article not found</h1>
+      <PageShell
+        activeSection="articles"
+        seo={<Seo title="Article not found — Abdullah Sherdy" noindex />}
+        mainClassName="container mx-auto flex min-h-[60vh] flex-col items-center justify-center gap-4 px-4 py-20 text-center"
+      >
+        <p className="eyebrow">404</p>
+        <h1 className="text-3xl font-bold font-display">Article not found</h1>
+        <p className="max-w-md text-muted-foreground">
+          This article may have moved or never existed. Browse the full list instead.
+        </p>
         <Link to="/articles" className="text-primary hover:underline inline-flex items-center gap-2">
           <ArrowLeft className="h-4 w-4" /> Back to all articles
         </Link>
-      </div>
+      </PageShell>
     );
   }
 
   return (
-    <div className="min-h-screen bg-background text-foreground transition-colors duration-300">
-      <Seo
-        title={`${article.title} — ${author.name}`}
-        description={article.description}
-        canonicalPath={`/articles/${article.slug}`}
-        ogType="article"
-        jsonLd={jsonLd}
-      />
-      {!reduceMotion && (
-        <motion.div
-          className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-primary"
-          style={{ scaleX: progress }}
-          aria-hidden="true"
+    <PageShell
+      activeSection="articles"
+      seo={
+        <Seo
+          title={`${article.title} — ${author.name}`}
+          description={article.description}
+          canonicalPath={`/articles/${article.slug}`}
+          ogType="article"
+          image={article.cover || undefined}
+          jsonLd={jsonLd}
         />
-      )}
-      <Navbar isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} activeSection="articles" />
-      <AnimatePresence>
-        {savedPosition && (
-          <motion.div
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: 24 }}
-            className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
-          >
-            <div className="flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pl-4 pr-1.5 shadow-lg backdrop-blur">
-              <button type="button" onClick={resume} className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
-                <BookOpen className="h-4 w-4" /> Resume reading ({Math.round(savedPosition.ratio * 100)}%)
-              </button>
-              <button type="button" onClick={dismiss} aria-label="Dismiss" className="rounded-full p-1.5 text-muted-foreground hover:bg-muted">
-                <X className="h-3.5 w-3.5" />
-              </button>
-            </div>
-          </motion.div>
-        )}
-      </AnimatePresence>
-      <PageTransition>
-        <main className="container mx-auto px-4 pt-28 pb-20">
-          <Link to="/articles" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
-            <ArrowLeft className="h-4 w-4" /> All articles
-          </Link>
-          <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_16rem] xl:gap-12">
-            <div className="mx-auto w-full max-w-[72ch]">
-              <ArticleView article={article} />
-            </div>
-            <TableOfContents entries={toc} />
-          </div>
-        </main>
-      </PageTransition>
-      <Footer />
-    </div>
+      }
+      beforeMain={
+        <>
+          {!reduceMotion && (
+            <motion.div
+              className="fixed top-0 left-0 right-0 z-[60] h-1 origin-left bg-primary"
+              style={{ scaleX: progress }}
+              aria-hidden="true"
+            />
+          )}
+          <AnimatePresence>
+            {savedPosition && (
+              <motion.div
+                initial={{ opacity: 0, y: 24 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 24 }}
+                className="fixed bottom-5 left-1/2 z-50 -translate-x-1/2"
+              >
+                <div className="flex items-center gap-2 rounded-full border border-border bg-background/95 py-1.5 pl-4 pr-1.5 shadow-lg backdrop-blur">
+                  <button type="button" onClick={resume} className="inline-flex items-center gap-2 text-sm font-medium text-primary hover:underline">
+                    <BookOpen className="h-4 w-4" /> Resume reading ({Math.round(savedPosition.ratio * 100)}%)
+                  </button>
+                  <button type="button" onClick={dismiss} aria-label="Dismiss" className="rounded-full p-1.5 text-muted-foreground hover:bg-muted">
+                    <X className="h-3.5 w-3.5" />
+                  </button>
+                </div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </>
+      }
+    >
+      <Link to="/articles" className="inline-flex items-center gap-2 text-sm text-muted-foreground hover:text-primary transition-colors mb-8">
+        <ArrowLeft className="h-4 w-4" /> All articles
+      </Link>
+      <div className="xl:grid xl:grid-cols-[minmax(0,1fr)_16rem] xl:gap-12">
+        <div className="mx-auto w-full max-w-[72ch]">
+          <ArticleView article={article} />
+        </div>
+        <TableOfContents entries={toc} />
+      </div>
+    </PageShell>
   );
 };
 

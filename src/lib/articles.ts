@@ -5,6 +5,8 @@ export interface Article {
   slug: string;
   title: string;
   date: string;
+  /** Optional `updated:` frontmatter — the real last-modified date. Falls back to `date`. */
+  dateModified: string;
   tags: string[];
   description: string;
   cover: string;
@@ -22,10 +24,12 @@ const modules = import.meta.glob("/src/content/articles/*.md", {
 function toArticle(path: string, raw: string): Article {
   const { data, content } = parseFrontmatter(raw);
   const fileSlug = path.split("/").pop()!.replace(/\.md$/, "");
+  const date = (data.date as string) || "";
   return {
     slug: (data.slug as string) || fileSlug,
     title: (data.title as string) || fileSlug,
-    date: (data.date as string) || "",
+    date,
+    dateModified: (data.updated as string) || date,
     tags: (data.tags as string[]) || [],
     description: (data.description as string) || "",
     cover: (data.cover as string) || "",
