@@ -79,11 +79,27 @@ export async function submitReview(input: ReviewInput): Promise<void> {
 export interface ReviewStats {
   count: number;
   average: number; // 0 when there are no reviews
+  /** A numeric average is only credible past a few ratings; below that, callers show the count alone. */
+  showAverage: boolean;
 }
+
+/** Below this many reviews an average is statistical noise — suppress the number, keep the count. */
+const MIN_REVIEWS_FOR_AVERAGE = 3;
 
 /** Aggregate rating + count for the Hero strip and section summary. */
 export function computeReviewStats(reviews: Review[]): ReviewStats {
-  if (reviews.length === 0) return { count: 0, average: 0 };
+  if (reviews.length === 0) return { count: 0, average: 0, showAverage: false };
   const sum = reviews.reduce((total, r) => total + r.rating, 0);
-  return { count: reviews.length, average: sum / reviews.length };
+  const count = reviews.length;
+  return { count, average: sum / count, showAverage: count >= MIN_REVIEWS_FOR_AVERAGE };
+}
+
+/**
+ * Short, stable date for a review card (e.g. "Aug 23, 2026"). Returns "" for an
+ * unparseable value so the caller can omit the line.
+ */
+export function formatReviewDate(iso: string): string {
+  const date = new Date(iso);
+  if (Number.isNaN(date.getTime())) return "";
+  return date.toLocaleDateString("en-US", { year: "numeric", month: "short", day: "numeric" });
 }

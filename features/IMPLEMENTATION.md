@@ -37,11 +37,13 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 - [x] **2D** Footer rebuilt as a second conversion surface (brand+tagline · Hire me/Résumé CTAs · Explore section-mirror · Connect socials+email · copyright + reduced-motion-aware back-to-top) — navbar #6
 - [x] **2E** Polish: `scroll-mt-24` on `#learning` (already present on `#articles`) · logo as router `<Link>` — navbar #7
 
-## Section 3 — Reviews  (owner: `reviews/presentation.md`)
+## Section 3 — Reviews  (owner: `reviews/presentation.md`)  ✅ implemented — awaiting review
 
-- [ ] **3A** Show dates + tinted initial-avatars · suppress numeric average until N ≥ 3 — reviews #4, #5
-- [ ] **3B** Segmented tabs (All · Clients & Engineering · Students & Parents) + promoted lead review + category tinting — reviews #2, #3
-- [ ] **3C** Copy (instant-publish wording) · client validation parity (name ≤ 80, role ≤ 60) · StarRating a11y — reviews #7, #8, #9
+- [x] **3A** Tinted category initial-avatars + short date on each `ReviewCard`; `computeReviewStats` gained `showAverage` (N ≥ 3 gate) — numeric average now suppressed below 3 reviews in both the Reviews summary line and the Hero social-proof strip (shows count-only). `formatReviewDate` added to `lib/reviews.ts`. *Star-distribution bar skipped — meaningless at low N and contradicts the average-suppression gate.* — reviews #4, #5
+- [x] **3B** Segmented tabs (All · Clients & Engineering · Students & Parents) filtering the fetched list client-side by `category` (no new fetch/schema); each tab promotes its strongest review (highest rating, then longest quote) as a wider `featured` lead card, rest in the grid; empty-category tabs show a gentle note. Category tinting via avatar + existing left accent bar. *No carousel (Direction B explicitly rejected in the plan).* — reviews #2, #3
+- [x] **3C** Copy already instant-publish (verified — no stale moderation wording anywhere) · client validation parity added (name ≤ 80, role ≤ 60 + `maxLength` attrs) · StarRating a11y: keyboard change now moves DOM focus to the selected star (fixes roving-tabindex desync) + new `describedById` prop wires the rating error via `aria-describedby`. *Submit-success is announced by the existing toast live region + Radix focus-return; no extra focus juggling added.* — reviews #7, #8, #9
+
+*Security model untouched: RLS stays the boundary, `approved` stays a dashboard kill switch, all changes are client-side filter/display. Schema additions (`verified`, `project_slug`) remain deferred.*
 
 ## Section 4 — Content pages  (owner: `content-pages/plan.md`)
 
@@ -72,3 +74,4 @@ Legend: `[ ]` todo · `[~]` in progress · `[x]` done · `[⏸]` deferred (needs
 - 2026-08-24 — tracker created; awaiting choice of starting section.
 - 2026-08-24 — **Section 1 (Home page) implemented** — 1A–1E applied; lint clean (0 errors), build passes (4 routes prerendered). 1F deferred (portrait asset). Awaiting user review before Section 2.
 - 2026-08-24 — **Section 2 (Navbar & Footer) implemented** — 2A–2E applied across Navbar, Footer, Index scrollspy, LearningRoadmap (`onReady`), Hero + `portfolio.ts` (`resumeUrl`). Two `updates.ts` entries prepended. Awaiting user review before Section 3.
+- 2026-08-24 — **Section 3 (Reviews) implemented** — 3A–3C applied across `lib/reviews.ts` (`showAverage` gate + `formatReviewDate`), `ReviewCard` (avatars, dates, `featured` lead variant), `Reviews.tsx` (segmented tabs + client-side filter + lead card), `Hero.tsx` (average gated), `ReviewForm`/`StarRating` (validation parity + a11y). One `updates.ts` entry prepended. Lint clean (0 errors), build passes (4 routes). Per user instruction, proceeding to Section 4 without pausing — full set to be reviewed at the end.

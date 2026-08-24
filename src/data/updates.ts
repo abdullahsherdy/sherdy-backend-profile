@@ -11,6 +11,13 @@ export const updates: UpdateEntry[] = [
   {
     date: "2026-08-24",
     kind: "improvement",
+    title: "Reviews you can filter — clients vs. students",
+    description:
+      "The reviews section now sorts feedback into “Clients & Engineering” and “Students & Parents” tabs, leads each with a standout review, and shows every reviewer's initials and date. The overall star average only appears once there are enough reviews to be meaningful.",
+  },
+  {
+    date: "2026-08-24",
+    kind: "improvement",
     title: "Reach me from anywhere on the site",
     description:
       "A “Hire me” button now sits in the top navigation, and the footer has been rebuilt into a proper landing spot — quick links to every section, ways to connect, a résumé download, and a one-tap “back to top”.",

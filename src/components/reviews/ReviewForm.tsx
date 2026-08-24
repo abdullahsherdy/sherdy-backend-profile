@@ -20,6 +20,9 @@ import { REVIEWS_QUERY_KEY } from "@/hooks/useReviews";
 
 const MIN_QUOTE = 10;
 const MAX_QUOTE = 600;
+// Parity with the DB column caps so oversize input is caught client-side, not by a failed insert.
+const MAX_NAME = 80;
+const MAX_ROLE = 60;
 
 interface FormErrors {
   name?: string;
@@ -86,8 +89,12 @@ const ReviewForm = ({
 
   const validate = (): FormErrors => {
     const next: FormErrors = {};
-    if (form.name.trim().length < 2) next.name = "Please enter your name.";
-    if (form.role.trim().length < 2) next.role = "Please add your role (e.g. Student, Client).";
+    const nameLength = form.name.trim().length;
+    if (nameLength < 2) next.name = "Please enter your name.";
+    else if (nameLength > MAX_NAME) next.name = `Please keep your name under ${MAX_NAME} characters.`;
+    const roleLength = form.role.trim().length;
+    if (roleLength < 2) next.role = "Please add your role (e.g. Student, Client).";
+    else if (roleLength > MAX_ROLE) next.role = `Please keep your role under ${MAX_ROLE} characters.`;
     if (form.rating < 1) next.rating = "Please select a star rating.";
     const quoteLength = form.quote.trim().length;
     if (quoteLength < MIN_QUOTE) next.quote = `Please write at least ${MIN_QUOTE} characters.`;
@@ -157,6 +164,7 @@ const ReviewForm = ({
                 onChange={(e) => setForm({ ...form, name: e.target.value })}
                 disabled={loading}
                 required
+                maxLength={MAX_NAME}
                 aria-invalid={Boolean(errors.name)}
                 aria-describedby={errors.name ? "review-name-error" : undefined}
               />
@@ -175,6 +183,7 @@ const ReviewForm = ({
                   onChange={(e) => setForm({ ...form, role: e.target.value })}
                   disabled={loading}
                   required
+                  maxLength={MAX_ROLE}
                   aria-invalid={Boolean(errors.role)}
                   aria-describedby={errors.role ? "review-role-error" : undefined}
                 />
@@ -222,8 +231,15 @@ const ReviewForm = ({
 
             <div>
               <Label className="mb-2 block">Rating</Label>
-              <StarRating value={form.rating} onChange={(v) => setForm({ ...form, rating: v })} size={28} />
-              {errors.rating && <p className="mt-1 text-sm text-destructive">{errors.rating}</p>}
+              <StarRating
+                value={form.rating}
+                onChange={(v) => setForm({ ...form, rating: v })}
+                size={28}
+                describedById={errors.rating ? "review-rating-error" : undefined}
+              />
+              {errors.rating && (
+                <p id="review-rating-error" className="mt-1 text-sm text-destructive">{errors.rating}</p>
+              )}
             </div>
 
             <div>

@@ -1,4 +1,4 @@
-import { useState, type KeyboardEvent } from "react";
+import { useRef, useState, type KeyboardEvent } from "react";
 import { Star } from "lucide-react";
 import { cn } from "@/lib/utils";
 
@@ -10,6 +10,8 @@ interface StarRatingProps {
   size?: number;
   className?: string;
   id?: string;
+  /** id of an external error/hint element, wired via aria-describedby (interactive mode). */
+  describedById?: string;
 }
 
 const STARS = [1, 2, 3, 4, 5] as const;
@@ -19,8 +21,9 @@ const STARS = [1, 2, 3, 4, 5] as const;
  * lucide `Star` icons. Read-only when `onChange` is omitted (renders as an image
  * with an aria-label); an accessible radiogroup with keyboard support when interactive.
  */
-const StarRating = ({ value, onChange, size = 20, className, id }: StarRatingProps) => {
+const StarRating = ({ value, onChange, size = 20, className, id, describedById }: StarRatingProps) => {
   const [hover, setHover] = useState(0);
+  const buttonRefs = useRef<(HTMLButtonElement | null)[]>([]);
   const interactive = typeof onChange === "function";
 
   if (!interactive) {
@@ -46,13 +49,15 @@ const StarRating = ({ value, onChange, size = 20, className, id }: StarRatingPro
   const shown = hover || value;
 
   const handleKeyDown = (e: KeyboardEvent<HTMLDivElement>) => {
-    if (e.key === "ArrowRight" || e.key === "ArrowUp") {
-      e.preventDefault();
-      onChange!(Math.min(5, (value || 0) + 1));
-    } else if (e.key === "ArrowLeft" || e.key === "ArrowDown") {
-      e.preventDefault();
-      onChange!(Math.max(1, (value || 1) - 1));
-    }
+    let next: number | null = null;
+    if (e.key === "ArrowRight" || e.key === "ArrowUp") next = Math.min(5, (value || 0) + 1);
+    else if (e.key === "ArrowLeft" || e.key === "ArrowDown") next = Math.max(1, (value || 1) - 1);
+    if (next === null) return;
+    e.preventDefault();
+    onChange!(next);
+    // Keep DOM focus on the selected star so it matches the roving tab stop
+    // (which follows `value`) — otherwise focus is stranded on a tabIndex=-1 button.
+    buttonRefs.current[next - 1]?.focus();
   };
 
   return (
@@ -60,6 +65,7 @@ const StarRating = ({ value, onChange, size = 20, className, id }: StarRatingPro
       id={id}
       role="radiogroup"
       aria-label="Rating from 1 to 5 stars"
+      aria-describedby={describedById}
       className={cn("inline-flex items-center gap-1", className)}
       onKeyDown={handleKeyDown}
       onMouseLeave={() => setHover(0)}
@@ -71,6 +77,9 @@ const StarRating = ({ value, onChange, size = 20, className, id }: StarRatingPro
         return (
           <button
             key={i}
+            ref={(el) => {
+              buttonRefs.current[i - 1] = el;
+            }}
             type="button"
             role="radio"
             aria-checked={value === i}
