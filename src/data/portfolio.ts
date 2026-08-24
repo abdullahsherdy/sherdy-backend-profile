@@ -11,6 +11,9 @@ export const socials = {
   location: "Cairo, Egypt",
 };
 
+// Single source of truth for the résumé path — referenced by Hero, Navbar, and Footer.
+export const resumeUrl = "/resume/Abdullah_Sherdy_SWE.pdf";
+
 export const heroTech = [
   "C#",
   "ASP.NET Core",

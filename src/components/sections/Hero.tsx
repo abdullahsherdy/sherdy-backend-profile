@@ -2,7 +2,7 @@ import { Download, Star } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import AnimatedSection from "@/components/AnimatedSection";
 import MagneticButton from "@/components/MagneticButton";
-import { heroTech, roles } from "@/data/portfolio";
+import { heroTech, roles, resumeUrl } from "@/data/portfolio";
 import { computeReviewStats } from "@/lib/reviews";
 import { useReviews } from "@/hooks/useReviews";
 
@@ -57,7 +57,7 @@ const Hero = () => {
                 <a href="#contact">Hire Me</a>
               </MagneticButton>
               <MagneticButton asChild variant="outline" size="lg" className="w-full sm:w-auto">
-                <a href="/resume/Abdullah_Sherdy_SWE.pdf" download="Abdullah_Sherdy_SWE.pdf" className="flex items-center">
+                <a href={resumeUrl} download className="flex items-center">
                   <Download className="mr-2 h-4 w-4" />
                   Download CV
                 </a>
