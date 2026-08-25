@@ -35,7 +35,7 @@ const ReviewCard = ({ review, featured = false }: ReviewCardProps) => {
   const date = formatReviewDate(review.createdAt);
   return (
     <Card className={cn("h-full transition-colors", cardClassByCategory[review.category])}>
-      <CardContent className={cn("flex h-full flex-col", featured ? "p-8" : "p-6")}>
+      <CardContent className={cn("flex h-full flex-col", featured ? "p-6 sm:p-8" : "p-6")}>
         <div className="mb-3">
           <StarRating value={review.rating} size={featured ? 20 : 16} />
         </div>
