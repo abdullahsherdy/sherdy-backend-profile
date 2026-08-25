@@ -12,10 +12,11 @@ import { useReviews } from "@/hooks/useReviews";
 type ReviewTab = "all" | "engineering" | "teaching";
 
 // Maps the site's engineering/teaching split onto audience-facing labels.
-const TABS: { value: ReviewTab; label: string }[] = [
-  { value: "all", label: "All" },
-  { value: "engineering", label: "Clients & Engineering" },
-  { value: "teaching", label: "Students & Parents" },
+// `short` keeps the mobile tab bar to a single row; the full label shows from `sm` up.
+const TABS: { value: ReviewTab; label: string; short: string }[] = [
+  { value: "all", label: "All", short: "All" },
+  { value: "engineering", label: "Clients & Engineering", short: "Clients" },
+  { value: "teaching", label: "Students & Parents", short: "Students" },
 ];
 
 // Strongest review = highest rating, then longest (most substantive) quote.
@@ -113,10 +114,13 @@ const Reviews = () => {
         ) : (
           <Tabs value={tab} onValueChange={(v) => setTab(v as ReviewTab)}>
             <div className="mb-8 flex justify-center">
-              <TabsList className="h-auto flex-wrap justify-center gap-1">
+              {/* Full-width 3-up segmented control on mobile (short labels, one row),
+                  compact centered pill with full labels from sm up. */}
+              <TabsList className="grid w-full grid-cols-3 gap-1 sm:inline-flex sm:w-auto">
                 {TABS.map((t) => (
-                  <TabsTrigger key={t.value} value={t.value}>
-                    {t.label}
+                  <TabsTrigger key={t.value} value={t.value} className="px-2 text-xs sm:px-3 sm:text-sm">
+                    <span className="sm:hidden">{t.short}</span>
+                    <span className="hidden sm:inline">{t.label}</span>
                   </TabsTrigger>
                 ))}
               </TabsList>
