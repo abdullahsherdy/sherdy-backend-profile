@@ -9,6 +9,13 @@ export interface UpdateEntry {
 
 export const updates: UpdateEntry[] = [
   {
+    date: "2026-08-26",
+    kind: "fix",
+    title: "Reviews now fit properly on mobile",
+    description:
+      "On phones, part of each review card could get cut off at the right edge — the quote and the reviewer's date weren't fully visible. Review cards now stack in a single column and fit the screen, so you can read every review in full.",
+  },
+  {
     date: "2026-08-24",
     kind: "improvement",
     title: "One consistent professional title",
