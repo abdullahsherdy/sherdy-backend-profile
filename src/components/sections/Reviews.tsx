@@ -48,7 +48,7 @@ const Reviews = () => {
           <ReviewCard review={lead} featured />
         </AnimatedSection>
         {rest.length > 0 && (
-          <div className="mt-6 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="mt-6 grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {rest.map((review, i) => (
               <AnimatedSection key={review.id} animation="fade-up" delay={Math.min(i * 80, 400)}>
                 <ReviewCard review={review} />
@@ -95,7 +95,7 @@ const Reviews = () => {
         </AnimatedSection>
 
         {isLoading ? (
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
             {Array.from({ length: 3 }).map((_, i) => (
               <Skeleton key={i} className="h-52 w-full rounded-lg" />
             ))}
