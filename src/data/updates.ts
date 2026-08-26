@@ -13,7 +13,7 @@ export const updates: UpdateEntry[] = [
     kind: "fix",
     title: "Reviews now fit properly on mobile",
     description:
-      "On phones, part of each review card could get cut off at the right edge — the quote and the reviewer's date weren't fully visible. Review cards now stack in a single column and fit the screen, so you can read every review in full.",
+      "On phones, part of each review card could get cut off at the right edge, so you couldn't read the whole quote. The reviews section is back to a clean single-column layout on mobile, so every review is fully readable.",
   },
   {
     date: "2026-08-24",
@@ -56,13 +56,6 @@ export const updates: UpdateEntry[] = [
     title: "Every article points you forward",
     description:
       "Articles and the articles list now close with clear next steps — quick ways to hire me for engineering work or learn with me — plus links to follow along on YouTube and LinkedIn.",
-  },
-  {
-    date: "2026-08-24",
-    kind: "improvement",
-    title: "Reviews you can filter — clients vs. students",
-    description:
-      "The reviews section now sorts feedback into “Clients & Engineering” and “Students & Parents” tabs, leads each with a standout review, and shows every reviewer's initials and date. The overall star average only appears once there are enough reviews to be meaningful.",
   },
   {
     date: "2026-08-24",
